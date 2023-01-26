@@ -1,20 +1,8 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-<html lang="en" class="light">
-    <!-- BEGIN: Head -->
-    <head>
-        <meta charset="utf-8">
-        <link href="dist/images/logo.png" rel="shortcut icon">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Vertex Engineering LLC">
-        <meta name="keywords" content="Vertex Engineering LLC">
-        <meta name="author" content="Vertex Engineering LLC">
-        <title>Vertex Engineering LLC</title>
-        <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
-        <!-- END: CSS Assets-->
-    </head>
-    <!-- END: Head -->
+<!-- style section started -->
     <style>
          @media(max-width: 575px)
             {
@@ -23,8 +11,23 @@
                 }
             }
     </style>
+    <style>
+        .dark-mode-switcher{
+            display: none;
+        } 
+         .sm\:py-20 {
+            padding-top: 5rem;
+            padding-bottom: 1rem;
+        }
+        .content {
+            min-height: 75vh;
+           
+        }
+    </style>
+<!-- style section ended -->
+
     <body class="py-5">
-         <?php include ('header.php'); ?>
+        {% include 'header.html' %}
         <!-- BEGIN: Content -->
     <div class="content">
             <div class="flex items-center mt-8">
@@ -60,30 +63,11 @@
     <!-- END: Wizard Layout -->
     </div>
     <!-- END: Content -->
-    <style>
-        .dark-mode-switcher{
-            display: none;
-        } 
-         .sm\:py-20 {
-            padding-top: 5rem;
-            padding-bottom: 1rem;
-        }
-        .content {
-            min-height: 75vh;
-           
-        }
-    </style>
         <!-- BEGIN: Dark Mode Switcher-->
         <div data-url="top-menu-dark-regular-form.html" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
             <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>
             <div class="dark-mode-switcher__toggle border"></div>
         </div>
         <!-- END: Dark Mode Switcher-->
-        
-        <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
-        <!-- END: JS Assets-->
     </body>
-</html>
+{% endblock content %}

@@ -21,7 +21,7 @@
                 <button class="btn btn-outline-secondary shadow-md mr-2">
                     <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export to Excel
                 </button>
-                <a href="salesman-add.php"><button class="btn btn-primary shadow-md mr-2">Add New Salesman</button></a>
+                <a href="{% url 'add-salesman' %}"><button class="btn btn-primary shadow-md mr-2">Add New Salesman</button></a>
                 <div class="dropdown ml-auto sm:ml-0">
                         <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
                             <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-lucide="plus"></i> </span>
@@ -29,10 +29,10 @@
                         <div class="dropdown-menu w-40">
                             <ul class="dropdown-content">
                                 <li>
-                                    <a href="category-add.php" class="dropdown-item"> <i data-lucide="file-plus" class="w-4 h-4 mr-2"></i> New Category </a>
+                                    <a href="{% url 'add-category' %}" class="dropdown-item"> <i data-lucide="file-plus" class="w-4 h-4 mr-2"></i> New Category </a>
                                 </li>
                                 <li>
-                                    <a href="product-add.php" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> New Product </a>
+                                    <a href="{% url 'add-product' %}" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> New Product </a>
                                 </li>
                             </ul>
                         </div>
@@ -81,15 +81,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for salesman in salesmans %}
                         <tr class="intro-x">
                             
                             <td class="w-20">
                                 <a href="" class=" whitespace-nowrap">1</a>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.email }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
@@ -112,7 +113,7 @@
                                     <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
                                         <i data-lucide="key" class="w-4 h-4 mr-1"></i>
                                     </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
+                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-salesman' salesman.id %}">
                                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                     </a>
                                     <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
@@ -121,219 +122,8 @@
                                 </div>
                             </td>
                         </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">2</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="key" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">3</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="key" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">4</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="key" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">5</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="key" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">6</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="key" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->

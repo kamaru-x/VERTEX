@@ -20,7 +20,7 @@
                 <button class="btn btn-outline-secondary shadow-md mr-2">
                     <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export to Excel
                 </button>
-                <a href="leads-add.php"><button class="btn btn-primary shadow-md mr-2">Add New Lead</button></a>
+                <a href="{% url 'add-lead' %}"><button class="btn btn-primary shadow-md mr-2">Add New Lead</button></a>
                 <div class="dropdown ml-auto sm:ml-0">
                         <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
                             <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-lucide="plus"></i> </span>
@@ -28,10 +28,10 @@
                         <div class="dropdown-menu w-40">
                             <ul class="dropdown-content">
                                 <li>
-                                    <a href="category-add.php" class="dropdown-item"> <i data-lucide="file-plus" class="w-4 h-4 mr-2"></i> New Category </a>
+                                    <a href="{% url 'add-category' %}" class="dropdown-item"> <i data-lucide="file-plus" class="w-4 h-4 mr-2"></i> New Category </a>
                                 </li>
                                 <li>
-                                    <a href="product-add.php" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> New Product </a>
+                                    <a href="{% url 'add-product' %}" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> New Product </a>
                                 </li>
                             </ul>
                         </div>
@@ -80,15 +80,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for lead in leads %}
                         <tr class="intro-x">
                             
                             <td class="w-20">
                                 <a href="" class=" whitespace-nowrap">1</a>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"><span class="btn btn-sm btn-danger">HOT LEAD</span> </div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
+                                {% if lead.State == 1 %}
+                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"><span class="btn btn-sm btn-danger">HOT LEAD</span> </div>
+                                {% else %}
+                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"><span class="btn btn-sm btn-warning">COLD LEAD</span> </div>
+                                {% endif %}
                             </td>
                             <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap">Vijesh Chandran</a>
@@ -105,14 +110,14 @@
                                 <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: {{ lead.Date|date:"d M Y" }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: {{ lead.ESValue }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: {{ lead.ECDate|date:"d M Y" }}</span></div>
                             </td>
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
+                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-lead' lead.id %}">
                                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                     </a>
                                     <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
@@ -121,93 +126,7 @@
                                 </div>
                             </td>
                         </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">2</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"><span class="btn btn-sm btn-warning">COLD LEAD</span> </div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Vijesh Chandran</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">3</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"><span class="btn btn-sm btn-danger">HOT LEAD</span> </div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Vijesh Chandran</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
+                    {% endfor %}
                     </tbody>
             </table>
         </div>

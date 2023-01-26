@@ -24,13 +24,13 @@
                         </a>
                         <ul class="">
                             <li>
-                                <a href="add-category.php" class="menu menu--active">
+                                <a href="{% url 'add-category' %}" class="menu menu--active">
                                     <div class="menu__icon"> <i data-lucide="box"></i> </div>
                                     <div class="menu__title"> Add/Manage Category </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="add-product.php" class="menu menu--active">
+                                <a href="{% url 'add-product' %}" class="menu menu--active">
                                     <div class="menu__icon"> <i data-lucide="box"></i> </div>
                                     <div class="menu__title"> Add/Manage Products </div>
                                 </a>
@@ -45,13 +45,13 @@
                         </a>
                         <ul class="">
                             <li>
-                                <a href="create-salesman.php" class="menu">
+                                <a href="{% url 'add-salesman' %}" class="menu">
                                     <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="menu__title"> Create Salesman </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="edit-salesman.php" class="menu">
+                                <a href="" class="menu">
                                     <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="menu__title"> Edit Salesman </div>
                                 </a>
@@ -72,7 +72,7 @@
                         </a>
                         <ul class="">
                             <li>
-                                <a href="create-lead.php" class="menu">
+                                <a href="{% url 'create-lead' %}" class="menu">
                                     <div class="menu__icon"> <i data-lucide="file-plus"></i> </div>
                                     <div class="menu__title"> Create Lead </div>
                                 </a>
@@ -84,14 +84,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="edit-lead.php" class="menu">
+                                <a href="" class="menu">
                                     <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="menu__title"> Edit Lead <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
                                 </a>
                                 
                             </li>
                             <li>
-                                <a href="view-lead.php" class="menu">
+                                <a href="{% url 'list-lead' %}" class="menu">
                                     <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="menu__title"> View Lead <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
                                 </a>
@@ -430,7 +430,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="salesman-list.php" class="top-menu">
+                            <a href="{% url 'list-salesman' %}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-lucide="box"></i> </div>
                                 <div class="top-menu__title"> Salesman </div>
                             </a>
@@ -445,7 +445,7 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="leads-list.php" class="top-menu">
+                            <a href="{% url 'list-lead' %}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-lucide="user"></i> </div>
                                 <div class="top-menu__title"> Leads</div>
                             </a>

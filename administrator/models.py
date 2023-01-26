@@ -40,3 +40,27 @@ class Product(models.Model):
 
     def __str__(self):
         return self.Name
+
+#################################################################################
+
+class Lead(models.Model):
+    Date = models.DateTimeField(null=True)
+    Status = models.IntegerField(default=1)
+    AddedBy = models.IntegerField(default=0)
+    Ip = models.GenericIPAddressField(null=True)
+
+    Edited_Date = models.DateTimeField(auto_now_add=True)
+    EditedBy = models.IntegerField(default=0)
+    EditedIp = models.GenericIPAddressField(null=True)
+
+    Reference = models.CharField(max_length=20)
+    Company = models.CharField(max_length=50)
+    Address = models.CharField(max_length=250)
+    Email = models.EmailField()
+    Phone = models.CharField(max_length=15)
+    ECDate = models.DateField()
+    ESValue = models.FloatField()
+    State = models.IntegerField()
+
+    def __str__(self):
+        return self.Company

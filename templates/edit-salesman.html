@@ -24,27 +24,27 @@
             <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-2" class="form-label">Enter Name</label>
-                    <input id="input-wizard-2" type="text" class="form-control" name="name" placeholder="Name">
+                    <input id="input-wizard-2" type="text" class="form-control" value="{{ salesman.first_name }}" name="name" placeholder="Name">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-3" class="form-label">Qatar ID Number</label>
-                    <input id="input-wizard-3" type="text" class="form-control" name="id-number" placeholder="ID">
+                    <input id="input-wizard-3" type="text" class="form-control" name="id-number" value="{{ salesman.Qatar_ID }}" placeholder="ID">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Email Id</label>
-                    <input id="input-wizard-4" type="email" class="form-control" name="email" placeholder="Email Id">
+                    <input id="input-wizard-4" type="email" class="form-control" name="email" value="{{ salesman.email }}" placeholder="Email Id">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Mobile Number</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="mobile" placeholder="Mobile Number">
+                    <input id="input-wizard-4" type="text" class="form-control" name="mobile" value="{{ salesman.Mobile }}" placeholder="Mobile Number">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Address</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="address" placeholder="Address">
+                    <input id="input-wizard-4" type="text" class="form-control" name="address" value="{{ salesman.Address }}" placeholder="Address">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Country</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="country" placeholder="Country">
+                    <input id="input-wizard-4" type="text" class="form-control" name="country" value="{{ salesman.Country }}" placeholder="Country">
                 </div>
                 <!--<div class="intro-y col-span-12 sm:col-span-6">-->
                 <!--    <label for="input-wizard-4" class="form-label">Reset Password</label>-->

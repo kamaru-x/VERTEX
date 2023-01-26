@@ -25,31 +25,31 @@
             <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-2" class="form-label">Reference</label>
-                    <input id="input-wizard-2" type="text" value="{{ refer }}" readonly class="form-control" placeholder="Reference">
+                    <input id="input-wizard-2" type="text" value="{{ lead.Reference }}" readonly class="form-control" placeholder="Reference">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-3" class="form-label">Company name</label>
-                    <input id="input-wizard-3" type="text" class="form-control" name="company" placeholder="Company name">
+                    <input id="input-wizard-3" type="text" class="form-control" name="company" value="{{ lead.Company }}" placeholder="Company name">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Address</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="address" placeholder="Address">
+                    <input id="input-wizard-4" type="text" class="form-control" name="address" value="{{ lead.Address }}" placeholder="Address">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Email ID</label>
-                    <input id="input-wizard-4" type="email" class="form-control" name="email" placeholder="Email ID">
+                    <input id="input-wizard-4" type="email" class="form-control" name="email" value="{{ lead.Email }}" placeholder="Email ID">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Phone number</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="number" placeholder="Phone number">
+                    <input id="input-wizard-4" type="text" class="form-control" name="number" value="{{ lead.Phone }}" placeholder="Phone number">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Expected Closing date</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="date" placeholder="Closing date">
+                    <input id="input-wizard-4" type="text" class="form-control" name="date" value="{{ lead.ECDate }}" placeholder="Closing date">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Expected Sales Value</label>
-                    <input id="input-wizard-4" type="text" class="form-control" name="value" placeholder="Expected value">
+                    <input id="input-wizard-4" type="text" class="form-control" name="value" value="{{ lead.ESValue }}" placeholder="Expected value">
                 </div>
 
                 <div class="intro-y col-span-12 sm:col-span-6">

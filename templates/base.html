@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <link href="{% static 'images/logo.png' %}" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Vertex Engineering LLC">
+        <meta name="keywords" content="Vertex Engineering LLC">
+        <meta name="author" content="Vertex Engineering LLC">
+        <title>Vertex Engineering LLC</title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <!-- BEGIN: JS Assets-->
+    <script src="{% static 'js/app.js' %}"></script>
+    <!-- END: JS Assets-->
+</html>

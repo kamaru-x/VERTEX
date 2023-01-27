@@ -55,8 +55,38 @@
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-6" class="form-label"> Lead  Possibility</label>
                     <select id="input-wizard-6" class="form-select" name="state">
-                        <option value="1">Hot</option>
-                        <option value="0">Cold</option>   
+                        {% if lead.State == 0 %}
+                            <option value="0">Cold</option>
+                            <option value="1">Hot</option>
+                        {% else %}
+                            <option value="1">Hot</option>
+                            <option value="0">Cold</option>
+                        {% endif %}   
+                    </select>
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Person</label>
+                    <input id="input-wizard-4" type="text" name="cname" value="{{ lead.CName }}" class="form-control" placeholder="Contact Person">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Number</label>
+                    <input id="input-wizard-4" type="text" name="cnumber" value="{{ lead.CNumber }}" class="form-control" placeholder="Contact Number">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Mail</label>
+                    <input id="input-wizard-4" type="email" name="cmail" value="{{ lead.CMail }}" class="form-control" name="value" placeholder="Contact Email">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-6" class="form-label">Select salesman</label>
+                    <select id="input-wizard-6" class="form-select" name="salesman">
+                            <option value="{{ lead.Salesman.id }}">{{ lead.Salesman.first_name }}</option>
+                        {% for salesman in salesmans %}
+                            <option value="{{ salesman.id }}">{{salesman.first_name}}</option>
+                        {% endfor %}  
                     </select>
                 </div>
                 

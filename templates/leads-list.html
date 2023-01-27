@@ -84,7 +84,7 @@
                         <tr class="intro-x">
                             
                             <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">1</a>
+                                <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap">{{ lead.Company }}</a>
@@ -96,14 +96,14 @@
                                 {% endif %}
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Vijesh Chandran</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ lead.CName }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CNumber }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CMail }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
@@ -117,6 +117,9 @@
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'view-lead' lead.id %}" title="view">
+                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+                                    </a>
                                     <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-lead' lead.id %}">
                                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                     </a>

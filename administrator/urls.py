@@ -4,6 +4,8 @@ from administrator import views
 urlpatterns = [
     path('add-category/',views.add_category,name='add-category'),
     path('list-category/',views.list_category,name='list-category'),
+    path('view-category/<int:cid>/',views.view_category,name='view-category'),
+    path('edit-category/<int:cid>/',views.edit_category,name='edit-category'),
     path('delete-category/<int:cid>/',views.delete_category,name='delete-category'),
     
     path('add-product/',views.add_product,name='add-product'),
@@ -18,4 +20,5 @@ urlpatterns = [
     path('add-leads/',views.add_lead,name='add-lead'),
     path('list-add/',views.list_leads,name='list-lead'),
     path('edit-lead/<int:lid>/',views.edit_lead,name='edit-lead'),
+    path('view-lead/<int:lid>',views.view_lead,name='view-lead')
 ]

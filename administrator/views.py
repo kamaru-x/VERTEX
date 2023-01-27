@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead
-import datetime
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments
+from datetime import datetime,date
+from datetime import date as dt
 from django.contrib import messages
 from u_auth.models import User
 
@@ -64,6 +65,32 @@ def list_category(request):
 #################################################################################
 
 @login_required
+def view_category(request,cid):
+    category = Category.objects.get(id=cid)
+    products = Product.objects.filter(Category=category).filter(Status=1)
+    context = {
+        'category' : category,
+        'products' : products,
+    }
+    return render(request,'category-view.html',context)
+
+#################################################################################
+
+@login_required
+def edit_category(request,cid):
+    category = Category.objects.get(id=cid)
+    if request.method == 'POST':
+        category.Name = request.POST.get('name')
+        category.save()
+        return redirect('.')
+    context = {
+        'category':category,
+    }
+    return render(request,'category-edit.html',context)
+
+#################################################################################
+
+@login_required
 def delete_category(request,cid):
     category = Category.objects.get(id=cid)
     category.Status = 0
@@ -77,7 +104,7 @@ def add_product(request):
 
     categories = Category.objects.all()
     r = Product.objects.last()
-    date = datetime.date.today()
+    date = datetime.date()
     user = request.user.id
     ip = setip(request)
 
@@ -125,12 +152,11 @@ def edit_product(request,pid):
     product = Product.objects.get(id=pid)
     user = request.user.id
     ip = setip(request)
-    date = datetime.date.today()
     categories = Category.objects.filter(Status=1)
 
     if request.method == 'POST':
         product.EditedBy = user
-        product.Edited_Date = date
+        product.Edited_Date = date.today()
         product.EditedIp = ip
         category = request.POST.get('category')
         c = Category.objects.get(id=category)
@@ -222,8 +248,8 @@ def edit_salesman(request,uid):
 def add_lead(request):
     user = request.user.id
     ip = setip(request)
-    date = datetime.date.today()
     r = Lead.objects.last()
+    salesmans = User.objects.filter(is_salesman=True)
 
     if r:
         refer = f'LEAD-00{r.id+1}'
@@ -238,15 +264,23 @@ def add_lead(request):
         ecdate = request.POST.get('date')
         esvalue = request.POST.get('value')
         state = request.POST.get('state')
+        cname = request.POST.get('cname')
+        cnumber = request.POST.get('cnumber')
+        cmail = request.POST.get('cmail')
+        salesman = request.POST.get('salesman')
+        s = User.objects.get(id=salesman)
 
-        data = Lead(Date=date,AddedBy=user,Ip=ip,Reference=refer,Company=company,Address=address,
-        Email=email,Phone=phone,ECDate=ecdate,ESValue=esvalue,State=state)
+
+        data = Lead(Date=date.today(),AddedBy=user,Ip=ip,Reference=refer,Company=company,Address=address,
+        Email=email,Phone=phone,ECDate=ecdate,ESValue=esvalue,State=state,CName=cname,CNumber=cnumber,
+        CMail=cmail,Salesman=s)
         data.save()
         messages.success(request,'created new lead')
         return redirect('add-lead')
 
     context = {
-        'refer':refer
+        'refer':refer,
+        'salesmans' : salesmans,
     }
 
     return render(request,'leads-add.html',context)
@@ -264,11 +298,68 @@ def list_leads(request):
 #################################################################################
 
 @login_required
+def view_lead(request,lid):
+    lead = Lead.objects.get(id=lid)
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    lead_update = Lead_Update.objects.filter(Lead=lead).last()
+    attachments = Attachments.objects.filter(Lead_Update=lead_update)
+
+    if request.method == 'POST':
+        if request.POST.get('date'):
+            date = request.POST.get('date')
+            description = request.POST.get('update-description')
+
+            data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead,Description=description,AddedDate=date)
+            data.save()
+
+            ld = Lead_Update.objects.filter(Lead=lead).last()
+            attachment = request.FILES.getlist('attachment')
+            for a in attachment:
+                attach = Attachments(Lead_Update=ld,Attachment=a,Name='filename')
+                attach.save()
+
+        if request.POST.get('sdate'):
+            sdate = request.POST.get('sdate')
+            mode = request.POST.get('mode')
+            ftime = request.POST.get('from')
+            to = request.POST.get('to')
+            sdescription = request.POST.get('sdescription')
+
+            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
+            data.save()
+
+        return redirect('/view-lead/%s' %lead.id)
+
+    schedules = Lead_Schedule.objects.all()
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.Date.date() > dt.today() :
+            previous.append(schedule)
+        elif schedule.Date.date() < dt.today() :
+            upcoming.append(schedule)
+
+    context = {
+        'lead' : lead,
+        'lead_update' : lead_update,
+        'attachments' : attachments,
+        'previous' : previous,
+        'upcoming' : upcoming,
+    }
+    return render(request,'leads-view.html',context)
+
+#################################################################################
+
+@login_required
 def edit_lead(request,lid):
     lead = Lead.objects.get(id=lid)
     user = request.user.id
     ip = setip(request)
-    date = datetime.date.today()
+    salesmans = User.objects.filter(is_salesman=True)
 
     if request.method == 'POST':
         lead.EditedBy = user
@@ -277,15 +368,28 @@ def edit_lead(request,lid):
         lead.Address = request.POST.get('address')
         lead.Email = request.POST.get('email')
         lead.Phone = request.POST.get('number')
-        lead.ECDate = request.POST.get('date')
+        date = request.POST.get('date')
+        temp = lead.Date
+        if date:
+            lead.ECDate = date
+        else:
+            lead.ECDate = temp
+        # lead.ECDate = datetime.strptime(date, "%Y-%m-%d")
         lead.ESValue = request.POST.get('value')
         lead.State = request.POST.get('state')
+        lead.CName = request.POST.get('cname')
+        lead.CNumber = request.POST.get('cnumber')
+        lead.CMail = request.POST.get('cmail')
+        s = request.POST.get('salesman')
+        salesman = User.objects.get(id=s)
+        lead.Salesman = salesman
         lead.save()
         messages.success(request,'lead data edited successfull')
         return redirect('.')
     
     context = {
-        'lead' : lead
+        'lead' : lead,
+        'salesmans' : salesmans,
     }
 
     return render(request,'edit-lead.html',context)

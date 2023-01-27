@@ -59,6 +59,33 @@
                         <option value="0">Cold</option>   
                     </select>
                 </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Person</label>
+                    <input id="input-wizard-4" type="text" name="cname" class="form-control" placeholder="Contact Person">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Number</label>
+                    <input id="input-wizard-4" type="text" name="cnumber" class="form-control" placeholder="Contact Number">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-4" class="form-label">Contact Mail</label>
+                    <input id="input-wizard-4" type="email" name="cmail" class="form-control" name="value" placeholder="Contact Email">
+                </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label for="input-wizard-6" class="form-label">Select salesman</label>
+                    <select id="input-wizard-6" class="form-select" name="salesman">
+                            <option value="">select salesman</option>
+                        {% for salesman in salesmans %}
+                            <option value="{{ salesman.id }}">{{salesman.first_name}}</option>
+                        {% endfor %}  
+                    </select>
+                </div>
+
+
                 
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                     <!-- <button class="btn btn-secondary w-24">Add</button> -->

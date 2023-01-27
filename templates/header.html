@@ -72,13 +72,13 @@
                         </a>
                         <ul class="">
                             <li>
-                                <a href="{% url 'create-lead' %}" class="menu">
+                                <a href="{% url 'add-lead' %}" class="menu">
                                     <div class="menu__icon"> <i data-lucide="file-plus"></i> </div>
                                     <div class="menu__title"> Create Lead </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="manage-lead.php" class="menu">
+                                <a href="{% url 'list-lead' %}" class="menu">
                                     <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                                     <div class="menu__title"> Manage Lead </div>
                                 </a>
@@ -406,7 +406,7 @@
         <nav class="top-nav">
             <ul>
                 <li>
-                    <a href="index.php" class="top-menu top-menu--active">
+                    <a href="{% url 'dashboard' %}" class="top-menu top-menu--active">
                         <div class="top-menu__icon"> <i data-lucide="home"></i> </div>
                         <div class="top-menu__title"> Dashboard  </div>
                     </a>
@@ -592,7 +592,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="login.php" class="top-menu">
+                            <a href="{% url 'sign-out' %}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-lucide="log-out"></i> </div>
                                 <div class="top-menu__title"> Logout </div>
                             </a>

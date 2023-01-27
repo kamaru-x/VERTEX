@@ -76,6 +76,7 @@
                         <th class="text-center whitespace-nowrap">ADDED ON</th>
                         <th class="whitespace-nowrap">CATEGORY NAME</th>
                         <th class="whitespace-nowrap">PRODUCT TITLE</th>
+                        <th class="whitespace-nowrap">PRODUCT PRICE</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
@@ -87,8 +88,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">{{ product.Reference }}</a>
-                                 
+                                <a href="" class="font-medium whitespace-nowrap">{{ product.Reference }}</a>     
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
@@ -101,7 +101,9 @@
                             <td>
                              <div class="whitespace-nowrap">{{ product.Name }}</div>
                             </td>
-                            
+                            <td>
+                                <div class="whitespace-nowrap">{{ product.Price }}</div>
+                            </td>
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-product' product.id %}">

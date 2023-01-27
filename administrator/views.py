@@ -174,7 +174,7 @@ def add_salesman(request):
         password = '#password123'
 
         user = User.objects.create(first_name=name,Qatar_ID=qid,email=email,
-        Mobile=mobile,Address=address,Country=country,is_staff=True,username=email)
+        Mobile=mobile,Address=address,Country=country,is_salesman=True,username=email)
         user.save()
         user.set_password('#password123')
         user.save()
@@ -240,7 +240,7 @@ def add_lead(request):
         state = request.POST.get('state')
 
         data = Lead(Date=date,AddedBy=user,Ip=ip,Reference=refer,Company=company,Address=address,
-        Email=email,Phone=phone,ECDate=date,ESValue=esvalue,State=state)
+        Email=email,Phone=phone,ECDate=ecdate,ESValue=esvalue,State=state)
         data.save()
         messages.success(request,'created new lead')
         return redirect('add-lead')
@@ -277,7 +277,7 @@ def edit_lead(request,lid):
         lead.Address = request.POST.get('address')
         lead.Email = request.POST.get('email')
         lead.Phone = request.POST.get('number')
-        lead.ECDate = date
+        lead.ECDate = request.POST.get('date')
         lead.ESValue = request.POST.get('value')
         lead.State = request.POST.get('state')
         lead.save()

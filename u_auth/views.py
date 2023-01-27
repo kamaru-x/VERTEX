@@ -16,7 +16,10 @@ def signin(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            return redirect('dashboard')
+            if request.user.is_superuser:
+                return redirect('dashboard')
+            elif request.user.is_salesman:
+                return redirect('salesboard')
         else:
             messages.error(request,'incorrect username or password')
             return redirect('.')
@@ -27,6 +30,12 @@ def signin(request):
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
     return render(request,'index.html')
+
+#################################################################################
+
+@login_required
+def salesboard(request):
+    return render(request,'salesboard.html')
 
 #################################################################################
 

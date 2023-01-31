@@ -289,7 +289,7 @@ def add_lead(request):
 
 @login_required
 def list_leads(request):
-    leads = Lead.objects.all()
+    leads = Lead.objects.filter(Lead_Status=0)
     context = {
         'leads' : leads
     }
@@ -303,8 +303,8 @@ def view_lead(request,lid):
     user = request.user.id
     d = dt.today()
     ip = setip(request)
-    lead_update = Lead_Update.objects.filter(Lead=lead).last()
-    attachments = Attachments.objects.filter(Lead_Update=lead_update)
+    lead_update = Lead_Update.objects.filter(Lead=lead)
+    # attachments = Attachments.objects.all()
 
     if request.method == 'POST':
         if request.POST.get('date'):
@@ -314,11 +314,13 @@ def view_lead(request,lid):
             data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead,Description=description,AddedDate=date)
             data.save()
 
-            ld = Lead_Update.objects.filter(Lead=lead).last()
+            ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
-                attach = Attachments(Lead_Update=ld,Attachment=a,Name='filename')
+                attach = Attachments(Attachment=a,Name='filename')
                 attach.save()
+                ld.Attachments.add(attach)
+                ld.save()
 
         if request.POST.get('sdate'):
             sdate = request.POST.get('sdate')
@@ -330,23 +332,39 @@ def view_lead(request,lid):
             data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
             data.save()
 
+        if request.POST.get('udate'):
+            udate = request.POST.get('udate')
+            udescription = request.POST.get('u-description')
+            participents = request.POST.get('participents')
+
+            data = Lead_Schedule(Update_Date=udate,Update_Description=udescription,Members=participents)
+            data.save()
+
+            ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
+            attachment = request.FILES.getlist('attach')
+            for a in attachment:
+                attach = Attachments(Attachment=a,Name='filename')
+                attach.save()
+                ls.Attachment.add(attach)
+                ls.save()
+
         return redirect('/view-lead/%s' %lead.id)
 
-    schedules = Lead_Schedule.objects.all()
+    schedules = Lead_Schedule.objects.filter(Lead=lead)
 
     previous = []
     upcoming = []
 
     for schedule in schedules:
-        if schedule.Date.date() > dt.today() :
+        if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.Date.date() < dt.today() :
+        elif schedule.AddedDate > dt.today() :
             upcoming.append(schedule)
 
     context = {
         'lead' : lead,
         'lead_update' : lead_update,
-        'attachments' : attachments,
+        # 'attachments' : attachments,
         'previous' : previous,
         'upcoming' : upcoming,
     }
@@ -402,3 +420,20 @@ def delete_lead(request,lid):
     lead.Status = 0
     lead.save()
     return redirect('list-lead')
+
+#################################################################################
+
+@login_required
+def opertunity_convertion(request,lid):
+    lead = Lead.objects.get(id=lid)
+    lead.Lead_Status = 1
+    lead.To_Opertunity = date.today()
+    lead.save()
+    return redirect('list-lead')
+
+#################################################################################
+
+@login_required
+def previous_meeting_details(request,mid):
+    meeting = Lead_Schedule.objects.get(id=mid)
+    return render(request,'meeting-previous-details.html',{'meeting':meeting})

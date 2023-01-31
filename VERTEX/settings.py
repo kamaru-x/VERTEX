@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # vertex apps
     'u_auth',
     'administrator',
+    'converter',
 ]
 
 MIDDLEWARE = [

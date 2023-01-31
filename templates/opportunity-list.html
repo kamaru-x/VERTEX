@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-
-<html lang="en" class="light">
-    <!-- BEGIN: Head -->
-    <head>
-        <meta charset="utf-8">
-        <link href="dist/images/logo.png" rel="shortcut icon">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Vertex Engineering LLC">
-        <meta name="keywords" content="Vertex Engineering LLC">
-        <meta name="author" content="Vertex Engineering LLC">
-        <title>Vertex Engineering WLL</title>
-        <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
-        <!-- END: CSS Assets-->
-    </head>
-    <!-- END: Head -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
     <body class="py-5">
-        <?php include ('header.php'); ?>
+        {% include 'header.html' %}
       
       <!-- BEGIN: Content -->
     <div class="content">
@@ -79,38 +65,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                       
-
-                      
-
-
+                    {% for op in opertunitunities %}
                         <tr class="intro-x">
                            
                              <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ op.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ op.Phone }} / {{ op.Email }}</div>
                                 
                             </td>
                             <td class="w-60 ref">
-                                  <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                  <a href="" class="font-medium whitespace-nowrap">{{ op.Reference }}</a>
                                 
                             </td>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
+                                     {{ op.To_Opertunity }}
                                 </div>
                             </td>
                             
                             <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">{{ op.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ op.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ op.Salesman.email }}</div>
                             </td>
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap " href="opportunity-view.php" title="view">
+                                    <a class="flex items-center text-primary whitespace-nowrap " href="{% url 'view-opportunity' op.id %}" title="view">
                                         <i data-lucide="eye" class="w-4 h-4 mr-5"></i> 
                                     </a>
                                      <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal ">
@@ -122,89 +104,8 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                          
-                            <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            
-                              <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap " href="opportunity-view.php" title="view">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-5"></i> 
-                                    </a>
-                                     <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal ">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-5"></i>
-                                    </a> 
-                                   <a class="flex items-right text-danger whitespace-nowrap" href="javascript:;" title="cancel">
-                                        <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                    </a> 
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-60 ref">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                
-                            </td>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap " href="opportunity-view.php" title="view">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-5"></i> 
-                                    </a>
-                                     <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal ">
-                                        <i data-lucide="trash" class="w-4 h-4 mr-5"></i>
-                                    </a> 
-                                   <a class="flex items-right text-danger whitespace-nowrap" href="javascript:;" title="cancel">
-                                        <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                    </a> 
-                                </div>
-                            </td>
-                        </tr>
-
-
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->
@@ -294,11 +195,5 @@
             <div class="dark-mode-switcher__toggle border"></div>
         </div>
         <!-- END: Dark Mode Switcher-->
-        
-        <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
-        <!-- END: JS Assets-->
     </body>
-</html>
+{% endblock content %}

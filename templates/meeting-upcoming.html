@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-
-<html lang="en" class="light">
-    <!-- BEGIN: Head -->
-    <head>
-        <meta charset="utf-8">
-        <link href="dist/images/logo.png" rel="shortcut icon">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Vertex Engineering LLC">
-        <meta name="keywords" content="Vertex Engineering LLC">
-        <meta name="author" content="Vertex Engineering LLC">
-        <title>Vertex Engineering WLL</title>
-        <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
-        <!-- END: CSS Assets-->
-    </head>
-    <!-- END: Head -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
     <body class="py-5">
         <style>
             .form-control {
@@ -28,7 +14,7 @@
             }
             
         </style>
-        <?php include ('header.php'); ?>
+        {% include 'header.html' %}
         <!-- BEGIN: Content -->
     <div class="content">
             <div class="flex items-center mt-8">
@@ -182,11 +168,5 @@
             <div class="dark-mode-switcher__toggle border"></div>
         </div>
         <!-- END: Dark Mode Switcher-->
-        
-        <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
-        <!-- END: JS Assets-->
     </body>
-</html>
+{% endblock content %}

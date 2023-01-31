@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-
-<html lang="en" class="light">
-    <!-- BEGIN: Head -->
-    <head>
-        <meta charset="utf-8">
-        <link href="dist/images/logo.png" rel="shortcut icon">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Vertex Engineering LLC">
-        <meta name="keywords" content="Vertex Engineering LLC">
-        <meta name="author" content="Vertex Engineering LLC">
-        <title>Vertex Engineering WLL</title>
-        <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
-        <!-- END: CSS Assets-->
-    </head>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
     <!-- END: Head -->
     <body class="py-5">
-        <?php include ('header.php'); ?>
+        {% include 'header.html' %}
 <style>
    
     .head{
@@ -39,7 +26,7 @@
                                         <i data-lucide="pie-chart" class="w-10 h-10 text-pending"></i> 
                                         <div class="justify-start flex items-center text-slate-600 dark:text-slate-300"> </div>
                                         <div class="flex items-center justify-start mt-4">
-                                            <div class="relative text-2xl font-medium ml-0.5"> <span class="absolute text-xl font-medium top-0 left-0 -ml-0.5"></span> ABC International<br>4433 6688 / info@abcdintl.com</div>
+                                            <div class="relative text-2xl font-medium ml-0.5"> <span class="absolute text-xl font-medium top-0 left-0 -ml-0.5"></span>{{ meeting.Lead.Company }}<br>4433 6688 / info@abcdintl.com</div>
                                             <a class="text-slate-500 ml-4" href=""></a>
                                         </div>
                                         <!-- <div class="mt-4 text-slate-500 text-xs">Last updated 1 hour ago</div> -->
@@ -52,45 +39,45 @@
                                                 <div class="col-span-6 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Reference No</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">REF:12345</div>
+                                                        <div class="text-base">{{ meeting.Lead.Reference }}</div>
                                                         
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Salesman</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Ramshad Hassan<br>4466 7877<br>ramshad@vertex.com.qa</div>
+                                                        <div class="text-base">{{ meeting.Lead.Salesman.first_name }}<br>{{ meeting.Lead.Salesman.Mobile }}<br>{{ meeting.Lead.Salesman.email }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Company Name</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">XYZ International<br>4433 6688 / info@abcdintl.com</div>
+                                                        <div class="text-base">{{ meeting.Lead.Company }}<br>{{ meeting.Lead.Phone }} / {{ meeting.Lead.Email }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Time</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">10.00AM - 12.00PM</div>
+                                                        <div class="text-base">{{ meeting.From }} - {{ meeting.To }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head"> Date</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">12/3/2023</div>
+                                                        <div class="text-base">{{ meeting.AddedDate }}</div>
                                                         
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Mode of Meeting</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Online</div>
+                                                        <div class="text-base">{{ meeting.Mode }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Description</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Description Here
+                                                        <div class="text-base">{{ meeting.Description }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -170,19 +157,5 @@
         }
         
     </style>
-
-  
-        <!-- BEGIN: Dark Mode Switcher-->
-        <div data-url="top-menu-dark-regular-form.html" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
-            <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>
-            <div class="dark-mode-switcher__toggle border"></div>
-        </div>
-        <!-- END: Dark Mode Switcher-->
-        
-        <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
-        <!-- END: JS Assets-->
     </body>
-</html>
+{% endblock content %}

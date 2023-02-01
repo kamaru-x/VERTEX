@@ -54,45 +54,45 @@
                                                 <div class="col-span-6 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Reference No</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">REF:12345</div>
+                                                        <div class="text-base">{{ task.Lead.Reference }}</div>
                                                         
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Salesman</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Ramshad Hassan<br>4466 7877<br>ramshad@vertex.com.qa</div>
+                                                        <div class="text-base">{{ task.Lead.Salesman.first_name }}<br>{{ task.Lead.Salesman.Mobile }}<br>{{ task.Lead.Salesman.email }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Company Name</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">XYZ International<br>4433 6688 / info@abcdintl.com</div>
+                                                        <div class="text-base">{{ task.Lead.Company }}<br>{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Task Title</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Inventory Procurement</div>
+                                                        <div class="text-base">{{ task.Title }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Due Date</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">12/3/2023</div>
+                                                        <div class="text-base">{{ task.Due_Date }}</div>
                                                         
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Priority</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Medium</div>
+                                                        <div class="text-base">{{ task.Priority }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Description</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Description Here
+                                                        <div class="text-base">{{ task.Description }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,20 +126,21 @@
                     
                         <div class="post intro-y overflow-hidden box mt-5"><br><br>
                         
-                        <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal"><button class="btn btn-primary shadow-md mr-2">Add Update</button></a></div><br><br>
+                        <!-- <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal"><button class="btn btn-primary shadow-md mr-2">Add Update</button></a></div><br><br> -->
                         
                         
                         <div class="post__content tab-content">
+                        {% for replay in replayes %}
                             <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                                 <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description </div>
                                     <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-danger-soft px-3 py-1"><span style="font-weight:700;"> Reema</span> | 12/3/2023</div>              
+                                         <div class="text-base btn-rounded btn-danger-soft px-3 py-1"><span style="font-weight:700;"> Reema</span> | {{ replay.AddedDate }}</div>              
                                     </div>
 
                                     <div class="mt-5">
                                         <div class="editor">
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                            <p>{{ replay.Message }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,10 +149,12 @@
                                     <div class="mt-5">
                                        
                                         <div class="flex items-center mt-5">
+                                            {% for attach in replay.Attachments.all %}
                                             <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in mr-5">
-                                                        <img class="rounded-md" alt="" src="dist/images/preview-1.jpg">
-                                                        <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
-                                                    </div>
+                                                <img class="rounded-md" alt="" src="{{ attach.Attachment.url }}">
+                                                <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                                            </div>
+                                            {% endfor %}
 
                                     <div class="file">
                                         <a href="" class="">
@@ -183,124 +186,9 @@
                               </div>
                             </div>
                         </div>
+                    {% endfor %}
 
                         <!-- description -->
-
-                        <div class="post__content tab-content">
-                            <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
-                                <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                    <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description </div>
-                                    <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-success-soft px-3 py-1"><span style="font-weight:700;"> Replied By: Nadeera</span> | 12/3/2023</div>              
-                                    </div>
-
-                                    <div class="mt-5">
-                                        <div class="editor">
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
-                                    <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Files & Attachments </div>
-                                    <div class="mt-5">
-                                       
-                                        <div class="flex items-center mt-5">
-                                            <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in mr-5">
-                                                        <img class="rounded-md" alt="" src="dist/images/preview-1.jpg">
-                                                        <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> 
-                                                        </div>
-                                            </div>
-
-                                    <div class="file">
-                                        <a href="" class="">
-                                            <div><img src="dist/images/download.png"></div>
-                                        </a>
-                                    </div>
-
-                                    <div class="ml-4">
-                                        <a class="font-medium" href="">Sales Report</a> 
-                                        <div class="text-slate-500 text-xs mt-0.5">40 KB</div>
-                                    </div><br>
-
-                                    
-                                    <div class="dropdown ml-auto">
-                                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i> </a>
-                                        <div class="dropdown-menu w-40">
-                                            <ul class="dropdown-content">
-                                                <li>
-                                                    <a href="" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> Share File </a>
-                                                </li>
-                                                <li>
-                                                    <a href="" class="dropdown-item"> <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                 <!--  Reviews-->
-
-                    <div class="post intro-y overflow-hidden box mt-5"><br><br>
-                        <h2 style=" font-size: 30px; font-weight: 500; text-align: center; color: #1e40af; padding-top: 70px;">Reviews</h2>
-                        
-                        <div class="post__content tab-content">
-                            <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
-                                <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                    <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description </div>
-                                     <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-danger-soft px-3 py-1"><span style="font-weight:700;"> Sarin</span> | 12/3/2023</div>              
-                                    </div>   
-
-                                    <div class="mt-5">
-                                        <div class="editor">
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
-                                    <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Files & Attachments </div>
-                                    <div class="mt-5">
-                                       
-                                        <div class="flex items-center mt-5">
-                                            <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in mr-5">
-                                                        <img class="rounded-md" alt="" src="dist/images/preview-1.jpg">
-                                                        <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
-                                                    </div>
-
-                                    <div class="file">
-                                        <a href="" class="">
-                                            <div><img src="dist/images/download.png"></div>
-                                        </a>
-                                    </div>
-
-                                    <div class="ml-4">
-                                        <a class="font-medium" href="">Sales Report</a> 
-                                        <div class="text-slate-500 text-xs mt-0.5">40 KB</div>
-                                    </div><br>
-                                    
-                                    <div class="dropdown ml-auto">
-                                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i> </a>
-                                        <div class="dropdown-menu w-40">
-                                            <ul class="dropdown-content">
-                                                <li>
-                                                    <a href="" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> Share File </a>
-                                                </li>
-                                                <li>
-                                                    <a href="" class="dropdown-item"> <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
                     
         </div>

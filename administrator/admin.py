@@ -1,5 +1,5 @@
 from django.contrib import admin
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Task,Replays
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Task,Replays,Salesman_Report
 
 # Register your models here.
 
@@ -12,3 +12,4 @@ admin.site.register(Attachments)
 admin.site.register(Proposal)
 admin.site.register(Task)
 admin.site.register(Replays)
+admin.site.register(Salesman_Report)

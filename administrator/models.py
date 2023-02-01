@@ -182,3 +182,24 @@ class Replays(models.Model):
 
     def __str__(self):
         return self.Message
+
+#################################################################################
+
+class Review(models.Model):
+    AddedDate = models.DateField(null=True)
+    Task = models.ForeignKey(Task,on_delete=models.DO_NOTHING)
+    Message = models.TextField()
+    Attachments = models.ManyToManyField(Attachments)
+
+    def __str__(self):
+        return self.Message
+
+#################################################################################
+
+class Salesman_Report(models.Model):
+    Salesman = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    Pending_Tasks = models.IntegerField(default=0)
+    Completed_Tasks = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.Salesman.first_name

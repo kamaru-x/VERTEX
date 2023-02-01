@@ -153,7 +153,11 @@
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Status</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">{{ lead.State }}</div>
+                                                        {% if lead.State == '1' %}
+                                                            <div class="text-base">Hot</div>
+                                                        {% else %}
+                                                            <div class="text-base">Cold</div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
 

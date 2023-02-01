@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report
+from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
 
@@ -169,7 +170,7 @@ def create_task(request):
 
         ld = Lead.objects.get(id=lead)
 
-        data = Task(Date=d,AddedBy=user,Ip=ip,Lead=ld,Title=title,Priority=priority,Due_Date=date,Descrition=description)
+        data = Task(Date=d,AddedBy=user,Ip=ip,Lead=ld,Title=title,Priority=priority,Due_Date=date,Description=description)
         data.save()
 
         ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
@@ -521,3 +522,86 @@ def previous_meetings(request):
     return render(request,'meeting-previous.html',{'previous':previous})
 
 #################################################################################
+
+@login_required
+def meeting_staff_list(request):
+    salesmans = User.objects.filter(is_salesman=True)
+    return render(request,'meeting-staff.html',{'salesmans':salesmans})
+
+#################################################################################
+
+@login_required
+def meeting_staff_view(request,uid):
+    salesman = User.objects.get(id=uid)
+    schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate > dt.today() :
+            upcoming.append(schedule)
+    context = {
+        'salesman':salesman,
+        'previous' : previous,
+        'upcoming' : upcoming,
+    }
+    return render(request,'meeting-staff-view.html',context)
+
+#################################################################################
+
+def task_staff(request):
+    salesmans = User.objects.filter(is_salesman=True)
+    return render(request,'task-staff.html',{'salesmans':salesmans})
+
+#################################################################################
+
+def task_staff_view(request,uid):
+    salesman = User.objects.get(id=uid)
+    pending = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=0)
+    completed = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=1)
+    
+    context = {
+        'salesman' : salesman,
+        'pending' : pending,
+        'completed' : completed,
+    }
+
+    return render(request,'task-staff-view.html',context)
+
+#################################################################################
+
+@login_required
+def salesman_report(request):
+    return render(request,'salesman-report.html')
+
+#################################################################################
+
+@login_required
+def salestarget(request):
+    return render(request,'salestarget-report.html')
+
+#################################################################################
+
+@login_required
+def target_report(request):
+    return render(request,'target-report.html')
+
+#################################################################################
+
+@login_required
+def top_customers(request):
+    return render(request,'top-customers.html')
+
+#################################################################################
+
+@login_required
+def proposal_report(request):
+    return render(request,'report-proposal.html')
+
+#################################################################################
+
+@login_required
+def total_propose(request):
+    return render(request,'report-proposal-total.html')

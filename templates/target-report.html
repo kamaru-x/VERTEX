@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-
-<html lang="en" class="light">
-    <!-- BEGIN: Head -->
-    <head>
-        <meta charset="utf-8">
-        <link href="dist/images/logo.png" rel="shortcut icon">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Vertex Engineering LLC">
-        <meta name="keywords" content="Vertex Engineering LLC">
-        <meta name="author" content="Vertex Engineering LLC">
-        <title>Vertex Engineering WLL</title>
-        <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
-        <!-- END: CSS Assets-->
-    </head>
-    <!-- END: Head -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
     <body class="py-5">
-        <?php include ('header.php'); ?>
-      
+        {% include 'header.html' %}  
      <style>
             .box{
                 box-shadow: none;
@@ -28,10 +13,7 @@
     <div class="content">
 
               <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Sales Target Report</h2>
-         <!--   <div class="intro-y box py-10 sm:py-20 mt-5">
-        <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
-        color: #1e40af;">Add Category</h2>
-    </div> -->
+         
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
             
@@ -40,30 +22,7 @@
                 <button class="btn btn-primary shadow-md mr-2">
                     <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export to Excel
                 </button>
-              <!--   <button class="btn btn-primary shadow-md mr-2">
-                    <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export to PDF
-                </button> -->
-                <!-- <div class="dropdown">
-                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                        <span class="w-5 h-5 flex items-center justify-center">
-                            <i class="w-4 h-4" data-lucide="plus"></i>
-                        </span>
-                    </button>
-                    <div class="dropdown-menu w-40">
-                        <ul class="dropdown-content">
-                            <li>
-                                <a href="" class="dropdown-item">
-                                    <i data-lucide="arrow-left-right" class="w-4 h-4 mr-2"></i> Change Status
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="dropdown-item">
-                                    <i data-lucide="bookmark" class="w-4 h-4 mr-2"></i> Bookmark
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div> -->
+              
             </div>
         </div>
         <!-- BEGIN: Data List -->
@@ -71,16 +30,15 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
-                        <!-- <th class="whitespace-nowrap">
-                            <input class="form-check-input" type="checkbox">
-                        </th> -->
+                       
                         <th class="whitespace-nowrap">SALESMAN</th>
                         <th class="whitespace-nowrap">GIVEN TARGET</th>
                         <th class="text-center whitespace-nowrap">ACHIEVED TARGET</th>
                         <th class="whitespace-nowrap" style="
                             text-align: center;">PENDING TARGET</th>
                         <th class="whitespace-nowrap">
-                            <div class="pr-16">PERCENTAGE OF ACHIEVEMENT</div>
+                            <div class="pr-16" style="
+                            text-align: center;">PERCENTAGE OF ACHIEVEMENT</div>
                         </th>
                         
                     </tr>
@@ -106,7 +64,7 @@
                                 <div class="pr-16">100,000</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap">70%</div>
+                             <div class="whitespace-nowrap text-center">70%</div>
                                    
                             </td>
                             
@@ -133,7 +91,7 @@
                                 <div class="pr-16">100,000</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap w-60">70% </div>
+                             <div class="whitespace-nowrap text-center">70% </div>
                                     
                             </td>
                            
@@ -160,7 +118,7 @@
                                 <div class="pr-16">100,000</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap">70% 
+                             <div class="whitespace-nowrap text-center">70% 
                              </div>
                                    
                             </td>
@@ -188,7 +146,7 @@
                                 <div class="pr-16">100,000</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap">70% 
+                             <div class="whitespace-nowrap text-center">70% 
                              </div>
                                    
                             </td>
@@ -283,11 +241,5 @@
             <div class="dark-mode-switcher__toggle border"></div>
         </div>
         <!-- END: Dark Mode Switcher-->
-        
-        <!-- BEGIN: JS Assets-->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
-        <!-- END: JS Assets-->
     </body>
-</html>
+{% endblock content %}

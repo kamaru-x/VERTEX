@@ -12,7 +12,9 @@ urlpatterns = [
     path('completed-task/',views.completed_task,name='completed-task'),
     path('edit-task/<int:tid>/',views.edit_task,name='edit-task'),
     path('pending-task/<int:tid>/',views.view_pending_task,name='pending-task-view'),
-    path('completed-task/<int:id>/',views.view_completed_task,name='completed-task-view'),
+    path('completed-task/<int:tid>/',views.view_completed_task,name='completed-task-view'),
+    path('task-staff/',views.task_staff,name='task-staff'),
+    path('task-staff/<int:uid>/',views.task_staff_view,name='task-staff-view'),
 
     path('clients/',views.client_list,name='clients'),
     path('client-view/<int:cid>/',views.client_view,name='client-view'),
@@ -24,4 +26,13 @@ urlpatterns = [
 
     path('upcomin-meetings/',views.upcoming_meetings,name='upcoming-meetings'),
     path('previous-meetings/',views.previous_meetings,name='previous-meetings'),
+    path('meeting-staff-list/',views.meeting_staff_list,name='meeting-staff-list'),
+    path('meeting-staff-view/<int:uid>/',views.meeting_staff_view,name='meeting-staff-view'),
+
+    path('salesman-report/',views.salesman_report,name='salesman-report'),
+    path('salestarget/',views.salestarget,name='sales-target'),
+    path('target-report/',views.target_report,name='target-report'),
+    path('top-customers/',views.top_customers,name='top-customers'),
+    path('proposal_report/',views.proposal_report,name='proposal_report'),
+    path('total-proposal/',views.total_propose,name='total-propose')
 ]

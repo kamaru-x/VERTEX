@@ -66,34 +66,35 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for task in tasks %}
                         <tr class="intro-x">
                             
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                 </div>
                             </td>
                             <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ task.Lead.Reference }}</a>
                                  
                             </td>
                            
                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.email }}</div>
                             </td>
                             <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
+                                <div class="pr-16">{{ task.Title }}</div>
                             </td>
 
                             <td class="w-40  text-warning">
-                                <div class="pr-16">Medium</div>
+                                <div class="pr-16">{{ task.Priority }}</div>
                             </td>
 
                              <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
+                                     {{ task.Completed_Date }}
                                 </div>
                             </td>
                             
@@ -108,140 +109,8 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-
-                            <td class="w-40  text-danger">
-                                <div class="pr-16">High</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                   
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-completed.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                           
-                            <td class="w-40  text-success">
-                                <div class="pr-16">Normal</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                   
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-completed.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                            
-                           <td class="w-40  text-success">
-                                <div class="pr-16">Normal</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                  
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-completed.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                    
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-         
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->

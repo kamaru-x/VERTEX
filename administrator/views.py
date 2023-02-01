@@ -40,7 +40,7 @@ def add_category(request):
     }
 
     if request.method == 'POST':
-        date = datetime.date.today()
+        date = dt.today()
         user = request.user.id
         ip = setip(request)
         name = request.POST.get('name')
@@ -104,7 +104,7 @@ def add_product(request):
 
     categories = Category.objects.all()
     r = Product.objects.last()
-    date = datetime.date()
+    date = dt.today()
     user = request.user.id
     ip = setip(request)
 

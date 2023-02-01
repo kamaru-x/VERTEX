@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays
 from datetime import date as dt
 from administrator.views import setip
 
@@ -190,7 +190,32 @@ def create_task(request):
 
 @login_required
 def pending_task(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(Task_Status=0)
+    user = request.user.id
+    ip = setip(request)
+    d = dt.today()
+    if request.method == 'POST' :
+        tid = request.POST.get('taskid')
+        task = Task.objects.get(id=tid)
+        date = request.POST.get('date')
+        description = request.POST.get('update-description')
+        task.Task_Status = 1
+        task.Completed_Date = d
+        task.save()
+
+        data = Replays(Date=d,AddedBy=user,Ip=ip,Task=task,Message=description,AddedDate=date)
+        data.save()
+
+        ld = Replays.objects.filter(Task=task).filter(AddedBy=user).last()
+        attachment = request.FILES.getlist('attachment')
+        for a in attachment:
+            attach = Attachments(Attachment=a,Name='filename')
+            attach.save()
+            ld.Attachments.add(attach)
+            ld.save()
+        return redirect('pending-task')
+        
+
     context = {
         'tasks' : tasks,
     }
@@ -208,7 +233,76 @@ def completed_task(request):
 @login_required
 def edit_task(request,tid):
     task = Task.objects.get(id=tid)
-    return render(request,'task-edit.html',{'task':task})
+    leads = Lead.objects.all()
+    user = request.user.id
+    if request.method == 'POST':
+        lead = request.POST.get('lead')
+        ld = Lead.objects.get(id=lead)
+
+        task.Lead = ld
+        task.Title = request.POST.get('title')
+        task.Priority = request.POST.get('priority')
+        task.Due_Date = request.POST.get('date')
+        task.Descrition = request.POST.get('description')
+
+        ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
+        attachment = request.FILES.getlist('attach')
+        for a in attachment:
+            attach = Attachments(Attachment=a,Name='filename')
+            attach.save()
+            ls.Attachment.add(attach)
+            ls.save()
+        return redirect('create-task')
+    context = {
+        'leads' : leads,
+        'task' :task,
+    }
+    return render(request,'task-edit.html',context)
+
+#################################################################################
+
+@login_required
+def view_pending_task(request,tid):
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    task = Task.objects.get(id=tid)
+    replayes = Replays.objects.filter(Task=task)
+
+    if request.POST.get('date'):
+        date = request.POST.get('date')
+        description = request.POST.get('update-description')
+
+        data = Replays(Date=d,AddedBy=user,Ip=ip,Task=task,Message=description,AddedDate=date)
+        data.save()
+
+        ld = Replays.objects.filter(Task=task).filter(AddedBy=user).last()
+        attachment = request.FILES.getlist('attachment')
+        for a in attachment:
+            attach = Attachments(Attachment=a,Name='filename')
+            attach.save()
+            ld.Attachments.add(attach)
+            ld.save()
+        return redirect('.')
+
+    context = {
+        'task' : task,
+        'replayes' : replayes
+    }
+
+    return render(request,'view-task-pending.html',context)
+
+#################################################################################
+
+@login_required
+def view_completed_task(request,tid):
+    task = Task.objects.get(id=tid)
+    replayes = Replays.objects.filter(Task=task)
+    context = {
+        'task' : task,
+        'replayes' : replayes
+    }
+    return render(request,'view-task-completed.html',context)
 
 #################################################################################
 
@@ -393,5 +487,37 @@ def view_project(request,pid):
         'proposal' : proposal,
     }
     return render(request,'project-view.html',context)
+
+#################################################################################
+
+@login_required
+def upcoming_meetings(request):
+    schedules = Lead_Schedule.objects.all().order_by('AddedDate')
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate > dt.today() :
+            upcoming.append(schedule)
+    return render(request,'meeting-upcoming.html',{'upcoming':upcoming})
+
+#################################################################################
+
+@login_required
+def previous_meetings(request):
+    schedules = Lead_Schedule.objects.all().order_by('-AddedDate')
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate > dt.today() :
+            upcoming.append(schedule)    
+    return render(request,'meeting-previous.html',{'previous':previous})
 
 #################################################################################

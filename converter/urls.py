@@ -11,6 +11,8 @@ urlpatterns = [
     path('pending-task/',views.pending_task,name='pending-task'),
     path('completed-task/',views.completed_task,name='completed-task'),
     path('edit-task/<int:tid>/',views.edit_task,name='edit-task'),
+    path('pending-task/<int:tid>/',views.view_pending_task,name='pending-task-view'),
+    path('completed-task/<int:id>/',views.view_completed_task,name='completed-task-view'),
 
     path('clients/',views.client_list,name='clients'),
     path('client-view/<int:cid>/',views.client_view,name='client-view'),
@@ -18,5 +20,8 @@ urlpatterns = [
     path('accept/<int:lid>/',views.accept,name='accept'),
 
     path('projects/',views.projects,name='projects'),
-    path('projects/<int:pid>/',views.view_project,name='view-project')
+    path('projects/<int:pid>/',views.view_project,name='view-project'),
+
+    path('upcomin-meetings/',views.upcoming_meetings,name='upcoming-meetings'),
+    path('previous-meetings/',views.previous_meetings,name='previous-meetings'),
 ]

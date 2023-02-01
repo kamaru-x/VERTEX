@@ -45,31 +45,30 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for u in upcoming %}
                                                      <tr>
-                                                        <td>{{ u.AddedDate | date:"d M Y" }}</td>
+                                                        <td>1/12/2023</td>
                                                          <td class="w-60 text-primary">
-                                                            <a href="meeting-upcoming-details.php" class="font-medium whitespace-nowrap">{{ u.Lead.Company }}</a>
-                                                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Phone }} / {{ u.Lead.Email }}</div>
+                                                            <a href="meeting-upcoming-details.php" class="font-medium whitespace-nowrap">ABCD International</a>
+                                                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
                                                             
                                                         </td>
                                                          <td class="w-60">
-                                                        <a href="meeting-upcoming-details.php" class="font-medium whitespace-nowrap text-primary">{{ u.Lead.Salesman.first_name }}</a>
-                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.Mobile }}</div>
-                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.email }}</div>
-                                                        </td>
-                                                        <td>{{ u.Mode }}</td>
-                                                        <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
-                                                        <td class="table-report__action">
-                                                        <div class="flex justify-center items-center">
+                                                        <a href="meeting-upcoming-details.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
+                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
+                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                                    </td>
+                                                        <td>Telephone</td>
+                                                        <td class="text-primary">10:00 AM - 12.00PM</td>
+                                                    <td class="table-report__action">
+                                                    <div class="flex justify-center items-center">
                                                      
                                                         <a title="Delete" class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                                             <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
                                                         </a>
-                                                        </div>
-                                                        </td>   
+                                                    </div>
+                                                </td>
+                                                        
                                                     </tr>
-                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>

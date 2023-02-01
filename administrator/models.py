@@ -159,10 +159,26 @@ class Task(models.Model):
     Title = models.CharField(max_length=50)
     Priority = models.CharField(max_length=25)
     Due_Date = models.DateField()
-    Descrition = models.TextField()
+    Description = models.TextField()
     Attachment = models.ManyToManyField(Attachments)
     Task_Status = models.IntegerField(default=0)
     Completed_Date = models.DateField(null=True)
 
     def __str__(self):
         return self.Title
+
+#################################################################################
+
+class Replays(models.Model):
+    Date = models.DateTimeField()
+    Status = models.IntegerField(default=1)
+    AddedBy = models.IntegerField(default=0)
+    Ip = models.GenericIPAddressField(null=True,blank=True)
+
+    AddedDate = models.DateField(null=True)
+    Task = models.ForeignKey(Task,on_delete=models.DO_NOTHING)
+    Message = models.TextField()
+    Attachments = models.ManyToManyField(Attachments)
+
+    def __str__(self):
+        return self.Message

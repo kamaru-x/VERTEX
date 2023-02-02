@@ -19,7 +19,7 @@ def setip(request):
 def setcount():
     categories = Category.objects.all()
     for category in categories:
-        count = Product.objects.filter(Category=category).count()
+        count = Product.objects.filter(Category=category).filter(Status=1).count()
         category.Products = count
         category.save()
 
@@ -48,7 +48,7 @@ def add_category(request):
         value = Category(Date=date,AddedBy=user,Ip=ip,Name=name,Reference=refer)
         value.save()
         messages.success(request,'New category added successfully')
-        return redirect('add-category')
+        return redirect('list-category')
 
     return render(request,'category-add.html',context)
 
@@ -57,6 +57,14 @@ def add_category(request):
 @login_required
 def list_category(request):
     categories = Category.objects.filter(Status=1)
+
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        category = Category.objects.get(id=id)
+        category.Status = 0
+        category.save()
+        return redirect('list-category')
+
     context = {
         'categories' : categories
     }
@@ -82,20 +90,11 @@ def edit_category(request,cid):
     if request.method == 'POST':
         category.Name = request.POST.get('name')
         category.save()
-        return redirect('.')
+        return redirect('/edit-category/%s' %category.id)
     context = {
         'category':category,
     }
     return render(request,'category-edit.html',context)
-
-#################################################################################
-
-@login_required
-def delete_category(request,cid):
-    category = Category.objects.get(id=cid)
-    category.Status = 0
-    category.save()
-    return redirect('list-category')
 
 #################################################################################
 
@@ -118,15 +117,20 @@ def add_product(request):
         name = request.POST.get('name')
         price = request.POST.get('price')
 
-        c = Category.objects.get(id=category)
+        try:
+            c = Category.objects.get(id=category)
+        except:
+            messages.error(request,'no category selected')
+            return redirect('.')
 
         value = Product(Date=date,AddedBy=user,Ip=ip,Category=c,Name=name,Price=price,Reference=refer)
         value.save()
         c.Products = c.Products+1
         c.save()
+        setcount()
 
         messages.success(request,'new product added successfully')
-        return redirect('add-product')
+        return redirect('list-product')
     
     context = {
         'refer':refer,
@@ -140,6 +144,13 @@ def add_product(request):
 @login_required
 def list_products(request):
     products = Product.objects.filter(Status=1)
+    if request.method == 'POST' :
+        id = request.POST.get('id')
+        product = Product.objects.get(id=id)
+        product.Status = 0
+        product.save()
+        setcount()
+        return redirect('list-product')
     context = {
         'products' : products
     }
@@ -167,7 +178,7 @@ def edit_product(request,pid):
         setcount()
 
         messages.success(request,'product details edited successfully')
-        return redirect('.')
+        return redirect('list-product')
 
     context = {
         'categories' : categories,
@@ -175,15 +186,6 @@ def edit_product(request,pid):
     }
 
     return render(request,'edit-product.html',context)
-
-#################################################################################
-
-@login_required
-def delete_product(request,pid):
-    product = Product.objects.get(id=pid)
-    product.Status = 0
-    product.save()
-    return redirect('list-product')
 
 #################################################################################
 
@@ -206,7 +208,7 @@ def add_salesman(request):
         user.save()
 
         messages.success(request,'new supervisor created successfully')
-        return redirect('add-salesman')
+        return redirect('list-salesman')
 
     return render(request,'salesman-add.html')
 
@@ -214,7 +216,13 @@ def add_salesman(request):
 
 @login_required
 def list_salesman(request):
-    salesmans = User.objects.exclude(is_superuser=True)
+    salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True)
+    if request.method == 'POST' :
+        id = request.POST.get('id')
+        salesman = User.objects.get(id=id)
+        salesman.is_active = False
+        salesman.save()
+        return redirect('list-salesman')
     context = {
         'salesmans':salesmans
     }
@@ -235,12 +243,19 @@ def edit_salesman(request,uid):
         salesman.username = request.POST.get('email')
         salesman.save()
         messages.success(request,'salesman detail edited')
-        return redirect('.')
+        return redirect('/salesman-view/%s' %salesman.id)
 
     context = {
         'salesman':salesman
     }
     return render(request,'edit-salesman.html',context)
+
+#################################################################################
+
+@login_required
+def salesman_view(request,sid):
+    salesman = User.objects.get(id=sid)
+    return render(request,'salesman-view.html')
 
 #################################################################################
 

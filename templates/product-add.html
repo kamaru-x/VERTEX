@@ -34,6 +34,7 @@
                         <label>Select Category</label>
                         <div class="mt-2">
                             <select data-placeholder="select Category" name="category" class="tom-select w-full">
+                                <option value="0">select a category</option>
                                 {% for category in categories %}
                                     <option value="{{category.id}}">{{category}}</option>
                                 {% endfor %}
@@ -43,11 +44,11 @@
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-2" class="form-label">Enter Product Title</label>
-                    <input id="input-wizard-2" type="text" class="form-control" name="name" placeholder="Name">
+                    <input id="input-wizard-2" type="text" class="form-control" name="name" placeholder="Product Name" required>
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-3" class="form-label">Enter Product Price</label>
-                    <input id="input-wizard-3" type="text" class="form-control" name="price" placeholder="Price">
+                    <input id="input-wizard-3" type="text" class="form-control" name="price" placeholder="Product Price" required>
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Product Ref.</label>

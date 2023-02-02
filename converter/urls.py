@@ -34,5 +34,5 @@ urlpatterns = [
     path('target-report/',views.target_report,name='target-report'),
     path('top-customers/',views.top_customers,name='top-customers'),
     path('proposal_report/',views.proposal_report,name='proposal_report'),
-    path('total-proposal/',views.total_propose,name='total-propose')
+    path('total-proposal/',views.total_propose,name='total-propose'),
 ]

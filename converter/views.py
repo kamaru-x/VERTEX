@@ -605,3 +605,5 @@ def proposal_report(request):
 @login_required
 def total_propose(request):
     return render(request,'report-proposal-total.html')
+
+#################################################################################

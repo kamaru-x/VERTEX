@@ -15,6 +15,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if clients %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -80,6 +81,9 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <h1></h1>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">

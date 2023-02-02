@@ -99,8 +99,8 @@ class Lead_Update(models.Model):
     Description = models.TextField()
     Attachments = models.ManyToManyField(Attachments)
 
-    def __str__(self):
-        return self.Lead.Company
+    # def __str__(self):
+    #     return self.Lead.Company
 
 #################################################################################
 
@@ -124,8 +124,8 @@ class Lead_Schedule(models.Model):
     Attachment = models.ManyToManyField(Attachments)
 
 
-    def __str__(self):
-        return self.Lead.Company
+    # def __str__(self):
+    #     return self.Lead.Company
 
 #################################################################################
 

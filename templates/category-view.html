@@ -176,6 +176,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if products %}
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -219,9 +220,12 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+            <h1>No products in this category</h1>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+        <!-- <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
                     <li class="page-item">
@@ -267,7 +271,7 @@
                 <option>35</option>
                 <option>50</option>
             </select>
-        </div>
+        </div> -->
         <!-- END: Pagination -->
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->

@@ -14,7 +14,7 @@
                                 <h2 class="text-lg font-medium truncate mr-5">
                                     General Summary
                                 </h2>
-                                <a href="" class="ml-auto flex items-center text-danger"> <i data-lucide="alert-triangle" class="w-4 h-4 mr-3"></i> You have 3 meetings today </a>
+                                <a href="" class="ml-auto flex items-center text-danger"> <i data-lucide="alert-triangle" class="w-4 h-4 mr-3"></i> You have {{ meetings_today }} meetings today </a>
                                 <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data </a>
                             </div>
                             <div class="grid grid-cols-12 gap-6 mt-5">
@@ -28,7 +28,7 @@
                                                     <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="40% Failed" style="float: left;"> 171 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">471</div>
+                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_leads }}</div>
                                             <div class="text-base text-slate-500 mt-1">Total Leads</div>
                                             <!-- <div class="pt-3 pb-5" style="width:100%;">
                                                 <div class="alert-success p-1" style="width:60%; float: left; text-align: center;" title="60% Success">300</div>
@@ -47,7 +47,7 @@
                                                     <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="13% Failed" style="float: left;"> 21 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">121</div>
+                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_opportunities }}</div>
                                             <div class="text-base text-slate-500 mt-1">Total Opportunities</div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                                     <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="10% Failed" style="float: left;"> 10 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">110</div>
+                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_proposals }}</div>
                                             <div class="text-base text-slate-500 mt-1">Total Proposals</div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                                     <div class="report-box__indicator bg-success tooltip cursor-pointer" title="22 new this month"> 22 new this month <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">102</div>
+                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_clients }}</div>
                                             <div class="text-base text-slate-500 mt-1">Total Clients</div>
                                         </div>
                                     </div>

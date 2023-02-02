@@ -3,6 +3,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments
+from datetime import date
 
 # Create your views here.
 
@@ -29,7 +31,21 @@ def signin(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
-    return render(request,'index.html')
+    total_leads = Lead.objects.all().count()
+    total_opportunities = Lead.objects.filter(Lead_Status=1).count()
+    total_proposals = Lead.objects.filter(Lead_Status=2).count()
+    total_clients = Lead.objects.filter(Lead_Status=3).count()
+    meetings_today = Lead_Schedule.objects.filter(AddedDate=date.today()).count()
+
+    context = {
+        'total_leads' : total_leads,
+        'total_opportunities' : total_opportunities,
+        'total_proposals' : total_proposals,
+        'total_clients' : total_clients,
+        'meetings_today' : meetings_today
+    }
+
+    return render(request,'index.html',context)
 
 #################################################################################
 

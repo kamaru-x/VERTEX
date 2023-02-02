@@ -35,4 +35,6 @@ urlpatterns = [
     path('top-customers/',views.top_customers,name='top-customers'),
     path('proposal_report/',views.proposal_report,name='proposal_report'),
     path('total-proposal/',views.total_propose,name='total-propose'),
+
+    path('previous-meeting-details/<int:mid>/',views.previous_meeting_details,name='p-meeting-d'),
 ]

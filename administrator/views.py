@@ -76,6 +76,10 @@ def list_category(request):
 def view_category(request,cid):
     category = Category.objects.get(id=cid)
     products = Product.objects.filter(Category=category).filter(Status=1)
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        product = Product.objects.get(id=id)
+        return redirect('.')
     context = {
         'category' : category,
         'products' : products,
@@ -447,8 +451,3 @@ def opertunity_convertion(request,lid):
     return redirect('list-lead')
 
 #################################################################################
-
-@login_required
-def previous_meeting_details(request,mid):
-    meeting = Lead_Schedule.objects.get(id=mid)
-    return render(request,'meeting-previous-details.html',{'meeting':meeting})

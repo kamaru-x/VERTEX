@@ -157,7 +157,7 @@ class Task(models.Model):
 
     Lead = models.ForeignKey(Lead,on_delete=models.SET_NULL,null=True)
     Title = models.CharField(max_length=50)
-    Priority = models.CharField(max_length=25)
+    Priority = models.CharField(max_length=25,null=True)
     Due_Date = models.DateField()
     Description = models.TextField()
     Attachment = models.ManyToManyField(Attachments)

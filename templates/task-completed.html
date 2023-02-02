@@ -46,7 +46,8 @@
                 </div> -->
             </div>
         </div>
-    <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+        {% if tasks %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
@@ -114,7 +115,7 @@
             </table>
         </div>
         <!-- END: Data List -->
-        
+        {% endif %}
     </div>
     
     </div>

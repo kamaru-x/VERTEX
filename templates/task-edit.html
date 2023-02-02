@@ -42,7 +42,7 @@
                
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Task Title</label>
-                    <input id="input-wizard-4" value="{{ task.Title }}" name="title" type="text" class="form-control" placeholder="Task Title">
+                    <input id="input-wizard-4" value="{{ task.Title }}" name="title" type="text" class="form-control" placeholder="Task Title" required>
                 </div>
 
             
@@ -66,13 +66,13 @@
                      <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
                        <i data-lucide="calendar" class="w-4 h-4"></i>
                     </div>
-                      <input name="date" type="date" value="{{ task.Due_Date }}" class="pl-12" data-single-mode="true" style="width: 100%!important;">
+                      <input required name="date" type="date" value="{{ task.Due_Date | date:'Y-M-d' }}" class="pl-12" data-single-mode="true" style="width: 100%!important;">
                   </div>
                 </div>
 
                  <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Description</label>
-                    <textarea name="description" id="update-profile-form-5" class="form-control" placeholder="Description">{{ task.Descrition }}</textarea>
+                    <textarea name="description" id="update-profile-form-5" class="form-control" placeholder="Description" required>{{ task.Description }}</textarea>
                 </div>
 
 
@@ -85,7 +85,7 @@
                 
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                     <!-- <button class="btn btn-secondary w-24">Add</button> -->
-                    <button type="submit" class="btn btn-primary w-40 ml-2">Create Task</button>
+                    <button type="submit" class="btn btn-primary w-40 ml-2">Edit Task</button>
                 </div>
             </div>
             </form>

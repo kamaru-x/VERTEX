@@ -28,7 +28,7 @@
                            
                         </div>
                     </div>
-                    <div class="mt-6 lg:mt-0 flex-1 px-5 border-t lg:border-0 border-slate-200/60 dark:border-darkmode-400 pt-5 lg:pt-0">
+                    <!-- <div class="mt-6 lg:mt-0 flex-1 px-5 border-t lg:border-0 border-slate-200/60 dark:border-darkmode-400 pt-5 lg:pt-0">
                         <div class="font-medium text-center lg:text-left lg:mt-5">Sales Growth</div>
                         <div class="flex items-center justify-center lg:justify-start mt-2">
                             <div class="mr-2 w-20 flex"> USP: <span class="ml-3 font-medium text-success">+23%</span> </div>
@@ -46,12 +46,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                
             </div>
             <!-- END: Profile Info -->
              <!-- BEGIN: Data List -->
+        {% if upcoming %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Upcoming Meetings</h2>
             <table class="table table-report -mt-2">
@@ -96,9 +97,11 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
 
              <!-- BEGIN: Data List -->
+        {% if previous %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Previous Meetings</h2>
             <table class="table table-report -mt-2">
@@ -152,6 +155,7 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
            
         <!-- END: Content -->

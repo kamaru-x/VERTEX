@@ -24,6 +24,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if tasks %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -88,8 +89,9 @@
                                     <a class="flex items-center text-success whitespace-nowrap mr-5" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Mark As Completed">
                                         <i onclick="call('{{task.id}}')" data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
                                     </a>
-                                    
-                                  
+                                    <a class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{category.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -97,12 +99,29 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No pending tasks</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
         <!-- END: Data List -->
 
 
 
 
         <!-- BEGIN: Pagination -->
+        {% if tasks %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -150,6 +169,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
     </div>
     
@@ -208,6 +228,10 @@
     <script>
         function call(id){
             $('#taskid').val(id);
+        }
+
+        function pop(id){
+            $('#id').val(id);
         }
     </script>
         <!-- BEGIN: Dark Mode Switcher-->

@@ -55,6 +55,7 @@
                 </div>
                
             </div>
+        {% if pending %}
             <!-- END: Profile Info -->
              <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af; padding-top: 50px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Pending Task</h2>
              <!-- BEGIN: Data List -->
@@ -117,9 +118,11 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
 
          <!-- END: Profile Info -->
+        {% if completed %}
              <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af; padding-top: 50px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Completed Task</h2>
              <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
@@ -176,6 +179,7 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
            
         <!-- END: Content -->

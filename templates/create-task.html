@@ -31,7 +31,8 @@
                 <div class="intro-y col-span-12 sm:col-span-6">
                    <label>Select Lead</label>
                         <div class="mt-2">
-                            <select data-placeholder="Select Category" name="lead" class="tom-select w-full">
+                            <select data-placeholder="Select Category" name="lead" class="tom-select w-full" required>
+                                <option value=" ">select a lead</option>
                                 {% for lead in leads %}
                                     <option value="{{ lead.id }}">{{ lead.Company }} ({{ lead.Reference }})</option>
                                 {% endfor %}
@@ -41,7 +42,7 @@
                
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Task Title</label>
-                    <input id="input-wizard-4" name="title" type="text" class="form-control" placeholder="Task Title">
+                    <input id="input-wizard-4" name="title" type="text" class="form-control" placeholder="Task Title" required>
                 </div>
 
             
@@ -49,7 +50,8 @@
                 <div class="intro-y col-span-12 sm:col-span-6">
                    <label>Select Priority</label>
                         <div class="mt-2">
-                            <select data-placeholder="Select Priority" name="priority" class="tom-select w-full">
+                            <select data-placeholder="Select Priority" name="priority" class="tom-select w-full" required>
+                                <option>None</option>
                                 <option>Normal</option>
                                 <option>Medium</option>
                                 <option>High</option>
@@ -64,13 +66,13 @@
                      <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
                        <i data-lucide="calendar" class="w-4 h-4"></i>
                     </div>
-                      <input name="date" type="date" class="pl-12" data-single-mode="true" style="width: 100%!important;">
+                      <input name="date" type="date" class="pl-12" data-single-mode="true" style="width: 100%!important;" required>
                   </div>
                 </div>
 
                  <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Description</label>
-                    <textarea name="description" id="update-profile-form-5" class="form-control" placeholder="Description"></textarea>
+                    <textarea name="description" id="update-profile-form-5" class="form-control" placeholder="Description" required></textarea>
                 </div>
 
 

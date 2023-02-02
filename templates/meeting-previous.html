@@ -30,6 +30,7 @@
         color: #1e40af;">Previous Meetings</h2>
          <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br>
         
+        {% if previous %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                     <div class="col-span-12">
@@ -70,7 +71,7 @@
                                                          Target Achieved
                                                         </td>
                                                         <td class="table-report__action">
-                                                        <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
+                                                        <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                                         </a>
                                                         <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
@@ -85,6 +86,22 @@
                 
             </div>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
     <!-- END: Wizard Layout -->
     </div>

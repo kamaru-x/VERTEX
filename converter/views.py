@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review
 from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
@@ -168,7 +168,10 @@ def create_task(request):
         date = request.POST.get('date')
         description = request.POST.get('description')
 
-        ld = Lead.objects.get(id=lead)
+        try:
+            ld = Lead.objects.get(id=lead)
+        except:
+            return redirect('.')
 
         data = Task(Date=d,AddedBy=user,Ip=ip,Lead=ld,Title=title,Priority=priority,Due_Date=date,Description=description)
         data.save()
@@ -180,7 +183,7 @@ def create_task(request):
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
-        return redirect('create-task')
+        return redirect('pending-task')
 
     context = {
         'leads' : leads
@@ -204,10 +207,10 @@ def pending_task(request):
         task.Completed_Date = d
         task.save()
 
-        data = Replays(Date=d,AddedBy=user,Ip=ip,Task=task,Message=description,AddedDate=date)
+        data = Review(Task=task,Message=description,AddedDate=date)
         data.save()
 
-        ld = Replays.objects.filter(Task=task).filter(AddedBy=user).last()
+        ld = Review.objects.last()
         attachment = request.FILES.getlist('attachment')
         for a in attachment:
             attach = Attachments(Attachment=a,Name='filename')
@@ -244,7 +247,8 @@ def edit_task(request,tid):
         task.Title = request.POST.get('title')
         task.Priority = request.POST.get('priority')
         task.Due_Date = request.POST.get('date')
-        task.Descrition = request.POST.get('description')
+        task.Description = request.POST.get('description')
+        task.save()
 
         ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
         attachment = request.FILES.getlist('attach')
@@ -253,7 +257,7 @@ def edit_task(request,tid):
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
-        return redirect('create-task')
+        return redirect('/edit-task/%s' %task.id)
     context = {
         'leads' : leads,
         'task' :task,
@@ -269,6 +273,7 @@ def view_pending_task(request,tid):
     ip = setip(request)
     task = Task.objects.get(id=tid)
     replayes = Replays.objects.filter(Task=task)
+    top = Replays.objects.filter(Task=task).first()
 
     if request.POST.get('date'):
         date = request.POST.get('date')
@@ -288,7 +293,8 @@ def view_pending_task(request,tid):
 
     context = {
         'task' : task,
-        'replayes' : replayes
+        'replayes' : replayes,
+        'top' : top,
     }
 
     return render(request,'view-task-pending.html',context)
@@ -299,9 +305,13 @@ def view_pending_task(request,tid):
 def view_completed_task(request,tid):
     task = Task.objects.get(id=tid)
     replayes = Replays.objects.filter(Task=task)
+    top = Replays.objects.filter(Task=task).first()
+    review = Review.objects.get(Task=task)
     context = {
         'task' : task,
-        'replayes' : replayes
+        'replayes' : replayes,
+        'review' : review,
+        'top' : top,
     }
     return render(request,'view-task-completed.html',context)
 
@@ -548,6 +558,14 @@ def meeting_staff_view(request,uid):
         'upcoming' : upcoming,
     }
     return render(request,'meeting-staff-view.html',context)
+
+#################################################################################
+
+
+@login_required
+def previous_meeting_details(request,mid):
+    meeting = Lead_Schedule.objects.get(id=mid)
+    return render(request,'meeting-previous-details.html',{'meeting':meeting})
 
 #################################################################################
 

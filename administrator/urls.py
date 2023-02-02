@@ -21,6 +21,4 @@ urlpatterns = [
     path('edit-lead/<int:lid>/',views.edit_lead,name='edit-lead'),
     path('view-lead/<int:lid>',views.view_lead,name='view-lead'),
     path('opertunity-convertion/<int:lid>/',views.opertunity_convertion,name='convert-op'),
-
-    path('previous-meeting-details/<int:mid>/',views.previous_meeting_details,name='p-meeting-d'),
 ]

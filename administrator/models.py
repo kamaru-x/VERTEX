@@ -202,5 +202,24 @@ class Salesman_Report(models.Model):
     Pending_Tasks = models.IntegerField(default=0)
     Completed_Tasks = models.IntegerField(default=0)
 
+    Lead_Total = models.IntegerField(default=0)
+    Lead_Succes = models.IntegerField(default=0)
+    Lead_Faild = models.IntegerField(default=0)
+
+    Opportunity_Total = models.IntegerField(default=0)
+    Opportunity_Success = models.IntegerField(default=0)
+    Opportunity_Faild = models.IntegerField(default=0)
+
+    Proposal_Total = models.IntegerField(default=0)
+    Proposal_Success = models.IntegerField(default=0)
+    Proposal_Faild = models.IntegerField(default=0)
+
+    SV_Total = models.FloatField(default=0)
+    SV_Success = models.FloatField(default=0)
+    SV_Failed = models.FloatField(default=0)
+
+    Upcoming_Meetings = models.IntegerField(default=0)
+    Previous_Meetings = models.IntegerField(default=0)
+
     def __str__(self):
         return self.Salesman.first_name

@@ -10,12 +10,13 @@
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
            
-            <div class="hidden xl:block mx-auto text-slate-500" style="text-align: center;">Showing 1 to 10 of 150 entries</div>
+            <!-- <div class="hidden xl:block mx-auto text-slate-500" style="text-align: center;">Showing 1 to 10 of 150 entries</div> -->
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
                 
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if projects %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -79,8 +80,25 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
+        {% if projects %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -128,6 +146,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->

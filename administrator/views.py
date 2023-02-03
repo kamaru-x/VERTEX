@@ -23,6 +23,43 @@ def setcount():
         category.Products = count
         category.save()
 
+
+def setreport():
+    users = User.objects.filter(is_salesman=True)
+
+    ids = []
+
+    for u in users:
+        ids.append(u.id)
+    
+    for i in ids:
+        user = User.objects.get(id=i)
+        report = Salesman_Report.objects.get(Salesman=user)
+
+        report.Pending_Tasks = 1 #Task.objects.filter(Task_Status=0).count()
+        report.Completed_Tasks = 2 #Task.objects.filter(Task_Status=1).count()
+
+        report.Lead_Total = 3 #Lead.objects.filter(Salesman=user).count()
+        report.Lead_Succes = 4 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Lead_Faild = 5 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+
+        report.Opportunity_Total = 6 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Opportunity_Success = 7 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.Opportunity_Faild = 8 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+
+        report.Proposal_Total = 9 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Proposal_Success = 10 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.Proposal_Faild = 11 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+
+        report.SV_Total = 12 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.SV_Success = 13 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.SV_Failed = 14 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        
+        report.Upcoming_Meetings = 15 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.Previous_Meetings = 16 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+
+        report.save()
+
 #################################################################################
 
 @login_required
@@ -214,6 +251,10 @@ def add_salesman(request):
         user.set_password('#password123')
         user.save()
 
+        salesman = User.objects.last()
+        report = Salesman_Report(Salesman=salesman)
+        report.save()
+
         messages.success(request,'new supervisor created successfully')
         return redirect('list-salesman')
 
@@ -223,6 +264,7 @@ def add_salesman(request):
 
 @login_required
 def list_salesman(request):
+    setreport()
     salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True)
     if request.method == 'POST' :
         id = request.POST.get('id')

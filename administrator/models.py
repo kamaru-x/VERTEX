@@ -81,7 +81,8 @@ class Lead(models.Model):
 class Attachments(models.Model):
     # Lead_Update = models.ForeignKey(Lead_Update,on_delete=models.SET_NULL,null=True)
     Attachment = models.FileField(upload_to='update-files')
-    Name = models.CharField(max_length=50)
+    Name = models.TextField()
+    Format = models.TextField()
 
     def __str__(self):
         return self.Name

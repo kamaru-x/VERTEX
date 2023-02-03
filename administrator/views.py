@@ -325,7 +325,7 @@ def add_lead(request):
         CMail=cmail,Salesman=s)
         data.save()
         messages.success(request,'created new lead')
-        return redirect('add-lead')
+        return redirect('list-lead')
 
     context = {
         'refer':refer,
@@ -371,8 +371,13 @@ def view_lead(request,lid):
 
             ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
+            
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ld.Attachments.add(attach)
                 ld.save()
@@ -398,7 +403,11 @@ def view_lead(request,lid):
             ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ls.Attachment.add(attach)
                 ls.save()

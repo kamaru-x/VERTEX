@@ -34,7 +34,11 @@ def view_opertunity(request,lid):
             ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ld.Attachments.add(attach)
                 ld.save()
@@ -60,7 +64,11 @@ def view_opertunity(request,lid):
             ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ls.Attachment.add(attach)
                 ls.save()
@@ -179,7 +187,11 @@ def create_task(request):
         ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
         attachment = request.FILES.getlist('attach')
         for a in attachment:
-            attach = Attachments(Attachment=a,Name='filename')
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
@@ -213,7 +225,11 @@ def pending_task(request):
         ld = Review.objects.last()
         attachment = request.FILES.getlist('attachment')
         for a in attachment:
-            attach = Attachments(Attachment=a,Name='filename')
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
             attach.save()
             ld.Attachments.add(attach)
             ld.save()
@@ -253,7 +269,11 @@ def edit_task(request,tid):
         ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
         attachment = request.FILES.getlist('attach')
         for a in attachment:
-            attach = Attachments(Attachment=a,Name='filename')
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
@@ -285,7 +305,11 @@ def view_pending_task(request,tid):
         ld = Replays.objects.filter(Task=task).filter(AddedBy=user).last()
         attachment = request.FILES.getlist('attachment')
         for a in attachment:
-            attach = Attachments(Attachment=a,Name='filename')
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
             attach.save()
             ld.Attachments.add(attach)
             ld.save()
@@ -345,7 +369,11 @@ def client_view(request,cid):
             ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ld.Attachments.add(attach)
                 ld.save()
@@ -371,7 +399,11 @@ def client_view(request,cid):
             ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ls.Attachment.add(attach)
                 ls.save()
@@ -445,7 +477,11 @@ def view_project(request,pid):
             ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ld.Attachments.add(attach)
                 ld.save()
@@ -471,7 +507,11 @@ def view_project(request,pid):
             ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 ls.Attachment.add(attach)
                 ls.save()
@@ -566,7 +606,11 @@ def previous_meetings(request):
 
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
-                attach = Attachments(Attachment=a,Name='filename')
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
                 meeting.Attachment.add(attach)
                 meeting.save()

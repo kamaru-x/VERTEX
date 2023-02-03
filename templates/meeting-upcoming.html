@@ -114,6 +114,17 @@
                         </div>
                     </div>
                     <div class="col-span-12">
+                        <label>Select Lead</label>
+                        <div class="mt-2">
+                            <select data-placeholder="Select Mode Of Meeting" class="tom-select w-full" name="lead">
+                                <option value=" ">Select Lead</option>
+                                {% for lead in leads %}
+                                    <option value="{{ lead.id }}">{{ lead.Company }} ( {{ lead.Reference }} )</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-span-12">
                         <label for="pos-form-2" class="form-label">Time(From)</label>
                         <input id="pos-form-2" type="time" name="from" class="form-control flex-1" placeholder="Time(From)">
                     </div>

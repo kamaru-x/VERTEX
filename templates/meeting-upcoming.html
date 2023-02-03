@@ -89,6 +89,8 @@
     <!-- BEGIN: New Order Modal -->
     <div id="new-order-modal1" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
+            <form action="" method="post">
+            {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">Add Schedule</h2>
@@ -99,38 +101,39 @@
                          <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
                        <i data-lucide="calendar" class="w-4 h-4"></i>
                     </div>
-                      <input type="text" class="datepicker pl-12" data-single-mode="true" style="width: 100%!important;">
+                      <input type="date" class="datepicker pl-12" name="date" data-single-mode="true" style="width: 100%!important;">
                     </div>
                     <div class="col-span-12">
                     <label>Mode Of Meeting</label>
                         <div class="mt-2">
-                            <select data-placeholder="Select Mode Of Meeting" class="tom-select w-full">
-                                            <option>Online</option>
-                                            <option>Direct</option>
-                                            <option>Telephone</option>
+                            <select data-placeholder="Select Mode Of Meeting" name="mode" class="tom-select w-full">
+                                <option>Online</option>
+                                <option>Direct</option>
+                                <option>Telephone</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-span-12">
                         <label for="pos-form-2" class="form-label">Time(From)</label>
-                        <input id="pos-form-2" type="text" class="form-control flex-1" placeholder="Time(From)">
+                        <input id="pos-form-2" type="time" name="from" class="form-control flex-1" placeholder="Time(From)">
                     </div>
 
                     <div class="col-span-12">
                         <label for="pos-form-2" class="form-label">Time(To)</label>
-                        <input id="pos-form-2" type="text" class="form-control flex-1" placeholder="Time(To)">
+                        <input id="pos-form-2" type="time" name="to" class="form-control flex-1" placeholder="Time(To)">
                     </div>
                     
                      <div class="col-span-12">
                         <label for="pos-form-2" class="form-label">Description</label>
-                       <textarea id="update-profile-form-5" class="form-control" placeholder="Description"></textarea>
+                       <textarea id="update-profile-form-5" name="description" class="form-control" placeholder="Description"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer text-right">
                     <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
-                    <button type="button" class="btn btn-primary w-32">Add Schedule</button>
+                    <button type="submit" class="btn btn-primary w-32">Add Schedule</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- END: New Order Modal -->

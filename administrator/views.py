@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task
 from datetime import datetime,date
 from datetime import date as dt
 from django.contrib import messages
@@ -259,7 +259,34 @@ def edit_salesman(request,uid):
 @login_required
 def salesman_view(request,sid):
     salesman = User.objects.get(id=sid)
-    return render(request,'salesman-view.html')
+    schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
+    leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0)
+    opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1)
+    clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2)
+    projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3)
+    p_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=0)
+    c_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=1)
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate > dt.today() :
+            upcoming.append(schedule)
+    context = {
+        'salesman':salesman,
+        'previous' : previous,
+        'upcoming' : upcoming,
+        'leads' : leads,
+        'opportunities' : opportunities,
+        'clients' : clients,
+        'projects' : projects,
+        'ptasks' : p_task,
+        'ctasks' : c_task,
+    }
+    return render(request,'salesman-view.html',context)
 
 #################################################################################
 
@@ -448,6 +475,6 @@ def opertunity_convertion(request,lid):
     lead.Lead_Status = 1
     lead.To_Opertunity = date.today()
     lead.save()
-    return redirect('list-lead')
+    return redirect('list-opportunities')
 
 #################################################################################

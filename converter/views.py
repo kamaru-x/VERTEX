@@ -75,7 +75,7 @@ def view_opertunity(request,lid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
 
     context = {
@@ -138,7 +138,7 @@ def create_proposal(request,lid):
             proposal.save()
             return redirect('/proposal/%s' %lead.id)
 
-    if proposal.Scope and proposal.Payment and proposal.Exclusion and proposal.Terms_Condition and proposal.Oppertunity :
+    if proposal.Scope and proposal.Payment and proposal.Exclusion and proposal.Terms_Condition :
         proposal.Lead.Lead_Status = 2
         proposal.Lead.To_Client = d
         proposal.Lead.save()
@@ -386,7 +386,7 @@ def client_view(request,cid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
 
     context = {
@@ -486,7 +486,7 @@ def view_project(request,pid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
 
     context = {
@@ -504,6 +504,22 @@ def view_project(request,pid):
 @login_required
 def upcoming_meetings(request):
     schedules = Lead_Schedule.objects.all().order_by('AddedDate')
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    leads = Lead.objects.all()
+
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        mode = request.POST.get('mode')
+        ftime = request.POST.get('from')
+        to = request.POST.get('to')
+        description = request.POST.get('description')
+        l = request.POST.get('lead')
+        lead = Lead.objects.get(id=l)
+
+        data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
+        data.save()
 
     previous = []
     upcoming = []
@@ -511,15 +527,52 @@ def upcoming_meetings(request):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
-    return render(request,'meeting-upcoming.html',{'upcoming':upcoming})
+    return render(request,'meeting-upcoming.html',{'upcoming':upcoming,'leads':leads})
 
 #################################################################################
 
 @login_required
 def previous_meetings(request):
     schedules = Lead_Schedule.objects.all().order_by('-AddedDate')
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    leads = Lead.objects.all()
+
+    if request.method == 'POST':
+        if request.POST.get('date'):
+            date = request.POST.get('date')
+            mode = request.POST.get('mode')
+            ftime = request.POST.get('from')
+            to = request.POST.get('to')
+            description = request.POST.get('description')
+            l = request.POST.get('lead')
+            lead = Lead.objects.get(id=l)
+
+            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
+            data.save()
+            return redirect('.')
+            
+        if request.POST.get('udate'):
+            udate = request.POST.get('udate')
+            udescription = request.POST.get('udescription')
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Update_Description = udescription
+            meeting.Update_Date = udate
+            meeting.save()
+
+            attachment = request.FILES.getlist('attachment')
+            for a in attachment:
+                attach = Attachments(Attachment=a,Name='filename')
+                attach.save()
+                meeting.Attachment.add(attach)
+                meeting.save()
+
+            return redirect('/previous-meeting-details/%s' %meeting.id)
+        
 
     previous = []
     upcoming = []
@@ -529,7 +582,7 @@ def previous_meetings(request):
             previous.append(schedule)
         elif schedule.AddedDate > dt.today() :
             upcoming.append(schedule)    
-    return render(request,'meeting-previous.html',{'previous':previous})
+    return render(request,'meeting-previous.html',{'previous':previous,'leads':leads})
 
 #################################################################################
 
@@ -550,7 +603,7 @@ def meeting_staff_view(request,uid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
     context = {
         'salesman':salesman,

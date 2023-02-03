@@ -35,7 +35,7 @@
                                     </button>
                                     <div class="dropdown-menu w-44 2xl:w-52">
                                         <ul class="dropdown-content">
-                                            {% for t in top.Attachments.all %}
+                                            {% for t in task.Attachment.all %}
                                             <li>
                                                 <a href="{{ t.Attachment.url }}" class="dropdown-item"> <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>{{ t.Attachment }}</a>
                                             </li>

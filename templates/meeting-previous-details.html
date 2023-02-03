@@ -128,17 +128,60 @@
                                 <div>
  -->
                                    
-
-                                    <label for="post-form-7" class="form-label" style="font-weight:600;">Name</label>
-                                    <div>Reema</div><br>
+                                    
+                                    <!-- <label for="post-form-7" class="form-label" style="font-weight:600;">Name</label> -->
+                                    <!-- <div>{{ meeting.Members }}</div><br> -->
 
                                     <label for="post-form-7" class="form-label" style="font-weight:600;">Date</label>
-                                    <div>12/3/2023</div><br>
+                                    <div>{{ meeting.Update_Date }}</div><br>
 
 
                                     
-                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</div>
+                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label>{{ meeting.Update_Description }}</div>
                                 </div>
+                                {% if meeting.Attachment.all %}
+                                <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
+                                    <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Files & Attachments </div>
+                                    <div class="mt-5">
+                                       
+                                        <div class="flex items-center mt-5">
+                                            {% for attach in meeting.Attachment.all %}
+                                            <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in mr-5">
+                                                <img class="rounded-md" alt="" src="{{ attach.Attachment.url }}">
+                                                <div title="Remove this image?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                                            </div>
+                                            {% endfor %}
+
+                                    <!-- <div class="file">
+                                        <a href="" class="">
+                                            <div><img src="dist/images/download.png"></div>
+                                        </a>
+                                    </div> -->
+
+                                    <!-- <div class="ml-4">
+                                        <a class="font-medium" href="">Sales Report</a> 
+                                        <div class="text-slate-500 text-xs mt-0.5">40 KB</div>
+                                    </div><br> -->
+
+                                    
+                                    <div class="dropdown ml-auto">
+                                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i> </a>
+                                        <div class="dropdown-menu w-40">
+                                            <ul class="dropdown-content">
+                                                <li>
+                                                    <a href="" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> Share File </a>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="dropdown-item"> <i data-lucide="trash" class="w-4 h-4 mr-2"></i> Delete </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            {% endif %}
                                 
                             </div>
                         </div>

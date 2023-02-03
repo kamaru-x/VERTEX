@@ -32,7 +32,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="text-sm 2xl:text-base font-medium -mb-1 text-primary"> Hi Ramshad Hassan, <span class="text-slate-600 dark:text-slate-300 font-normal">welcome back!</span> </div>
+                                <div class="text-sm 2xl:text-base font-medium -mb-1 text-primary"> Hi {{ salesman.first_name }}, <span class="text-slate-600 dark:text-slate-300 font-normal">welcome back!</span> </div>
                                 <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-slate-600 dark:text-slate-300 leading-3 mt-14 2xl:mt-24"> Total Target Assigned <i data-lucide="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i> </div>
                                 <div class="2xl:flex mt-5 mb-3">
                                     <div class="flex items-center justify-center sm:justify-start">
@@ -86,48 +86,26 @@
                                         </div>
                                         
                                     </div>
+                                    {% if ptasks %}
                                     <div class="tab-content px-5 pb-5">
                                         <div class="tab-pane active grid grid-cols-12 gap-y-6" id="weekly-report" role="tabpanel" aria-labelledby="weekly-report-tab">
+                                            {% for task in ptasks %}   
                                             <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
-                                                <div class="text-slate-500 task-head">TASK 1</div>
+                                                <div class="text-slate-500 task-head">{{ task.Title }}</div>
                                                 <div class="mt-1.5 flex items-center">
                                                   <i data-lucide="alert-triangle" class="w-4 h-4 mr-1 text-danger"></i>
                                                     <!-- <div class="text-lg">Task Description here</div> -->
-                                                    <div class="text-danger flex text-xs font-medium tooltip cursor-pointer ml-2" title="Urgent Task"> Due within 3 days</div>
+                                                    <div class="text-danger flex text-xs font-medium tooltip cursor-pointer ml-2" title="Urgent Task"> Due date : {{ task.Due_Date }}</div>
                                                 </div>
                                             </div>
-                                            <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
-                                                <div class="text-slate-500 task-head">TASK 2</div>
-                                                <div class="mt-1.5 flex items-center">
-                                                  <i data-lucide="alert-triangle" class="w-4 h-4 mr-1 text-danger"></i>
-                                                    <!-- <div class="text-lg">Task Description here</div> -->
-                                                    <div class="text-danger flex text-xs font-medium tooltip cursor-pointer ml-2" title="Urgent Task"> Due within 5 days </div>
-                                                </div>
-                                            </div>
-                                           <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
-                                                <div class="text-slate-500 task-head">TASK 3</div>
-                                                <div class="mt-1.5 flex items-center">
-                                                  <i data-lucide="alert-triangle" class="w-4 h-4 mr-1 text-danger"></i>
-                                                    <!-- <div class="text-lg">Task Description here</div> -->
-                                                    <div class="text-danger flex text-xs font-medium tooltip cursor-pointer ml-2" title="Urgent Task"> Due Within 3 days</div>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-12">
-                                                <div class="text-slate-500 task-head">TASK 4</div>
-                                                <div class="mt-1.5 flex items-center">
-                                                  <i data-lucide="alert-triangle" class="w-4 h-4 mr-1 text-danger"></i>
-                                                    <!-- <div class="text-lg">Task Description here</div> -->
-                                                    <div class="text-danger flex text-xs font-medium tooltip cursor-pointer ml-2" title="Urgent Task"> Due within 3 days</div>
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                             <button class="btn btn-outline-secondary col-span-12 border-slate-300 dark:border-darkmode-300 border-dashed relative justify-start mb-2"><a href="task-pending.php">
                                                 <span class="truncate mr-5">View All Tasks</span> 
                                                 <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-lucide="arrow-right" class="w-4 h-4"></i> </span></a>
                                             </button>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -191,6 +169,7 @@
     <div class="grid grid-cols-12 gap-6 mt-5">
         
          <!-- BEGIN: Data List -->
+        {% if leads %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -208,112 +187,47 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for lead in leads %}
                         <tr class="intro-x">
                             
                             <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">1</a>
+                                <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="leads-view.php" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="leads-view.php" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
                             <td class="w-60">
-                                <div class="font-medium whitespace-nowrap">Vijesh Chandran</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
+                                <div class="font-medium whitespace-nowrap">{{ lead.CName }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CNumber }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CMail }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="salesman-list.php" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="salesman-list.php" class="font-medium whitespace-nowrap">{{ lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
                                 <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: {{ lead.Date }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: {{ lead.ESValue }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: {{ lead.ECDate }}</span></div>
                             </td>
                             
                             
                         </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">2</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="leads-view.php" class="font-medium whitespace-nowrap text-primary">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                               
-                            </td>
-                            <td class="w-60">
-                                 <div class="font-medium whitespace-nowrap">Vijesh Chandran</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="salesman-list.php" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
-                            </td>
-                            
-                            
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-20">
-                                <a href="" class=" whitespace-nowrap">3</a>
-                            </td>
-                            <td class="w-60">
-                                <a href="leads-view.php" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-60">
-                                 <div class="font-medium whitespace-nowrap">Vijesh Chandran</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">vijesh@abcdintl.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="salesman-list.php" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: 24 Dec 2022</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Expected Value: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Expected Closing: 23 Jan 2023</span></div>
-                            </td>
-                            
-                            
-                        </tr>
-
+                    {% endfor %}
                     </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
+        {% if leads %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -361,6 +275,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
 
     </div>
@@ -369,10 +284,11 @@
     <div id="example-tab-6" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-6-tab">
 
         
-                     <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Opportunities</h2>
-                     <div class="grid grid-cols-12 gap-6 mt-5">
+        <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Opportunities</h2>
+        <div class="grid grid-cols-12 gap-6 mt-5">
         
         <!-- BEGIN: Data List -->
+        {% if opportunities %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -391,100 +307,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                       
-
-                      
-
-
+                    {% for opportunity in opportunities %}
                         <tr class="intro-x">
                            
                              <td class="w-60">
-                                <a href="opportunity-view.php" class="font-medium whitespace-nowrap text-primary">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="opportunity-view.php" class="font-medium whitespace-nowrap text-primary">{{ opportunity.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Phone }} / {{ opportunity.Email }}</div>
                                 
                             </td>
                             <td class="w-60 text-center">
-                                  <a href="" class="font-medium whitespace-nowrap ">REF:12345</a>
+                                  <a href="" class="font-medium whitespace-nowrap ">REF:{{ opportunity.Reference }}</a>
                                 
                             </td>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
+                                    {{ opportunity.To_Opertunity }}
                                 </div>
                             </td>
                             
                             <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary text-primary">{{ opportunity.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.email }}</div>
                             </td>
                             
                             
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="opportunity-view.php" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 text-center">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                          
-                            <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            
-                              
-                        </tr>
-
-                        <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
-                            <td class="w-60">
-                                <a href="opportunity-view.php" class="font-medium whitespace-nowrap text-primary">XYZ International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-60 text-center">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                
-                            </td>
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5534 6688</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            
-                           
-                        </tr>
-
-
+                    {% endfor %}
                     </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
+        {% if opportunity %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -532,6 +389,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
    
     
@@ -553,6 +411,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if clients %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -574,126 +433,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                            <tr class="intro-x">
+                    {% for client in clients %}
+                        <tr class="intro-x">
                             <!-- <td class="w-10">
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="clients-view.php" class="font-medium whitespace-nowrap">{{ client.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Phone }} / {{ client.Email }}</div>
                                
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                <a href="" class="font-medium whitespace-nowrap">REF:{{ client.Reference }}</a>
                                  
                             </td>
                             
                             <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
+                                <div class="pr-16">{{ client.To_Client }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ client.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     Confirmed
+                                     Waiting
                                 </div>
-                            </td>
-                            
-                            
+                            </td> 
                         </tr>
-
-                         <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                             <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     Confirmed
-                                </div>
-                            </td>
-                           
-                            
-                        </tr>
-                                            <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                               
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                            <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     Confirmed
-                                </div>
-                            </td>
-                            
-                           
-                        </tr>
-                        <tr class="intro-x">
-                           
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                            <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center ">
-                                <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                     Rejected
-                                </div>
-                            </td>
-                            
-                            
-                        </tr>
-
-                                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
+        {% if clients %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -741,6 +517,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
     </div>
     
@@ -761,6 +538,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if projects %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -783,90 +561,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                            <tr class="intro-x">
+                    {% for project in projects %}
+                        <tr class="intro-x">
                             <!-- <td class="w-10">
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="project-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="project-view.php" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Phone }} / {{ project.Email }}</div>
                                 
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:15678</a>
+                                <a href="" class="font-medium whitespace-nowrap">REF:{{ project.Reference }}</a>
                             </td>
                                  
                            
                             
                             <td class="w-64">
-                             <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4466 7877 / ramshad@vertex.com.qa</div>
+                             <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">{{ project.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Salesman.Mobile }} / {{ project.Salesman.email }}</div>
                             </td>
 
                              <td class="w-40" style="text-align:center;">
-                                <div  class="font-medium whitespace-nowrap text-success">12/3/2023</div>
-                            </td>
-                            
-                             
+                                <div  class="font-medium whitespace-nowrap text-success">{{ project.To_Project }}</div>
+                            </td>  
                         </tr>
-
-                         <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                                <a href="project-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:15678</a>
-                            </td>
-                            
-                            
-                            <td class="w-64">
-                             <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4466 7877 / ramshad@vertex.com.qa</div>
-                            </td>
-                           
-                           <td class="w-40" style="text-align:center;">
-                                <a href="" class="font-medium whitespace-nowrap text-success">12/3/2023</a>
-                            </td>
-
-                            
-                        </tr>
-
-                         <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
-                           <td class="w-72 text-primary">
-                                <a href="project-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:15678</a>
-                            </td>
-                           
-                            
-                            <td class="w-64">
-                             <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4466 7877 / ramshad@vertex.com.qa</div>
-                            </td>
-
-                            <td class="w-40" style="text-align:center;">
-                                 <div  class="font-medium whitespace-nowrap text-success">12/3/2023</div>
-                            </td>
-
-
-                            
-                            
-                        </tr>
-                        
-                    </tbody>
+                    {% endfor %}   
+                </tbody>
             </table>
         </div>
+        {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
+        {% if projects %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -914,6 +641,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
     </div>
     
@@ -925,6 +653,7 @@
 
 <!-- previous meeting -->
 
+{% if previous %}
 <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af; padding-top: 100px; padding-bottom:10px;">Previous Meeting</h2>
          <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br><br>
@@ -945,69 +674,37 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {% for p in previous %}
                                                     <tr>
                                                         <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-previous-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
+                                                         <td class="text-primary"><a href="{% url 'p-meeting-d' p.id %}">{{ p.Lead.Company }}<br>{{ p.Lead.Phone }} / {{ p.Lead.Email }}</a></td>
+                                                        <td>{{ p.Lead.Salesman.first_name }}<br>
+                                                         {{ p.Lead.Salesman.Qid }}</td>
                                                         <td>Online</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
+                                                        <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
                                                         
                                                         
                                                         <td>Status updated</td>
                                                         <td class="table-report__action">
-                                                    <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
-                                                    <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                                    </a>
-                                                    <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
-                                                </div>
-                                                </td>
-                                                
+                                                            <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
+                                                            <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
+                                                            </a>
+                                                            <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                     <tr>
-                                                        <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-previous-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
-                                                        <td>Online</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
-                                                         
-                                                        
-                                                        <td>Status updated</td>
-                                                      <td class="table-report__action">
-                                                    <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
-                                                    <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                                    </a>
-                                                    <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
-                                                </div>
-                                                </td>
-                                                    </tr>
-                                                     <tr>
-                                                        <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-previous-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
-                                                        <td>Online</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
-                                                        
-                                                        <td>Status updated</td>
-                                                       <td class="table-report__action">
-                                                    <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
-                                                    <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                                    </a>
-                                                    <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
-                                                </div>
-                                                </td>
-                                                    </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>
+{% endif %}
                                     
 
 
 <!-- /previous meeting -->
 <!-- upcoming meeting -->
- 
+
+{% if upcoming %}
 <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
 
@@ -1027,33 +724,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {% for u in upcoming %}
                                                     <tr>
-                                                        <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-upcoming-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
-                                                        <td>Direct</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
+                                                        <td>{{ u.AddedDate }}</td>
+                                                         <td class="text-primary"><a href="meeting-upcoming-details.php">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
+                                                        <td>{{ u.Lead.Salesman.first_name }}<br>
+                                                        {{ u.Lead.Salesman.Qid }}</td>
+                                                        <td>{{ u.Mode }}</td>
+                                                        <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
                                                        
                                                     </tr>
-                                                    <tr>
-                                                        <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-upcoming-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
-                                                        <td>Online</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
-                                                       
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1/12/2023</td>
-                                                         <td class="text-primary"><a href="meeting-upcoming-details.php">ABC International<br>4433 6688 / info@abcdintl.com</a></td>
-                                                        <td>Ramshad Hassan<br>
-                                                         ID#12345</td>
-                                                        <td>Telephone</td>
-                                                        <td class="text-primary">10:00 AM - 12:00 PM</td>
-                                                       
-                                                    </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1061,12 +742,13 @@
 
                                 </div>
                             </div>  
-                        </div> 
+                        </div>
+{% endif %} 
 
 
 
 <!-- pending task -->
-
+{% if ptasks %}
   <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Pending Task</h2>
         
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -1101,45 +783,46 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for task in ptasks %}
                         <tr class="intro-x">
                             
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                 </div>
                             </td>
                             <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ task.Lead.Reference }}</a>
                                  
                             </td>
                            
                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Salesman.email }}</div>
                             </td>
                             <td class="w-60 text-center">
-                                <div class="pr-16">Inventory Procurement</div>
+                                <div class="pr-16">{{ task.Title }}</div>
                             </td>
                             
 
                             <td class="w-40  text-danger">
-                                <div class="pr-16">High</div>
+                                <div class="pr-16">{{ task.Priority }}</div>
                             </td>
 
                              <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                     2/10/2023
+                                    {{ task.Due_Date }}
                                 </div>
                             </td>
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap" href="task-edit.php" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    <a class="flex items-center text-primary whitespace-nowrap" href="{% url 'edit-task' task.id %}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                     </a> &nbsp &nbsp
 
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-pending.php">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'pending-task-view' task.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
                                     <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
@@ -1150,164 +833,18 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-center">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                           
-                            <td class="w-40  text-danger">
-                                <div class="pr-16">High</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap" href="task-edit.php" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a> &nbsp &nbsp
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-pending.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                    <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-center">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                            
-
-                            <td class="w-40  text-success">
-                                <div class="pr-16">Normal</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap" href="task-edit.php" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a> &nbsp &nbsp
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-pending.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                    <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-center">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                           
-
-                            <td class="w-40  text-warning">
-                                <div class="pr-16">Medium</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap" href="task-edit.php" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                                    </a> &nbsp &nbsp
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-pending.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                   <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td>
-                        </tr>
-
-         
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
+{% endif %}
         <!-- END: Data List -->
 
 
 
 
         <!-- BEGIN: Pagination -->
+{% if ptasks %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -1357,9 +894,10 @@
         </div>
         <!-- END: Pagination -->
     </div>
+{% endif %}
 
     <!-- upcoming meeting -->
-
+{% if ctasks %}
       <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Completed Task</h2>
        
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -1390,147 +928,40 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for task in ctasks %}
                         <tr class="intro-x">
                             
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                 </div>
                             </td>
                             <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ task.Lead.Reference }}</a>
                                  
                             </td>
                            
                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.email }}</div>
                             </td>
                             <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-
-                            <td class="w-40  text-warning">
-                                <div class="pr-16">Medium</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                            <!-- <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                   
-
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="view-task-completed.php">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                    </a>
-                                  
-                                </div>
-                            </td> -->
-                        </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>    
-                            </td>
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
+                                <div class="pr-16">{{ task.Title }}</div>
                             </td>
 
                             <td class="w-40  text-danger">
-                                <div class="pr-16">High</div>
+                                <div class="pr-16">{{ task.Priority }}</div>
                             </td>
 
                              <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
+                                    {{ task.Completed_Date }}
                                 </div>
                             </td>
-                            
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                           
-                            <td class="w-40  text-success">
-                                <div class="pr-16">Normal</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                        </tr>
-
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                </div>
-                            </td>
-                            <td class="w-60 ref">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                                 
-                            </td>
-                           
-                           <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <div class="pr-16">Inventory Procurement</div>
-                            </td>
-                            
-                           <td class="w-40  text-success">
-                                <div class="pr-16">Normal</div>
-                            </td>
-
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     2/10/2023
-                                </div>
-                            </td>
-                            
-                        </tr>
-
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->
@@ -1553,6 +984,7 @@
 
         </div>
         <!-- END: Content -->
+{% endif %}
          <!-- BEGIN: New Order Modal -->
     <div id="new-order-modal1" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

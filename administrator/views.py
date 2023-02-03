@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report
 from datetime import datetime,date
 from datetime import date as dt
 from django.contrib import messages
@@ -393,24 +393,27 @@ def view_lead(request,lid):
             data.save()
 
         if request.POST.get('udate'):
-            udate = request.POST.get('udate')
-            udescription = request.POST.get('u-description')
-            participents = request.POST.get('participents')
+            if request.POST.get('udate'):
+                udate = request.POST.get('udate')
+                udescription = request.POST.get('u-description')
+                participends = request.POST.get('participents')
+                id = request.POST.get('id')
+                meeting = Lead_Schedule.objects.get(id=id)
+                meeting.Update_Description = udescription
+                meeting.Update_Date = udate
+                meeting.Members = participends
+                meeting.save()
 
-            data = Lead_Schedule(Update_Date=udate,Update_Description=udescription,Members=participents)
-            data.save()
-
-            ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
-            attachment = request.FILES.getlist('attach')
-            for a in attachment:
-                if str(a).endswith(('.png', '.jpg', '.jpeg')):
-                    format = 'image'
-                else:
-                    format = 'file'
-                attach = Attachments(Attachment=a,Name=a,Format=format)
-                attach.save()
-                ls.Attachment.add(attach)
-                ls.save()
+                attachment = request.FILES.getlist('attach')
+                for a in attachment:
+                    if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                        format = 'image'
+                    else:
+                        format = 'file'
+                    attach = Attachments(Attachment=a,Name=a,Format=format)
+                    attach.save()
+                    meeting.Attachment.add(attach)
+                    meeting.save()
 
         return redirect('/view-lead/%s' %lead.id)
 

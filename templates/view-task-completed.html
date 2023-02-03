@@ -223,7 +223,7 @@
                        <div class="mt-5">
                           
                            <div class="flex items-center mt-5">
-                            {% for u in update.Attachments.all %}
+                            {% for u in review.Attachments.all %}
                             {% if u.Format == 'image' %}
                             <a href="{{ u.Attachment.url }}" target="_blank"><div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in mr-5">
                                 <img class="rounded-md" alt="" src="{{ u.Attachment.url }}">

@@ -266,7 +266,7 @@
                             
                                     <br>
                                      <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br>
-                                    
+                                    {% if previous %}
                                     <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                         <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                                                 <div class="col-span-12">
@@ -305,10 +305,13 @@
                                                                                         Target Achieved
                                                                                     </td>
                                                                                     <td class="table-report__action">
-                                                                                        <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
+                                                                                        <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                                                                         </a>
-                                                                                        <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                                                        {% if p.Update_Date %}
+                                                                                        {% else %}
+                                                                                            <a class="text-primary" onclick="pop('{{p.id}}')" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                                                        {% endif %}
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
@@ -322,11 +325,13 @@
                                             
                                         </div>
                                     </div>
+                                    {% endif %}
                             <!-- /previous meeting -->
                                 </div>
                             
                                 <!-- upcoming meeting -->
-                            
+
+                                {% if upcoming %}
                                 <div id="example-tab-7" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-7-tab">
                             
                                    
@@ -372,7 +377,8 @@
                                             
                                             </div>
                                         </div>  
-                                    </div> 
+                                    </div>
+                                {% endif %} 
                             
                             
                             <!-- END: Wizard Layout -->
@@ -386,6 +392,11 @@
         }
         
     </style>
+    <script>
+        function pop(id){
+            $('#id').val(id)
+        }
+    </script>
      <!-- BEGIN: New Order Modal -->
     <div id="new-order-modal" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

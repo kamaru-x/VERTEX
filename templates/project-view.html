@@ -217,7 +217,7 @@
                                 
 
                                     <div class="mt-1.5 flex items-center">
-                                                <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>             
+                                                <!-- <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>              -->
                                         </div><br>
 
 
@@ -251,7 +251,7 @@
                                 
                                 <div>
                                         <div class="mt-1.5 flex items-center">
-                                            <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>                
+                                            <!-- <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>                 -->
                                     </div><br>
 
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;"></label>{{ proposal.Payment }}</div>
@@ -276,7 +276,7 @@
                                 <div>
 
                                         <div class="mt-1.5 flex items-center">
-                                            <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>
+                                            <!-- <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div> -->
                                     </div><br>
 
 
@@ -303,7 +303,7 @@
                                 <div>
 
                                         <div class="mt-1.5 flex items-center">
-                                            <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>
+                                            <!-- <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div> -->
                                     </div><br>
 
 
@@ -319,6 +319,7 @@
     <!--  Updates -->
 
     <div id="example-tab-10" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-10-tab">
+        <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal"><button class="btn btn-primary shadow-md mr-2">Add Update</button></a></div><br><br>
         <div class="post__content tab-content">
                         
                     <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
@@ -328,7 +329,7 @@
                         <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                                 <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="mt-1.5 flex items-center" style="float:right;">
-                                        <div class="text-base btn-rounded btn-primary-soft px-3 py-1 mb-2">12/3/2023</div><br>               
+                                        <!-- <div class="text-base btn-rounded btn-primary-soft px-3 py-1 mb-2">12/3/2023</div><br>                -->
                                         </div>
                                     <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description   
                                     </div>
@@ -396,6 +397,7 @@
         color: #1e40af; padding-top:100px;">Previous Meetings</h2>
             <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br>
         
+        {% if previous %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                     <div class="col-span-12">
@@ -437,10 +439,13 @@
                                                         </td>
 
                                                         <td class="table-report__action">
-                                                            <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="meeting-previous-details.php" title="view">
+                                                            <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                             <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                                             </a>
-                                                            <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                            {% if p.Update_Date %}
+                                                            {% else %}
+                                                                <a class="text-primary" onclick="pop('{{p.id}}')" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                            {% endif %}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -451,6 +456,7 @@
                 
             </div>
         </div>
+        {% endif %}
 <!-- /previous meeting -->
 
     
@@ -459,7 +465,7 @@
     <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af; padding-top:100px;">Upcoming Meetings</h2>
         
-        
+        {% if upcoming %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                     <div class="col-span-12">
@@ -502,6 +508,7 @@
                                     <!--  -->
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
 
     <!-- END: Wizard Layout -->
@@ -518,6 +525,11 @@
     }
     
 </style>
+<script>
+    function pop(id){
+        $('#id').val(id)
+    }
+</script>
     <!-- BEGIN: New Order Modal -->
 <div id="new-order-modal" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -607,11 +619,12 @@
 <!-- END: New Order Modal -->
 
 <!-- BEGIN: New Order Modal -->
-    <div id="new-order-modal2" class="modal" tabindex="-1" aria-hidden="true">
+<div id="new-order-modal2" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form action="" method="post" enctype="multipart/form-data">
             <div class="modal-content">
                 {% csrf_token %}
+                <input type="hidden" name="id" id="id">
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">Update Status</h2>
                 </div>

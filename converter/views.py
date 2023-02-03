@@ -56,12 +56,14 @@ def view_opertunity(request,lid):
         if request.POST.get('udate'):
             udate = request.POST.get('udate')
             udescription = request.POST.get('u-description')
-            participents = request.POST.get('participents')
+            participends = request.POST.get('participents')
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Update_Description = udescription
+            meeting.Update_Date = udate
+            meeting.Members = participends
+            meeting.save()
 
-            data = Lead_Schedule(Update_Date=udate,Update_Description=udescription,Members=participents)
-            data.save()
-
-            ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
                 if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -70,8 +72,8 @@ def view_opertunity(request,lid):
                     format = 'file'
                 attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
-                ls.Attachment.add(attach)
-                ls.save()
+                meeting.Attachment.add(attach)
+                meeting.save()
 
         return redirect('/opportunity-view/%s' %lead.id)
 
@@ -206,35 +208,42 @@ def create_task(request):
 
 @login_required
 def pending_task(request):
-    tasks = Task.objects.filter(Task_Status=0)
+    tasks = Task.objects.filter(Task_Status=0).filter(Status=1)
     user = request.user.id
     ip = setip(request)
     d = dt.today()
     if request.method == 'POST' :
-        tid = request.POST.get('taskid')
-        task = Task.objects.get(id=tid)
-        date = request.POST.get('date')
-        description = request.POST.get('update-description')
-        task.Task_Status = 1
-        task.Completed_Date = d
-        task.save()
+        if request.POST.get('taskid'):
+            tid = request.POST.get('taskid')
+            task = Task.objects.get(id=tid)
+            date = request.POST.get('date')
+            description = request.POST.get('update-description')
+            task.Task_Status = 1
+            task.Completed_Date = d
+            task.save()
 
-        data = Review(Task=task,Message=description,AddedDate=date)
-        data.save()
+            data = Review(Task=task,Message=description,AddedDate=date)
+            data.save()
 
-        ld = Review.objects.last()
-        attachment = request.FILES.getlist('attachment')
-        for a in attachment:
-            if str(a).endswith(('.png', '.jpg', '.jpeg')):
-                format = 'image'
-            else:
-                format = 'file'
-            attach = Attachments(Attachment=a,Name=a,Format=format)
-            attach.save()
-            ld.Attachments.add(attach)
-            ld.save()
-        return redirect('pending-task')
-        
+            ld = Review.objects.last()
+            attachment = request.FILES.getlist('attachment')
+            for a in attachment:
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
+                attach.save()
+                ld.Attachments.add(attach)
+                ld.save()
+            return redirect('pending-task')
+
+        if request.POST.get('id'):
+            id = request.POST.get('id')
+            task = Task.objects.get(id=id)
+            task.Status = 0
+            task.save()
+            return redirect('pending-task')        
 
     context = {
         'tasks' : tasks,
@@ -391,12 +400,14 @@ def client_view(request,cid):
         if request.POST.get('udate'):
             udate = request.POST.get('udate')
             udescription = request.POST.get('u-description')
-            participents = request.POST.get('participents')
+            participends = request.POST.get('participents')
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Update_Description = udescription
+            meeting.Update_Date = udate
+            meeting.Members = participends
+            meeting.save()
 
-            data = Lead_Schedule(Update_Date=udate,Update_Description=udescription,Members=participents)
-            data.save()
-
-            ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
                 if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -405,8 +416,8 @@ def client_view(request,cid):
                     format = 'file'
                 attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
-                ls.Attachment.add(attach)
-                ls.save()
+                meeting.Attachment.add(attach)
+                meeting.save()
 
         return redirect('/client-view/%s' %lead.id)
 
@@ -499,12 +510,14 @@ def view_project(request,pid):
         if request.POST.get('udate'):
             udate = request.POST.get('udate')
             udescription = request.POST.get('u-description')
-            participents = request.POST.get('participents')
+            participends = request.POST.get('participents')
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Update_Description = udescription
+            meeting.Update_Date = udate
+            meeting.Members = participends
+            meeting.save()
 
-            data = Lead_Schedule(Update_Date=udate,Update_Description=udescription,Members=participents)
-            data.save()
-
-            ls = Lead_Schedule.objects.filter(Lead=lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attach')
             for a in attachment:
                 if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -513,8 +526,8 @@ def view_project(request,pid):
                     format = 'file'
                 attach = Attachments(Attachment=a,Name=a,Format=format)
                 attach.save()
-                ls.Attachment.add(attach)
-                ls.save()
+                meeting.Attachment.add(attach)
+                meeting.save()
 
         return redirect('/client-view/%s' %lead.id)
 
@@ -543,23 +556,32 @@ def view_project(request,pid):
 
 @login_required
 def upcoming_meetings(request):
-    schedules = Lead_Schedule.objects.all().order_by('AddedDate')
+    schedules = Lead_Schedule.objects.filter(Status=1).order_by('AddedDate')
     user = request.user.id
     d = dt.today()
     ip = setip(request)
     leads = Lead.objects.all()
 
     if request.method == 'POST':
-        date = request.POST.get('date')
-        mode = request.POST.get('mode')
-        ftime = request.POST.get('from')
-        to = request.POST.get('to')
-        description = request.POST.get('description')
-        l = request.POST.get('lead')
-        lead = Lead.objects.get(id=l)
+        if request.POST.get('dste'):
+            date = request.POST.get('date')
+            mode = request.POST.get('mode')
+            ftime = request.POST.get('from')
+            to = request.POST.get('to')
+            description = request.POST.get('description')
+            l = request.POST.get('lead')
+            lead = Lead.objects.get(id=l)
 
-        data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
-        data.save()
+            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
+            data.save()
+            return redirect('upcoming-meetings')
+
+        if request.POST.get('id'):
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Status = 0
+            meeting.save()
+            return redirect('upcoming-meetings')
 
     previous = []
     upcoming = []
@@ -598,10 +620,12 @@ def previous_meetings(request):
         if request.POST.get('udate'):
             udate = request.POST.get('udate')
             udescription = request.POST.get('udescription')
+            participents = request.POST.get('participents')
             id = request.POST.get('id')
             meeting = Lead_Schedule.objects.get(id=id)
             meeting.Update_Description = udescription
             meeting.Update_Date = udate
+            meeting.Members = participents
             meeting.save()
 
             attachment = request.FILES.getlist('attachment')

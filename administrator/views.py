@@ -79,6 +79,9 @@ def view_category(request,cid):
     if request.method == 'POST':
         id = request.POST.get('id')
         product = Product.objects.get(id=id)
+        product.Category = None
+        product.save()
+        setcount()
         return redirect('.')
     context = {
         'category' : category,
@@ -105,7 +108,7 @@ def edit_category(request,cid):
 @login_required
 def add_product(request):
 
-    categories = Category.objects.all()
+    categories = Category.objects.filter(Status=1)
     r = Product.objects.last()
     date = dt.today()
     user = request.user.id
@@ -335,7 +338,13 @@ def add_lead(request):
 
 @login_required
 def list_leads(request):
-    leads = Lead.objects.filter(Lead_Status=0)
+    leads = Lead.objects.filter(Lead_Status=0).filter(Status=1)
+    if request.method == 'POST' :
+        id = request.POST.get('id')
+        lead = Lead.objects.get(id=id)
+        lead.Status = 0
+        lead.save()
+        return redirect('list-lead')
     context = {
         'leads' : leads
     }
@@ -449,7 +458,7 @@ def edit_lead(request,lid):
         lead.Salesman = salesman
         lead.save()
         messages.success(request,'lead data edited successfull')
-        return redirect('.')
+        return redirect('list-lead')
     
     context = {
         'lead' : lead,
@@ -457,15 +466,6 @@ def edit_lead(request,lid):
     }
 
     return render(request,'edit-lead.html',context)
-
-#################################################################################
-
-@login_required
-def delete_lead(request,lid):
-    lead = Lead.objects.get(id=lid)
-    lead.Status = 0
-    lead.save()
-    return redirect('list-lead')
 
 #################################################################################
 

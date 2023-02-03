@@ -76,7 +76,7 @@
                 <div class="report-box-4 w-full h-full grid grid-cols-12 gap-6 xl:absolute -mt-8 xl:mt-0 pb-6 xl:pb-0 top-0 right-0 z-30 xl:z-auto">
                     <div class="col-span-12 xl:col-span-3 xl:col-start-10 xl:pb-16 z-30">
                         <div class="h-full flex flex-col">
-                            
+                            {% if ptasks %}
                             <div class="report-box-4__content xl:min-h-0 intro-x">
                                 <div class="max-h-full xl:overflow-y-auto box mt-5">
                                     <div class="xl:sticky top-0 px-5 pt-5 pb-6">
@@ -86,7 +86,6 @@
                                         </div>
                                         
                                     </div>
-                                    {% if ptasks %}
                                     <div class="tab-content px-5 pb-5">
                                         <div class="tab-pane active grid grid-cols-12 gap-y-6" id="weekly-report" role="tabpanel" aria-labelledby="weekly-report-tab">
                                             {% for task in ptasks %}   
@@ -105,9 +104,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                    {% endif %}
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -161,7 +160,7 @@
     <div id="example-tab-5" class="tab-pane leading-relaxed active" role="tabpanel" aria-labelledby="example-5-tab">
         
        
-    <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">List Of Leads</h2>
+    <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">List Of Leads</h2> -->
          <!--   <div class="intro-y box py-10 sm:py-20 mt-5">
         <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af;">Add Category</h2>
@@ -284,7 +283,7 @@
     <div id="example-tab-6" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-6-tab">
 
         
-        <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Opportunities</h2>
+        <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Opportunities</h2> -->
         <div class="grid grid-cols-12 gap-6 mt-5">
         
         <!-- BEGIN: Data List -->
@@ -401,7 +400,7 @@
     <div id="example-tab-7" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-7-tab">
 
         <div class="post__content tab-content">
-                       <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Clients</h2>
+    <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Clients</h2> -->
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
            
@@ -528,15 +527,15 @@
     <div id="example-tab-8" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-8-tab">
 
         <div class="post__content tab-content">
-                      <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Projects</h2>
+    <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Projects</h2> -->
     <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
+        <!-- <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
            
             <div class="hidden xl:block mx-auto text-slate-500" style="text-align: center;">Showing 1 to 10 of 150 entries</div>
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
                 
             </div>
-        </div>
+        </div> -->
         <!-- BEGIN: Data List -->
         {% if projects %}
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">

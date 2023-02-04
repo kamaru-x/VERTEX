@@ -36,29 +36,64 @@ def setreport():
         user = User.objects.get(id=i)
         report = Salesman_Report.objects.get(Salesman=user)
 
-        report.Pending_Tasks = 1 #Task.objects.filter(Task_Status=0).count()
-        report.Completed_Tasks = 2 #Task.objects.filter(Task_Status=1).count()
+        report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
+        report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
-        report.Lead_Total = 3 #Lead.objects.filter(Salesman=user).count()
-        report.Lead_Succes = 4 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Lead_Faild = 5 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Lead_Total = Lead.objects.filter(Salesman=user).count()
+        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Lead_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
 
-        report.Opportunity_Total = 6 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Opportunity_Success = 7 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.Opportunity_Faild = 8 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Opportunity_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Opportunity_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.Opportunity_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
 
-        report.Proposal_Total = 9 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Proposal_Success = 10 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.Proposal_Faild = 11 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Proposal_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.Proposal_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.Proposal_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
 
-        report.SV_Total = 12 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.SV_Success = 13 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.SV_Failed = 14 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
-        
-        report.Upcoming_Meetings = 15 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.Previous_Meetings = 16 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.SV_Failed = 145168465 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+
+        schedules = Lead_Schedule.objects.filter(Lead__Salesman=user)
+        previous = []
+        upcoming = []
+
+        for schedule in schedules:
+            if schedule.AddedDate < dt.today() :
+                previous.append(schedule)
+            elif schedule.AddedDate >= dt.today() :
+                upcoming.append(schedule)
+
+        report.Upcoming_Meetings = len(upcoming)
+        report.Previous_Meetings = len(previous)
 
         report.save()
+
+def setmeeting():
+    leads = Lead.objects.filter(Status=1)
+
+    ids = []
+
+    for l in leads:
+        ids.append(l.id)
+    
+    for i in ids:
+        lead = Lead.objects.get(id=i)
+        schedules = Lead_Schedule.objects.filter(Lead=lead)
+        previous = []
+        upcoming = []
+
+        for schedule in schedules:
+            if schedule.AddedDate < dt.today() :
+                previous.append(schedule)
+            elif schedule.AddedDate >= dt.today() :
+                upcoming.append(schedule)
+
+        lead.Previous_Meetings = len(previous)
+        lead.Upcoming_Meetings = len(upcoming)
+        lead.save()
+
 
 #################################################################################
 
@@ -266,14 +301,19 @@ def add_salesman(request):
 def list_salesman(request):
     setreport()
     salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True)
+    reports = Salesman_Report.objects.filter(Status=1)
     if request.method == 'POST' :
         id = request.POST.get('id')
         salesman = User.objects.get(id=id)
         salesman.is_active = False
         salesman.save()
+        report = Salesman_Report.objects.get(Salesman=salesman)
+        report.Status = 0
+        report.save()
         return redirect('list-salesman')
     context = {
-        'salesmans':salesmans
+        'salesmans':salesmans,
+        'reports' : reports,
     }
     return render(request,'salesman-list.html',context)
 
@@ -303,6 +343,7 @@ def edit_salesman(request,uid):
 
 @login_required
 def salesman_view(request,sid):
+    setmeeting()
     salesman = User.objects.get(id=sid)
     schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
     leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0)
@@ -318,7 +359,7 @@ def salesman_view(request,sid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
     context = {
         'salesman':salesman,
@@ -380,6 +421,7 @@ def add_lead(request):
 
 @login_required
 def list_leads(request):
+    setmeeting()
     leads = Lead.objects.filter(Lead_Status=0).filter(Status=1)
     if request.method == 'POST' :
         id = request.POST.get('id')
@@ -467,7 +509,7 @@ def view_lead(request,lid):
     for schedule in schedules:
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
-        elif schedule.AddedDate > dt.today() :
+        elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
 
     context = {

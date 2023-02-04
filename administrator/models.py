@@ -68,6 +68,9 @@ class Lead(models.Model):
     Salesman = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     Lead_Status = models.IntegerField(default=0)
 
+    Upcoming_Meetings = models.IntegerField(default=0)
+    Previous_Meetings = models.IntegerField(default=0)
+
     To_Opertunity = models.DateField(null=True)
     To_Proposal = models.DateField(null=True)
     To_Client = models.DateField(null=True)
@@ -198,7 +201,10 @@ class Review(models.Model):
 #################################################################################
 
 class Salesman_Report(models.Model):
+
+    Status = models.IntegerField(default=1)
     Salesman = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+
     Pending_Tasks = models.IntegerField(default=0)
     Completed_Tasks = models.IntegerField(default=0)
 
@@ -214,7 +220,7 @@ class Salesman_Report(models.Model):
     Proposal_Success = models.IntegerField(default=0)
     Proposal_Faild = models.IntegerField(default=0)
 
-    SV_Total = models.FloatField(default=0)
+    SV_Pending = models.FloatField(default=0)
     SV_Success = models.FloatField(default=0)
     SV_Failed = models.FloatField(default=0)
 

@@ -208,8 +208,8 @@
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: 3</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: 2</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ lead.Previous_Meetings }}</span></div> 
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ lead.Upcoming_Meetings }}</span></div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap"><span>Lead Created on: {{ lead.Date }}</span></div>

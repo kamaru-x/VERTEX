@@ -44,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for salesman in salesmans %}
+                    {% for s in reports %}
                         <tr class="intro-x">
 
                         	  <td class="w-40">
@@ -52,16 +52,16 @@
                             </td>
                             
                             <td class="w-60">
-                                <a href="task-staff-view.php" class="font-medium whitespace-nowrap text-primary">{{ salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.email }}</div>
+                                <a href="task-staff-view.php" class="font-medium whitespace-nowrap text-primary">{{ s.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.email }}</div>
                             </td>
                             <td class="w-60 ref">
-                                <div class="text-warning">27</div>
+                                <div class="text-warning">{{ s.Pending_Tasks }}</div>
                                  
                             </td>
                             <td class="w-60 ref">
-                                <div class="text-success">46</div>
+                                <div class="text-success">{{ s.Completed_Tasks }}</div>
                                  
                             </td>
                             
@@ -69,7 +69,7 @@
                                 <div class="flex justify-center items-center">
                                     
 
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'task-staff-view' salesman.id %}">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'task-staff-view' s.Salesman.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
                                    

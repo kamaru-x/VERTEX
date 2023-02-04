@@ -82,31 +82,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for salesman in salesmans %}
+                    {% for s in reports %}
                         <tr class="intro-x">
                             
                             <td class="w-20">
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">{{ salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.email }}</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ s.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>145</span> / <span class="text-success">100</span> / <span class="text-danger">45</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>{{ s.Lead_Total }}</span> / <span class="text-success">{{ s.Lead_Succes }}</span> / <span class="text-danger">{{ s.Lead_Faild }}</span></div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>130</span> / <span class="text-success">90</span> / <span class="text-danger">40</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>{{ s.Opportunity_Total }}</span> / <span class="text-success">{{ s.Opportunity_Success }}</span> / <span class="text-danger">{{ s.Opportunity_Faild }}</span></div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>120</span> / <span class="text-success">80</span> / <span class="text-danger">20</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>{{ s.Proposal_Total }}</span> / <span class="text-success">{{ s.Proposal_Success }}</span> / <span class="text-danger">{{ s.Proposal_Faild }}</span></div>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: 350,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: 200,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: 50,000.00</span></div>
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: 100,000.00</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Total Proposal: {{ s.Proposal_Total }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Success: {{ s.SV_Success }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-danger">Failed: {{ s.SV_Failed }}</span></div>
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-primary">Pending: {{ s.SV_Pending }}</span></div>
                             </td>
                             
                             <td class="table-report__action">
@@ -114,13 +114,13 @@
                                     <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
                                         <i data-lucide="key" class="w-4 h-4 mr-1"></i>
                                     </a>
-                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-salesman' salesman.id %}">
+                                    <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-salesman' s.Salesman.id %}">
                                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                     </a>
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'salesman-view' salesman.id %}">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'salesman-view' s.Salesman.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{salesman.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{s.Salesman.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                         <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
                                     </a>
                                 </div>

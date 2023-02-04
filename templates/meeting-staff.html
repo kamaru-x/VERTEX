@@ -67,7 +67,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for salesman in salesmans %}
+                    {% for s in reports %}
                         <tr class="intro-x">
 
                         	  <td class="w-40">
@@ -75,16 +75,16 @@
                             </td>
                             
                             <td class="w-60">
-                                <a href="meeting-staff-view.php" class="font-medium whitespace-nowrap text-primary">{{ salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.email }}</div>
+                                <a href="meeting-staff-view.php" class="font-medium whitespace-nowrap text-primary">{{ s.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.Salesman.email }}</div>
                             </td>
                             <td class="w-60 ref">
-                                <div class="text-warning">Meeting 1</div>
+                                <div class="text-warning">{{ s.Previous_Meetings }} Previous Meetings</div>
                                  
                             </td>
                             <td class="w-60 ref">
-                                <div class="text-success">Meeting 2</div>
+                                <div class="text-success">{{ s.Upcoming_Meetings }} Upcoming Meetings</div>
                                  
                             </td>
                             
@@ -92,7 +92,7 @@
                                 <div class="flex justify-center items-center">
                                    
 
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'meeting-staff-view' salesman.id %}">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'meeting-staff-view' s.Salesman.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
                                    <!--  <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">

@@ -5,6 +5,8 @@ from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
 
+from administrator.views import setreport
+
 # Create your views here.
 
 @login_required
@@ -286,7 +288,7 @@ def edit_task(request,tid):
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
-        return redirect('/edit-task/%s' %task.id)
+        return redirect('pending-task')
     context = {
         'leads' : leads,
         'task' :task,
@@ -656,8 +658,10 @@ def previous_meetings(request):
 
 @login_required
 def meeting_staff_list(request):
+    setreport()
     salesmans = User.objects.filter(is_salesman=True)
-    return render(request,'meeting-staff.html',{'salesmans':salesmans})
+    reports = Salesman_Report.objects.filter(Status=1)
+    return render(request,'meeting-staff.html',{'salesmans':salesmans,'reports':reports})
 
 #################################################################################
 
@@ -691,8 +695,10 @@ def previous_meeting_details(request,mid):
 #################################################################################
 
 def task_staff(request):
+    setreport()
     salesmans = User.objects.filter(is_salesman=True)
-    return render(request,'task-staff.html',{'salesmans':salesmans})
+    reports = Salesman_Report.objects.filter(Status=1)
+    return render(request,'task-staff.html',{'salesmans':salesmans,'reports':reports})
 
 #################################################################################
 

@@ -13,11 +13,12 @@
      <!-- BEGIN: Content -->
     <div class="content">
 
-              <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Proposal Wise Report</h2>
+    <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Proposal Wise Report</h2>
          <!--   <div class="intro-y box py-10 sm:py-20 mt-5">
         <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af;">Add Category</h2>
     </div> -->
+    {% if reports %}
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
             
@@ -63,9 +64,9 @@
                         <th class="whitespace-nowrap">CUSTOMER NAME</th>
                         <th class="whitespace-nowrap">DATE OF PROPOSAL</th>
                         <th class="text-center whitespace-nowrap" style="
-    text-align: left;">SALESMAN</th>
+                            text-align: left;">SALESMAN</th>
                         <th class="whitespace-nowrap" style="
-    text-align: center;">VALUE OF PROPOSAL</th>
+                            text-align: center;">VALUE OF PROPOSAL</th>
                         <th class="whitespace-nowrap">
                             <div class="pr-16">DATE OF REJECTION / APPROVAL</div>
                         </th>
@@ -73,114 +74,52 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for report in reports %}
                         <tr class="intro-x">
-                            
                             <td class="w-72 text-primary">
-                               <a href="" class="font-medium whitespace-nowrap">Roy Thomas</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">roythomas@gmail.com</div>
+                               <a href="" class="font-medium whitespace-nowrap">{{ report.CName }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.CNumber }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.CMail }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">23/3/2023</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ report.To_Proposal }}</a>
                                 
                             </td>
                             <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ report.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.email }}</div>
                             </td>
                             <td class="w-60 text-right text-danger">
-                                <div class="pr-16">$200,000</div>
+                                <div class="pr-16">{{ report.ESValue }}</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap text-primary">24/5/2023</div>     
-                            </td>
-                            
-                            
+                             <div class="whitespace-nowrap text-primary">{{ report.To_Client }}</div>     
+                            </td>  
                         </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                               <a href="" class="font-medium whitespace-nowrap">Roy Thomas</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">roythomas@gmail.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">23/3/2023</a>
-                                
-                            </td>
-                            <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">$200,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-primary">24/5/2023</div>     
-                            </td>
-                            
-                            
-                        </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                               <a href="" class="font-medium whitespace-nowrap">Roy Thomas</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">roythomas@gmail.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">23/3/2023</a>
-                                
-                            </td>
-                            <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">$200,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-primary">24/5/2023</div>     
-                            </td>
-                            
-                            
-                        </tr>
-                        <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                               <a href="" class="font-medium whitespace-nowrap">Roy Thomas</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">roythomas@gmail.com</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">23/3/2023</a>
-                                
-                            </td>
-                            <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">$200,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-primary">24/5/2023</div>     
-                            </td>
-                            
-                            
-                        </tr>
-                        
-                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
         <!-- BEGIN: Pagination -->
+        {% if reports %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -228,6 +167,7 @@
                 <option>50</option>
             </select>
         </div>
+        {% endif %}
         <!-- END: Pagination -->
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->

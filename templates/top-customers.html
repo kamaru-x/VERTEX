@@ -5,7 +5,8 @@
         {% include 'header.html' %} 
         <!-- BEGIN: Content -->
     <div class="content">
-             <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Top Customers</h2>
+    <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Top Customers</h2>
+    {% if leads %}
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
            
@@ -36,31 +37,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                            <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
+                    {% for lead in leads %}
+                        <tr class="intro-x">
                             <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
+                                <a href="clients-view.php" class="font-medium whitespace-nowrap">{{ lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ lead.Reference }}</a>
                                  
                             </td>
                             
                             <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
+                                <div class="pr-16">{{ lead.To_Proposal }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
+                                <a href="clients-view.php" class="font-medium whitespace-nowrap text-primary">{{ lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                     95%
+                                     95% ( {{ lead.ESValue }} )
                                 </div>
                             </td>
                             
@@ -75,123 +74,29 @@
                                 </div>
                             </td>
                         </tr>
-
-                         <tr class="intro-x">
-                            
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                             <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                     93%
-                                </div>
-                            </td>
-                           
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="clients-view.php" title="View">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a class="flex items-right text-danger whitespace-nowrap" href="javascript:;" title="Cancel">
-                                        <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                    </a> 
-                                </div>
-                            </td>
-                        </tr>
-                                            <tr class="intro-x">
-                            <!-- <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
-                            </td> -->
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                               
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                            <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                     85%
-                                </div>
-                            </td>
-                            
-                           <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="clients-view.php" title="View">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a class="flex items-right text-danger whitespace-nowrap" href="javascript:;" title="Cancel">
-                                        <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                    </a> 
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="intro-x">
-                           
-                            <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">ABCD International</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">4433 6688 / info@abcdintl.com</div>
-                                
-                            </td>
-                            <td class="w-40">
-                                 <a href="" class="font-medium whitespace-nowrap">REF:12345</a>
-                            </td>
-                            
-                            <td class="w-60 text-right">
-                                <div class="pr-16">23/3/2023</div>
-                            </td>
-                           <td class="w-60">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap text-primary">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                             <td class="text-center ">
-                                <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                     76%
-                                </div>
-                            </td>
-                            
-                            <td class="table-report__action">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="clients-view.php" title="View">
-                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
-                                    </a>
-                                    <a class="flex items-right text-danger whitespace-nowrap" href="javascript:;" title="Cancel">
-                                        <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                    </a> 
-                                </div>
-                            </td>
-                        </tr>
-
-                                    </tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->
+    {% else %}
+    <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+        <table class="table table-report -mt-2">
+            <tbody>
+                <tr class="intro-x width"> 
+                    <td class=" width" style="width:100%;">
+                        <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                            background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                        </i>
+                    <div style="text-align: center;">No data available!</div>
+                    </td>   
+                </tr>    
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
         <!-- BEGIN: Pagination -->
+    {% if leads %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
@@ -239,6 +144,7 @@
                 <option>50</option>
             </select>
         </div>
+    {% endif %}
         <!-- END: Pagination -->
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->

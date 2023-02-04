@@ -153,6 +153,7 @@ def create_proposal(request,lid):
     if proposal.Scope and proposal.Payment and proposal.Exclusion and proposal.Terms_Condition :
         proposal.Lead.Lead_Status = 2
         proposal.Lead.To_Client = d
+        proposal.Lead.To_Proposal = d
         proposal.Lead.save()
         return redirect('clients')
 
@@ -719,7 +720,8 @@ def task_staff_view(request,uid):
 
 @login_required
 def salesman_report(request):
-    return render(request,'salesman-report.html')
+    reports = Salesman_Report.objects.filter(Status=1)
+    return render(request,'salesman-report.html',{'reports':reports})
 
 #################################################################################
 
@@ -737,7 +739,9 @@ def target_report(request):
 
 @login_required
 def top_customers(request):
-    return render(request,'top-customers.html')
+    reports = Salesman_Report.objects.filter(Status=1)
+    leads = Lead.objects.filter(Status=1).order_by('-ESValue')
+    return render(request,'top-customers.html',{'reports':reports,'leads':leads})
 
 #################################################################################
 
@@ -749,6 +753,7 @@ def proposal_report(request):
 
 @login_required
 def total_propose(request):
-    return render(request,'report-proposal-total.html')
+    reports = Lead.objects.filter(Status=1)
+    return render(request,'report-proposal-total.html',{'reports':reports})
 
 #################################################################################

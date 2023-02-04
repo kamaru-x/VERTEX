@@ -120,7 +120,7 @@
                                     <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'salesman-view' s.Salesman.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
-                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{s.Salesman.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    <a title="Delete" class="flex items-center text-danger whitespace-nowrap" style="cursor: pointer;" onclick="pop('{{s.Salesman.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                         <i data-lucide="trash" class="w-4 h-4 mr-1"></i>
                                     </a>
                                 </div>

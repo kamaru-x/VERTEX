@@ -169,7 +169,7 @@ def edit_category(request,cid):
     if request.method == 'POST':
         category.Name = request.POST.get('name')
         category.save()
-        return redirect('/edit-category/%s' %category.id)
+        return redirect('list-category')
     context = {
         'category':category,
     }

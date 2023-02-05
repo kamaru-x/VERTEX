@@ -775,3 +775,15 @@ def total_propose(request):
     return render(request,'report-proposal-total.html',{'reports':reports})
 
 #################################################################################
+
+@login_required
+def remove_proposal_product(request,pid,id):
+    product = Product.objects.get(id=id)
+    proposal = Proposal.objects.get(id=pid)
+    lid = proposal.Lead.id
+
+    proposal.Products.remove(product)
+    proposal.save()
+    return redirect('/proposal/%s' %lid)
+
+#################################################################################

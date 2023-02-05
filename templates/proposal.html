@@ -168,7 +168,7 @@
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
                                     <!--  -->
-                                    <a class="flex items-center text-danger whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    <a class="flex items-center text-danger whitespace-nowrap" href="{% url 'r_p_p' proposal.id product.id  %}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                         <i data-lucide="trash" class="w-4 h-4 mr-1"></i> Remove
                                     </a>
                                 </div>

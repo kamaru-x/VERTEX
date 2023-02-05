@@ -37,4 +37,6 @@ urlpatterns = [
     path('total-proposal/',views.total_propose,name='total-propose'),
 
     path('previous-meeting-details/<int:mid>/',views.previous_meeting_details,name='p-meeting-d'),
+
+    path('r_p_p/<int:pid>/<int:id>/',views.remove_proposal_product,name='r_p_p')
 ]

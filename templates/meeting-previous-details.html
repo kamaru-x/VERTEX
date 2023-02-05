@@ -104,7 +104,7 @@
            
            
             <div class="post intro-y overflow-hidden box mt-5">
-                
+                {% if meeting.Update_Date %}
                 <div class="post__content tab-content">
                      <h2 style=" font-size: 30px; font-weight: 500; text-align: center; color: #1e40af; padding-top: 100px;">Meeting Update</h2>
                     <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
@@ -187,6 +187,7 @@
                                 
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

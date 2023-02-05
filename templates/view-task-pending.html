@@ -29,10 +29,12 @@
                                             <a class="text-slate-500 ml-4" href=""></a>
                                         </div>
                                         <div class="mt-5 2xl:mt-24 dropdown">
+                                    {% if task.Attachment.all %}
                                     <button class="dropdown-toggle btn btn-rounded-primary w-44 2xl:w-52 px-4 relative justify-start" aria-expanded="false" data-tw-toggle="dropdown">
                                         Download Attachments 
                                         <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-1"> <i data-lucide="chevron-down" class="w-4 h-4"></i> </span>
                                     </button>
+                                    {% endif %}
                                     <div class="dropdown-menu w-44 2xl:w-52">
                                         <ul class="dropdown-content">
                                             {% for t in task.Attachment.all %}
@@ -116,7 +118,7 @@
         <!-- BEGIN: Post Content -->
         <div class="intro-y col-span-12 lg:col-span-12">
            
-           
+           {% if replayes %}
             <div class="post intro-y overflow-hidden box mt-5 pb-5">
                 
                 <div class="post__content tab-content">
@@ -131,6 +133,9 @@
                         <div class="post__content tab-content">
                             <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                                 <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                    <div class="mt-1.5 flex items-center" style="float:right;">
+                                        <div class="text-base btn-rounded btn-primary-soft px-3 py-1 mb-2">{{ replay.Date | date:"d M Y" }}</div><br>               
+                                    </div>
                                     <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description </div>
                                     <div class="mt-1.5 flex items-center">
                                          <div class="text-base btn-rounded btn-danger-soft px-3 py-1"><span style="font-weight:700;"> Admin </span> | {{ replay.AddedDate }}</div>              
@@ -196,6 +201,7 @@
 
 
             </div>
+            {% endif %}
         </div>
 
     </div>

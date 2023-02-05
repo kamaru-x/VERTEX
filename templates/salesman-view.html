@@ -98,7 +98,7 @@
                                                 </div>
                                             </div>
                                             {% endfor %}
-                                            <button class="btn btn-outline-secondary col-span-12 border-slate-300 dark:border-darkmode-300 border-dashed relative justify-start mb-2"><a href="task-pending.php">
+                                            <button class="btn btn-outline-secondary col-span-12 border-slate-300 dark:border-darkmode-300 border-dashed relative justify-start mb-2"><a href="">
                                                 <span class="truncate mr-5">View All Tasks</span> 
                                                 <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-lucide="arrow-right" class="w-4 h-4"></i> </span></a>
                                             </button>
@@ -193,7 +193,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="leads-view.php" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
@@ -203,7 +203,7 @@
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CMail }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="salesman-list.php" class="font-medium whitespace-nowrap">{{ lead.Salesman.first_name }}</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ lead.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
                             </td>
@@ -310,7 +310,7 @@
                         <tr class="intro-x">
                            
                              <td class="w-60">
-                                <a href="opportunity-view.php" class="font-medium whitespace-nowrap text-primary">{{ opportunity.Company }}</a>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ opportunity.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Phone }} / {{ opportunity.Email }}</div>
                                 
                             </td>
@@ -326,7 +326,7 @@
                             </td>
                             
                             <td class="w-60">
-                                <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary text-primary">{{ opportunity.Salesman.first_name }}</a>
+                                <a href="" class="font-medium whitespace-nowrap text-primary text-primary">{{ opportunity.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.email }}</div>
                             </td>
@@ -438,7 +438,7 @@
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="clients-view.php" class="font-medium whitespace-nowrap">{{ client.Company }}</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ client.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Phone }} / {{ client.Email }}</div>
                                
                             </td>
@@ -566,7 +566,7 @@
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="project-view.php" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Phone }} / {{ project.Email }}</div>
                                 
                             </td>
@@ -577,7 +577,7 @@
                            
                             
                             <td class="w-64">
-                             <a href="salesman-view.php" class="font-medium whitespace-nowrap text-primary">{{ project.Salesman.first_name }}</a>
+                             <a href="" class="font-medium whitespace-nowrap text-primary">{{ project.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Salesman.Mobile }} / {{ project.Salesman.email }}</div>
                             </td>
 
@@ -726,7 +726,7 @@
                                                     {% for u in upcoming %}
                                                     <tr>
                                                         <td>{{ u.AddedDate }}</td>
-                                                         <td class="text-primary"><a href="meeting-upcoming-details.php">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
+                                                         <td class="text-primary"><a href="">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
                                                         <td>{{ u.Lead.Salesman.first_name }}<br>
                                                         {{ u.Lead.Salesman.Qid }}</td>
                                                         <td>{{ u.Mode }}</td>

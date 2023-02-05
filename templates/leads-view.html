@@ -491,6 +491,7 @@
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="modal-content">
                     {% csrf_token %}
+                    <input type="hidden" name="id" id="id">
                     <div class="modal-header">
                         <h2 class="font-medium text-base mr-auto">Update Status</h2>
                     </div>

@@ -424,11 +424,19 @@ def list_leads(request):
     setmeeting()
     leads = Lead.objects.filter(Lead_Status=0).filter(Status=1)
     if request.method == 'POST' :
-        id = request.POST.get('id')
-        lead = Lead.objects.get(id=id)
-        lead.Status = 0
-        lead.save()
-        return redirect('list-lead')
+        if request.POST.get('id') :
+            id = request.POST.get('id')
+            lead = Lead.objects.get(id=id)
+            lead.Status = 0
+            lead.save()
+            return redirect('list-lead')
+        if request.POST.get('c'):
+            c = request.POST.get('c')
+            lead= Lead.objects.get(id=c)
+            lead.Status = 3
+            lead.save()
+            return redirect('list-lead')
+
     context = {
         'leads' : leads
     }

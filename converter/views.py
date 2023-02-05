@@ -11,7 +11,13 @@ from administrator.views import setreport
 
 @login_required
 def list_opertunities(request):
-    opertunities = Lead.objects.filter(Lead_Status=1)
+    opertunities = Lead.objects.filter(Lead_Status=1).filter(Status=1)
+    if request.method == 'POST':
+        c = request.POST.get('c')
+        lead= Lead.objects.get(id=c)
+        lead.Status = 3
+        lead.save()
+        return redirect('list-opportunities')
     return render(request,'opportunity-list.html',{'opertunitunities':opertunities})
 
 #################################################################################
@@ -355,7 +361,13 @@ def view_completed_task(request,tid):
 
 @login_required
 def client_list(request):
-    clients = Lead.objects.filter(Lead_Status=2)
+    clients = Lead.objects.filter(Lead_Status=2).filter(Status=1)
+    if request.method == 'POST':
+        c = request.POST.get('c')
+        lead= Lead.objects.get(id=c)
+        lead.Status = 3
+        lead.save()
+        return redirect('clients')
     return render(request,'clients.html',{'clients':clients})
 
 #################################################################################
@@ -465,7 +477,13 @@ def reject(request):
 
 @login_required
 def projects(request):
-    projects = Lead.objects.filter(Lead_Status=3)
+    projects = Lead.objects.filter(Lead_Status=3).filter(Status=1)
+    if request.method == 'POST':
+        c = request.POST.get('c')
+        lead= Lead.objects.get(id=c)
+        lead.Status = 3
+        lead.save()
+        return redirect('projects')
     return render(request,'projects-list.html',{'projects':projects})
 
 #################################################################################

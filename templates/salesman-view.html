@@ -121,7 +121,7 @@
                 <div class="col-span-12 2xl:col-span-9">
                     <div class="grid grid-cols-12 gap-6"> -->
                         <!-- BEGIN: Wizard Layout -->
-    <div class="intro-y box py-10 sm:py-20 mt-5">
+    <div class="intro-y box mt-5">
         
        
         <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Proposal</h2>
@@ -646,8 +646,11 @@
     
  </div>
 </div>
+</div>
+</div>
+</div>
 
-    
+<div class="intro-y box mt-5">   
 
 
 <!-- previous meeting -->
@@ -663,7 +666,7 @@
                                                     <tr>
                                                         <th class="whitespace-nowrap">Date</th>
                                                         <th class="whitespace-nowrap">Company Name</th>
-                                                        <th class="whitespace-nowrap">Salesman</th>
+                                                        <!-- <th class="whitespace-nowrap">Salesman</th> -->
                                                         <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                         <th class="whitespace-nowrap">Time </th>
                                                         
@@ -677,8 +680,8 @@
                                                     <tr>
                                                         <td>1/12/2023</td>
                                                          <td class="text-primary"><a href="{% url 'p-meeting-d' p.id %}">{{ p.Lead.Company }}<br>{{ p.Lead.Phone }} / {{ p.Lead.Email }}</a></td>
-                                                        <td>{{ p.Lead.Salesman.first_name }}<br>
-                                                         {{ p.Lead.Salesman.Qid }}</td>
+                                                        <!-- <td>{{ p.Lead.Salesman.first_name }}<br> -->
+                                                         <!-- {{ p.Lead.Salesman.Qid }}</td> -->
                                                         <td>Online</td>
                                                         <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
                                                         
@@ -716,7 +719,7 @@
                                                     <tr>
                                                         <th class="whitespace-nowrap">Date</th>
                                                         <th class="whitespace-nowrap">Company Name</th>
-                                                        <th class="whitespace-nowrap">Salesman Name</th>
+                                                        <!-- <th class="whitespace-nowrap">Salesman Name</th> -->
                                                         <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                         <th class="whitespace-nowrap">Time </th>
                                                         
@@ -727,8 +730,8 @@
                                                     <tr>
                                                         <td>{{ u.AddedDate }}</td>
                                                          <td class="text-primary"><a href="">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
-                                                        <td>{{ u.Lead.Salesman.first_name }}<br>
-                                                        {{ u.Lead.Salesman.Qid }}</td>
+                                                        <!-- <td>{{ u.Lead.Salesman.first_name }}<br> -->
+                                                        <!-- {{ u.Lead.Salesman.Qid }}</td> -->
                                                         <td>{{ u.Mode }}</td>
                                                         <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
                                                        
@@ -748,7 +751,7 @@
 
 <!-- pending task -->
 {% if ptasks %}
-  <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Pending Task</h2>
+  <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 30px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Pending Task</h2>
         
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
@@ -769,11 +772,11 @@
                     <tr>
                         
                         <th class="whitespace-nowrap">COMPANY NAME</th>
-                        <th class="whitespace-nowrap">REFERENCE (LEAD REFERENCE)</th>
+                        <th class="whitespace-nowrap">LEAD REFERENCE</th>
                        
-                        <th class="whitespace-nowrap">
+                        <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
-                        </th>
+                        </th> -->
                          <th class="whitespace-nowrap" >TASK TITLE</th>
                          
                         <th class="whitespace-nowrap"style="text-align: left;"> PRIORITY </th>
@@ -795,11 +798,11 @@
                                  
                             </td>
                            
-                           <td class="w-60">
+                           <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Salesman.email }}</div>
-                            </td>
+                            </td> -->
                             <td class="w-60 text-center">
                                 <div class="pr-16">{{ task.Title }}</div>
                             </td>
@@ -895,9 +898,11 @@
     </div>
 {% endif %}
 
+<div class="intro-y box mt-5">
+
     <!-- upcoming meeting -->
 {% if ctasks %}
-      <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Completed Task</h2>
+      <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 30px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Completed Task</h2>
        
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
@@ -915,11 +920,11 @@
                             <input class="form-check-input" type="checkbox">
                         </th> -->
                         <th class="whitespace-nowrap">COMPANY NAME</th>
-                        <th class="whitespace-nowrap">REFERENCE (LEAD REFERENCE)</th>
+                        <th class="whitespace-nowrap">LEAD REFERENCE</th>
                        
-                        <th class="whitespace-nowrap">
+                        <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
-                        </th>
+                        </th> -->
                          <th class="whitespace-nowrap">TASK TITLE</th>
                         <th class="whitespace-nowrap"> PRIORITY </th>
                         <th class="whitespace-nowrap mob" style="text-align: center;"> TASK COMPLETED DATE </th>
@@ -940,11 +945,11 @@
                                  
                             </td>
                            
-                           <td class="w-60">
+                           <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.email }}</div>
-                            </td>
+                            </td> -->
                             <td class="w-60">
                                 <div class="pr-16">{{ task.Title }}</div>
                             </td>

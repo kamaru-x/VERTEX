@@ -254,9 +254,7 @@
                                                                                     </td>
                                                                                     <td>Direct</td>
                                                                                     <td class="text-primary">{{ p.From | time:"" }} - {{ p.To | time:"" }}</td>   
-                                                                                    <td>
-                                                                                        Target Achieved
-                                                                                    </td>
+                                                                                    {% if p.Update_Date %}<td>Status updated</td>{% else %}<td>Status not updated</td>{% endif %}
                                                                                     <td class="table-report__action">
                                                                                         <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 

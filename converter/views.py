@@ -11,7 +11,7 @@ from administrator.views import setreport
 
 @login_required
 def list_opertunities(request):
-    opertunities = Lead.objects.filter(Lead_Status=1).filter(Status=1)
+    opertunities = Lead.objects.filter(Lead_Status=1).filter(Status=1).order_by('-id')
     if request.method == 'POST':
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
@@ -217,7 +217,7 @@ def create_task(request):
 
 @login_required
 def pending_task(request):
-    tasks = Task.objects.filter(Task_Status=0).filter(Status=1)
+    tasks = Task.objects.filter(Task_Status=0).filter(Status=1).order_by('-id')
     user = request.user.id
     ip = setip(request)
     d = dt.today()
@@ -263,7 +263,7 @@ def pending_task(request):
 
 @login_required
 def completed_task(request):
-    tasks = Task.objects.filter(Task_Status=1)
+    tasks = Task.objects.filter(Task_Status=1).order_by('-id')
     return render(request,'task-completed.html',{'tasks':tasks})
 
 #################################################################################
@@ -361,7 +361,7 @@ def view_completed_task(request,tid):
 
 @login_required
 def client_list(request):
-    clients = Lead.objects.filter(Lead_Status=2).filter(Status=1)
+    clients = Lead.objects.filter(Lead_Status=2).filter(Status=1).order_by('-id')
     if request.method == 'POST':
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
@@ -477,7 +477,7 @@ def reject(request):
 
 @login_required
 def projects(request):
-    projects = Lead.objects.filter(Lead_Status=3).filter(Status=1)
+    projects = Lead.objects.filter(Lead_Status=3).filter(Status=1).order_by('-id')
     if request.method == 'POST':
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)

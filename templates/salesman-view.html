@@ -223,6 +223,21 @@
                     </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i> -->
+                        <div style="text-align: center;">No Leads available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
         {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
@@ -335,6 +350,21 @@
                         </tr>
                     {% endfor %}
                     </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i> -->
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
             </table>
         </div>
         {% endif %}
@@ -465,6 +495,21 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i> -->
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
         {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
@@ -589,6 +634,21 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i> -->
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
         {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
@@ -678,20 +738,23 @@
                                                 <tbody>
                                                     {% for p in previous %}
                                                     <tr>
-                                                        <td>1/12/2023</td>
+                                                        <td>{{ p.AddedDate }}</td>
                                                          <td class="text-primary"><a href="{% url 'p-meeting-d' p.id %}">{{ p.Lead.Company }}<br>{{ p.Lead.Phone }} / {{ p.Lead.Email }}</a></td>
                                                         <!-- <td>{{ p.Lead.Salesman.first_name }}<br> -->
                                                          <!-- {{ p.Lead.Salesman.Qid }}</td> -->
-                                                        <td>Online</td>
+                                                        <td>{{ p.Mode }}</td>
                                                         <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
                                                         
                                                         
-                                                        <td>Status updated</td>
+                                                        {% if p.Update_Date %}<td>Status not updated</td>{% else %}<td>Status updated</td>{% endif %}
                                                         <td class="table-report__action">
                                                             <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                             <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                                             </a>
-                                                            <a href="#" class="text-primary" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                            {% if p.Update_Date %}
+                                                            {% else %}
+                                                                <a class="text-primary" style="cursor: pointer;" onclick="pop('{{p.id}}')" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                                            {% endif %}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -699,6 +762,21 @@
                                                 </tbody>
                                             </table>
                                         </div>
+{% else %}
+<div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+    <table class="table table-report -mt-2">
+        <tbody>
+            <tr class="intro-x width"> 
+                <td class=" width" style="width:100%;">
+                    <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                        background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                    </i> -->
+                <div style="text-align: center;">No data available!</div>
+                </td>   
+            </tr>    
+        </tbody>
+    </table>
+</div>
 {% endif %}
                                     
 
@@ -743,7 +821,22 @@
                                     
 
                                 </div>
-                            </div>  
+                            </div>
+{% else %}
+<div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+    <table class="table table-report -mt-2">
+        <tbody>
+            <tr class="intro-x width"> 
+                <td class=" width" style="width:100%;">
+                    <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                        background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                    </i> -->
+                <div style="text-align: center;">No data available!</div>
+                </td>   
+            </tr>    
+        </tbody>
+    </table>
+</div>  
 {% endif %} 
 
 <div class="intro-y box mt-5">  
@@ -985,6 +1078,21 @@
 
         </div>
         <!-- END: Content -->
+{% else %}
+<div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+    <table class="table table-report -mt-2">
+        <tbody>
+            <tr class="intro-x width"> 
+                <td class=" width" style="width:100%;">
+                    <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                        background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                    </i> -->
+                <div style="text-align: center;">No data available!</div>
+                </td>   
+            </tr>    
+        </tbody>
+    </table>
+</div>
 {% endif %}
          <!-- BEGIN: New Order Modal -->
     <div id="new-order-modal1" class="modal" tabindex="-1" aria-hidden="true">
@@ -1034,9 +1142,11 @@
         </div>
     </div>
     <!-- END: New Order Modal -->
-     <!-- BEGIN: New Order Modal -->
+    <!-- BEGIN: New Order Modal -->
     <div id="new-order-modal2" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
+            <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">Add Update</h2>
@@ -1047,27 +1157,30 @@
                          <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
                        <i data-lucide="calendar" class="w-4 h-4"></i>
                     </div>
-                      <input type="text" class="datepicker pl-12" data-single-mode="true" style="width: 100%!important;">
+                      <input type="date" name="udate" class=" pl-12" data-single-mode="true" style="width: 100%!important;">
                     </div>
-                    
-                    
-                    
                      <div class="col-span-12">
                         <label for="pos-form-2" class="form-label">Description</label>
-                       <textarea id="update-profile-form-5" class="form-control" placeholder="Description"></textarea>
+                       <textarea id="update-profile-form-5" name="udescription" class="form-control" placeholder="Description"></textarea>
+                    </div>
+                    <div class="col-span-12">
+                        <label for="pos-form-2" class="form-label">Participents</label>
+                        <input name="participents" id="pos-form-3" type="text" class="form-control flex-1" placeholder="Participents">
                     </div>
                 </div>
                 <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span class="text-primary mr-1">Upload a file</span> or drag and drop 
-                        <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                    <input type="file" name="attachment" multiple class="w-full h-full top-0 left-0 absolute opacity-0">
                  </div>
 
+                 <input type="hidden" id="id" name="id">
 
                 <div class="modal-footer text-right">
                     <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
-                    <button type="button" class="btn btn-primary w-32">Add Update</button>
+                    <button type="submit" class="btn btn-primary w-32">Add Update</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <!-- END: New Order Modal -->
@@ -1083,5 +1196,10 @@
         }
         
         </style>
+        <script>
+            function pop(id){
+                $('#id').val(id)
+            }
+        </script>
     </body>
 {% endblock content %}

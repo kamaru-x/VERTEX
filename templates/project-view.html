@@ -91,13 +91,13 @@
                                                         <div class="text-base">{{ lead.To_Project | date:"d M Y" }}</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                <!-- <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Status</div>
                                                     <div class="mt-1.5 flex items-center">
                                                         <div class="text-base">Hot</div>
                                                         
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 
                                                
                                                
@@ -185,7 +185,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                        2/10/2023
+                                    {{ product.Date }}
                                 </div>
                             </td>
                             <td class="w-64 text-primary">
@@ -434,9 +434,7 @@
                                                         <td>{{ p.Mode }}</td>
                                                         <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
                                                         
-                                                        <td>
-                                                            Target Achieved
-                                                        </td>
+                                                        {% if p.Update_Date %}<td>Status not updated</td>{% else %}<td>Status updated</td>{% endif %}
 
                                                         <td class="table-report__action">
                                                             <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">

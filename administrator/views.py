@@ -128,7 +128,7 @@ def add_category(request):
 
 @login_required
 def list_category(request):
-    categories = Category.objects.filter(Status=1)
+    categories = Category.objects.filter(Status=1).order_by('-id')
 
     if request.method == 'POST':
         id = request.POST.get('id')
@@ -147,7 +147,7 @@ def list_category(request):
 @login_required
 def view_category(request,cid):
     category = Category.objects.get(id=cid)
-    products = Product.objects.filter(Category=category).filter(Status=1)
+    products = Product.objects.filter(Category=category).filter(Status=1).order_by('-id')
     if request.method == 'POST':
         id = request.POST.get('id')
         product = Product.objects.get(id=id)
@@ -222,7 +222,7 @@ def add_product(request):
 
 @login_required
 def list_products(request):
-    products = Product.objects.filter(Status=1)
+    products = Product.objects.filter(Status=1).order_by('-id')
     if request.method == 'POST' :
         id = request.POST.get('id')
         product = Product.objects.get(id=id)
@@ -300,7 +300,7 @@ def add_salesman(request):
 @login_required
 def list_salesman(request):
     setreport()
-    salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True)
+    salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True).order_by('-id')
     reports = Salesman_Report.objects.filter(Status=1)
     if request.method == 'POST' :
         id = request.POST.get('id')
@@ -352,6 +352,30 @@ def salesman_view(request,sid):
     projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3)
     p_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=0)
     c_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=1)
+
+    if request.POST.get('udate'):
+        udate = request.POST.get('udate')
+        udescription = request.POST.get('udescription')
+        participents = request.POST.get('participents')
+        id = request.POST.get('id')
+        meeting = Lead_Schedule.objects.get(id=id)
+        meeting.Update_Description = udescription
+        meeting.Update_Date = udate
+        meeting.Members = participents
+        meeting.save()
+
+        attachment = request.FILES.getlist('attachment')
+        for a in attachment:
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
+            attach.save()
+            meeting.Attachment.add(attach)
+            meeting.save()
+
+        return redirect('/salesman-view/%s/' %salesman.id)
 
     previous = []
     upcoming = []
@@ -422,7 +446,7 @@ def add_lead(request):
 @login_required
 def list_leads(request):
     setmeeting()
-    leads = Lead.objects.filter(Lead_Status=0).filter(Status=1)
+    leads = Lead.objects.filter(Lead_Status=0).filter(Status=1).order_by('-id')
     if request.method == 'POST' :
         if request.POST.get('id') :
             id = request.POST.get('id')

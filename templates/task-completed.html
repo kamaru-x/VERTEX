@@ -81,7 +81,7 @@
                             </td>
                            
                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
+                                <a href="{% url 'salesman-view' task.Lead.Salesman.id %}" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.email }}</div>
                             </td>

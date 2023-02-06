@@ -217,7 +217,7 @@ def create_task(request):
 
 @login_required
 def pending_task(request):
-    tasks = Task.objects.filter(Task_Status=0).filter(Status=1).order_by('-id')
+    tasks = Task.objects.filter(Task_Status=0).filter(Status=1).order_by('Due_Date')
     user = request.user.id
     ip = setip(request)
     d = dt.today()
@@ -263,7 +263,7 @@ def pending_task(request):
 
 @login_required
 def completed_task(request):
-    tasks = Task.objects.filter(Task_Status=1).order_by('-id')
+    tasks = Task.objects.filter(Task_Status=1).order_by('-Completed_Date')
     return render(request,'task-completed.html',{'tasks':tasks})
 
 #################################################################################

@@ -138,7 +138,7 @@ USE_TZ = True
 STATIC_DIR = os.path.join(BASE_DIR,'static/')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [STATIC_DIR]
-STATIC_ROOT = BASE_DIR / "GeneralWebsite/static"
+STATIC_ROOT = BASE_DIR / "Vertex/static"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

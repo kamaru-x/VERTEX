@@ -15,7 +15,7 @@
                                 </span>
                                 <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button>
                             </div> -->
-                            <div class="alert alert-danger show flex items-center mb-2" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> This Salesman has 3 tasks pending!<button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
+                            {% if t_count %}<div class="alert alert-danger show flex items-center mb-2" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> This Salesman has {{ t_count }} tasks pending!<button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>{% endif %}
                         </div>
                         <div class="mt-14 mb-3 grid grid-cols-12 sm:gap-10 intro-y" style="background: #fff;">
                             <div class="col-span-12 sm:col-span-6 md:col-span-4 py-6 sm:pl-5 md:pl-0 lg:pl-5 relative text-center sm:text-left">
@@ -193,7 +193,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="{% url 'view-lead' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
@@ -313,6 +313,7 @@
                         <th class="whitespace-nowrap">COMPANY NAME</th>
                         <th class="whitespace-nowrap">LEAD REFERENCE</th>
                         <th class="text-center whitespace-nowrap">DATE OF OPPORTUNITY CONVERSION</th>
+                        <th class="text-center whitespace-nowrap">MEETINGS</th>
                         
                         <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
@@ -325,7 +326,7 @@
                         <tr class="intro-x">
                            
                              <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ opportunity.Company }}</a>
+                                <a href="{% url 'view-opportunity' opportunity.id %}" class="font-medium whitespace-nowrap text-primary">{{ opportunity.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Phone }} / {{ opportunity.Email }}</div>
                                 
                             </td>
@@ -338,6 +339,10 @@
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
                                     {{ opportunity.To_Opertunity }}
                                 </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ opportunity.Previous_Meetings }}</span></div> 
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ opportunity.Upcoming_Meetings }}</span></div>
                             </td>
                             
                             <!-- <td class="w-60">
@@ -457,7 +462,8 @@
                         <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
                         </th> -->
-                        <th class="whitespace-nowrap" style="text-align: center;">STATUS </th>
+                        <th class="text-center whitespace-nowrap" style="text-align: center;">MEETINGS</th>
+                        <!-- <th class="whitespace-nowrap" style="text-align: center;">STATUS </th> -->
                         
                     </tr>
                 </thead>
@@ -468,7 +474,7 @@
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">{{ client.Company }}</a>
+                                <a href="{% url 'client-view' client.id %}" class="font-medium whitespace-nowrap">{{ client.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Phone }} / {{ client.Email }}</div>
                                
                             </td>
@@ -480,16 +486,20 @@
                             <td class="w-60 text-right">
                                 <div class="pr-16">{{ client.To_Client }}</div>
                             </td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ client.Previous_Meetings }}</span></div> 
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ client.Upcoming_Meetings }}</span></div>
+                            </td>
                             <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap text-primary">{{ client.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
                             </td> -->
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
                                      Waiting
                                 </div>
-                            </td> 
+                            </td>  -->
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -601,6 +611,7 @@
                         <th class="whitespace-nowrap">
                             <div class="pr-16" style="text-align: center;">PROPOSAL COMPLETED DATE</div>
                         </th>
+                        <th class="text-center whitespace-nowrap" style="text-align: center;">MEETINGS</th>
                        
                     </tr>
                 </thead>
@@ -611,7 +622,7 @@
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
+                                <a href="{% url 'view-project' project.id %}" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Phone }} / {{ project.Email }}</div>
                                 
                             </td>
@@ -628,7 +639,11 @@
 
                              <td class="w-40" style="text-align:center;">
                                 <div  class="font-medium whitespace-nowrap text-success">{{ project.To_Project }}</div>
-                            </td>  
+                            </td> 
+                            <td class="text-center">
+                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ project.Previous_Meetings }}</span></div> 
+                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ project.Upcoming_Meetings }}</span></div>
+                            </td> 
                         </tr>
                     {% endfor %}   
                 </tbody>
@@ -746,7 +761,7 @@
                                                         <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
                                                         
                                                         
-                                                        {% if p.Update_Date %}<td>Status not updated</td>{% else %}<td>Status updated</td>{% endif %}
+                                                        {% if p.Update_Date %}<td>Status updated</td>{% else %}<td>Status not updated</td>{% endif %}
                                                         <td class="table-report__action">
                                                             <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                             <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
@@ -807,7 +822,7 @@
                                                     {% for u in upcoming %}
                                                     <tr>
                                                         <td>{{ u.AddedDate }}</td>
-                                                         <td class="text-primary"><a href="">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
+                                                        <td class="text-primary"><a href="{% url 'upcoming-meetings' %}">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
                                                         <!-- <td>{{ u.Lead.Salesman.first_name }}<br> -->
                                                         <!-- {{ u.Lead.Salesman.Qid }}</td> -->
                                                         <td>{{ u.Mode }}</td>
@@ -881,7 +896,7 @@
                         <tr class="intro-x">
                             
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
+                                <a href="{% url 'pending-task-view' task.id %}" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                 </div>
                             </td>
@@ -919,8 +934,8 @@
                                     <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'pending-task-view' task.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
-                                    <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
+                                    <a style="cursor: pointer;" class="flex items-center text-success whitespace-nowrap mr-5" data-tw-toggle="modal" data-tw-target="#new-order-modal3" title="Mark As Completed">
+                                        <i onclick="call('{{task.id}}')" data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
                                     </a>
                                     
                                   
@@ -1026,7 +1041,7 @@
                         <tr class="intro-x">
                             
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
+                                <a href="{% url 'completed-task-view' task.id %}" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Phone }} / {{ task.Lead.Email }}</div>
                                 </div>
                             </td>
@@ -1184,6 +1199,42 @@
         </div>
     </div>
     <!-- END: New Order Modal -->
+        <!-- BEGIN: New Order Modal -->
+        <div id="new-order-modal3" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="font-medium text-base mr-auto">Add Remarks</h2>
+                    </div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="taskid" id="taskid">
+                    <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                        <div class="col-span-12">
+                            <label for="pos-form-1" class="form-label">Date</label>
+                             <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
+                           <i data-lucide="calendar" class="w-4 h-4"></i>
+                        </div>
+                          <input type="date" name="date" class="pl-12" data-single-mode="true" style="width: 100%!important;">
+                        </div>
+                        <div class="col-span-12">
+                            <label for="pos-form-2" class="form-label">Description</label>
+                            <textarea id="update-profile-form-5" name="update-description" class="form-control" placeholder="Description"></textarea>
+                        </div>
+                        <div class="col-span-12">
+                            <label for="pos-form-3" class="form-label">Upload File</label>
+                            <input id="pos-form-3" multiple name="attachment" type="file" class="form-control flex-1" placeholder="Upload File">
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
+                        <button type="submit" class="btn btn-primary w-32">Submit</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- END: New Order Modal -->
         <!-- BEGIN: Dark Mode Switcher-->
         <div data-url="top-menu-dark-dashboard-overview-3.html" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
             <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>
@@ -1200,6 +1251,9 @@
             function pop(id){
                 $('#id').val(id)
             }
+            function call(id){
+            $('#taskid').val(id);
+        }
         </script>
     </body>
 {% endblock content %}

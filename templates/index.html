@@ -24,8 +24,8 @@
                                             <div class="flex">
                                                 <i data-lucide="briefcase" class="report-box__icon text-primary"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="60% Success" style="float: left;"> {{ total_leads }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="40% Failed" style="float: left;"> {{ lead_success }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="60% Success" style="float: left;"> {{ lead_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="40% Failed" style="float: left;"> {{ lead_faild }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_leads }}</div>
@@ -43,8 +43,8 @@
                                             <div class="flex">
                                                 <i data-lucide="credit-card" class="report-box__icon text-pending"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="87% Success" style="float: left;"> 100 <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="13% Failed" style="float: left;"> 21 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="87% Success" style="float: left;"> {{ opportunity_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="13% Failed" style="float: left;"> {{ opportunity_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_opportunities }}</div>

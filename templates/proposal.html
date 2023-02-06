@@ -200,7 +200,11 @@
                                     <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                                     <div>
                                         <!-- <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</div> -->
+                                        {% if proposal.Scope %}
                                         <textarea class="form-control" name="scope" id="" cols="30" rows="10">{{ proposal.Scope }}</textarea>
+                                        {% else %}
+                                        <textarea class="form-control" name="scope" id="" cols="30" rows="10"></textarea>
+                                        {% endif %}
                                     </div>
     
                                     <div style="margin-left: auto;
@@ -244,7 +248,11 @@
                                     <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                                     <div>
                                         <!-- <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</div> -->
+                                        {% if proposal.Payment %}
                                         <textarea class="form-control" name="payment" id="" cols="30" rows="10">{{ proposal.Payment }}</textarea>
+                                        {% else %}
+                                        <textarea class="form-control" name="payment" id="" cols="30" rows="10"></textarea>
+                                        {% endif %}
                                     </div>
     
                                     <div style="margin-left: auto;
@@ -284,7 +292,11 @@
                                     <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                                     <div>
                                         <!-- <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</div> -->
+                                        {% if proposal.Exclusion %}
                                         <textarea class="form-control" name="exclusion" id="" cols="30" rows="10">{{ proposal.Exclusion }}</textarea>
+                                        {% else %}
+                                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10"></textarea>
+                                        {% endif %}
                                     </div>
     
                                     <div style="margin-left: auto;
@@ -323,7 +335,11 @@
                                     <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                                     <div>
                                         <!-- <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 20.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</div> -->
+                                        {% if proposal.Terms_Condition %}
                                         <textarea class="form-control" name="terms" id="" cols="30" rows="10">{{ proposal.Terms_Condition }}</textarea>
+                                        {% else %}
+                                        <textarea class="form-control" name="terms" id="" cols="30" rows="10"></textarea>
+                                        {% endif %}
                                     </div>
     
                                     <div style="margin-left: auto;

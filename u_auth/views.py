@@ -35,8 +35,8 @@ def dashboard(request):
     Lead_Faild = Lead.objects.filter(Status=3).filter(Lead_Status=1).count()
     Lead_Succes = total_leads - Lead_Faild
 
-    total_opportunities = Lead.objects.filter(Lead_Status=1).filter(Status=1).count()
-    Opportunity_Success = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
+    total_opportunities = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
+    Opportunity_Success = Lead.objects.filter(Lead_Status=3).filter(Status=1).count()
     Opportunity_Faild = Lead.objects.filter(Lead_Status=2).filter(Status=3).count()
 
     total_proposals = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()

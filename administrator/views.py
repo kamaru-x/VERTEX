@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report,Review
 from datetime import datetime,date
 from datetime import date as dt
 from django.contrib import messages
@@ -40,7 +40,7 @@ def setreport():
         report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
         report.Lead_Total = Lead.objects.filter(Salesman=user).count()
-        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).filter(Status=1).count()
+        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Status = 1).count()
         report.Lead_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).filter(Status=3).count()
 
         report.Opportunity_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
@@ -350,32 +350,61 @@ def salesman_view(request,sid):
     opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1)
     clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2)
     projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3)
-    p_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=0)
-    c_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=1)
+    p_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=0).order_by('Due_Date')
+    c_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=1).order_by('-Completed_Date')
 
-    if request.POST.get('udate'):
-        udate = request.POST.get('udate')
-        udescription = request.POST.get('udescription')
-        participents = request.POST.get('participents')
-        id = request.POST.get('id')
-        meeting = Lead_Schedule.objects.get(id=id)
-        meeting.Update_Description = udescription
-        meeting.Update_Date = udate
-        meeting.Members = participents
-        meeting.save()
+    t_count = len(p_task)
 
-        attachment = request.FILES.getlist('attachment')
-        for a in attachment:
-            if str(a).endswith(('.png', '.jpg', '.jpeg')):
-                format = 'image'
-            else:
-                format = 'file'
-            attach = Attachments(Attachment=a,Name=a,Format=format)
-            attach.save()
-            meeting.Attachment.add(attach)
+    if request.method == 'POST':
+
+        if request.POST.get('udate'):
+            udate = request.POST.get('udate')
+            udescription = request.POST.get('udescription')
+            participents = request.POST.get('participents')
+            id = request.POST.get('id')
+            meeting = Lead_Schedule.objects.get(id=id)
+            meeting.Update_Description = udescription
+            meeting.Update_Date = udate
+            meeting.Members = participents
             meeting.save()
 
-        return redirect('/salesman-view/%s/' %salesman.id)
+            attachment = request.FILES.getlist('attachment')
+            for a in attachment:
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
+                attach.save()
+                meeting.Attachment.add(attach)
+                meeting.save()
+
+            return redirect('/salesman-view/%s/' %salesman.id)
+    
+        if request.POST.get('taskid'):
+            tid = request.POST.get('taskid')
+            task = Task.objects.get(id=tid)
+            date = request.POST.get('date')
+            description = request.POST.get('update-description')
+            task.Task_Status = 1
+            task.Completed_Date = dt.today()
+            task.save()
+
+            data = Review(Task=task,Message=description,AddedDate=date)
+            data.save()
+
+            ld = Review.objects.last()
+            attachment = request.FILES.getlist('attachment')
+            for a in attachment:
+                if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                    format = 'image'
+                else:
+                    format = 'file'
+                attach = Attachments(Attachment=a,Name=a,Format=format)
+                attach.save()
+                ld.Attachments.add(attach)
+                ld.save()
+            return redirect('/salesman-view/%s/' %salesman.id)
 
     previous = []
     upcoming = []
@@ -395,6 +424,7 @@ def salesman_view(request,sid):
         'projects' : projects,
         'ptasks' : p_task,
         'ctasks' : c_task,
+        't_count' : t_count,
     }
     return render(request,'salesman-view.html',context)
 

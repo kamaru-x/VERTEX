@@ -179,7 +179,7 @@
                         <th class="whitespace-nowrap">SL. NO.</th>
                         <th class="whitespace-nowrap">COMPANY NAME</th>
                         <th class="whitespace-nowrap">PRIMARY CONTACT</th>
-                        <th class="whitespace-nowrap">SALESMAN</th>
+                        <!-- <th class="whitespace-nowrap">SALESMAN</th> -->
                         <th class="text-center whitespace-nowrap">MEETINGS</th>
                         <th class="text-center whitespace-nowrap">SUMMARY</th>
                         
@@ -202,11 +202,11 @@
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CNumber }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.CMail }}</div>
                             </td>
-                            <td class="w-60">
+                            <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap">{{ lead.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
-                            </td>
+                            </td> -->
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ lead.Previous_Meetings }}</span></div> 
                                 <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ lead.Upcoming_Meetings }}</span></div>
@@ -299,9 +299,9 @@
                         <th class="whitespace-nowrap">REFERENCE (LEAD REFERENCE)</th>
                         <th class="text-center whitespace-nowrap">DATE OF OPPORTUNITY CONVERSION</th>
                         
-                        <th class="whitespace-nowrap">
+                        <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
-                        </th>
+                        </th> -->
                         
                     </tr>
                 </thead>
@@ -325,11 +325,11 @@
                                 </div>
                             </td>
                             
-                            <td class="w-60">
+                            <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap text-primary text-primary">{{ opportunity.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ opportunity.Salesman.email }}</div>
-                            </td>
+                            </td> -->
                             
                             
                         </tr>
@@ -424,9 +424,9 @@
                          <th class="whitespace-nowrap">REFERENCE </th>
                         
                         <th class="text-center whitespace-nowrap" style="text-align: center;">PROPOSAL DATE</th>
-                        <th class="whitespace-nowrap">
+                        <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
-                        </th>
+                        </th> -->
                         <th class="whitespace-nowrap" style="text-align: center;">STATUS </th>
                         
                     </tr>
@@ -450,11 +450,11 @@
                             <td class="w-60 text-right">
                                 <div class="pr-16">{{ client.To_Client }}</div>
                             </td>
-                            <td class="w-60">
+                            <!-- <td class="w-60">
                                 <a href="" class="font-medium whitespace-nowrap text-primary">{{ client.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
-                            </td>
+                            </td> -->
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
                                      Waiting
@@ -550,9 +550,9 @@
                         <th class="whitespace-nowrap">COMPANY NAME</th>
                          <th class="whitespace-nowrap">REFERENCE </th>
                         <!-- <th class="text-center whitespace-nowrap" style="text-align: left;">Proposal Date</th> -->
-                        <th class="whitespace-nowrap">
+                        <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN </div>
-                        </th>
+                        </th> -->
                         <th class="whitespace-nowrap">
                             <div class="pr-16" style="text-align: center;">PROPOSAL COMPLETED DATE</div>
                         </th>
@@ -576,10 +576,10 @@
                                  
                            
                             
-                            <td class="w-64">
+                            <!-- <td class="w-64">
                              <a href="" class="font-medium whitespace-nowrap text-primary">{{ project.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Salesman.Mobile }} / {{ project.Salesman.email }}</div>
-                            </td>
+                            </td> -->
 
                              <td class="w-40" style="text-align:center;">
                                 <div  class="font-medium whitespace-nowrap text-success">{{ project.To_Project }}</div>
@@ -657,7 +657,7 @@
 
 {% if previous %}
 <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
-        color: #1e40af; padding-top: 100px; padding-bottom:10px;">Previous Meeting</h2>
+        color: #1e40af; padding-top: 50px; padding-bottom:10px;">Previous Meeting</h2>
          <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br><br>
                                     
                                         <div class="overflow-x-auto">
@@ -897,8 +897,6 @@
         <!-- END: Pagination -->
     </div>
 {% endif %}
-
-<div class="intro-y box mt-5">
 
     <!-- upcoming meeting -->
 {% if ctasks %}

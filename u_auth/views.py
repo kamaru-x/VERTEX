@@ -32,9 +32,18 @@ def signin(request):
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
     total_leads = Lead.objects.all().count()
-    total_opportunities = Lead.objects.filter(Lead_Status=1).count()
-    total_proposals = Lead.objects.filter(Lead_Status=2).count()
-    total_clients = Lead.objects.filter(Lead_Status=3).count()
+    Lead_Faild = Lead.objects.filter(Status=3).filter(Lead_Status=1).count()
+    Lead_Succes = total_leads - Lead_Faild
+
+    total_opportunities = Lead.objects.filter(Lead_Status=1).filter(Status=1).count()
+    Opportunity_Success = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
+    Opportunity_Faild = Lead.objects.filter(Lead_Status=2).filter(Status=3).count()
+
+    total_proposals = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
+    Proposal_Success = Lead.objects.filter(Lead_Status=3).count()
+    Proposal_Faild = Lead.objects.filter(Lead_Status=3).filter(Status=3).count()
+
+    total_clients = Lead.objects.filter(Lead_Status=3).filter(Status=1).count()
     meetings_today = Lead_Schedule.objects.filter(AddedDate=date.today()).count()
 
     context = {
@@ -42,7 +51,13 @@ def dashboard(request):
         'total_opportunities' : total_opportunities,
         'total_proposals' : total_proposals,
         'total_clients' : total_clients,
-        'meetings_today' : meetings_today
+        'meetings_today' : meetings_today,
+        'lead_success' : Lead_Succes,
+        'lead_faild' : Lead_Faild,
+        'opportunity_success' : Opportunity_Success,
+        'opportunity_failed' : Opportunity_Faild,
+        'proposal_success' : Proposal_Success,
+        'proposal_failed' : Proposal_Faild,
     }
 
     return render(request,'index.html',context)

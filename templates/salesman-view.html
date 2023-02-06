@@ -15,7 +15,7 @@
                                 </span>
                                 <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button>
                             </div> -->
-                            <div class="alert alert-danger show flex items-center mb-2" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> You have 3 tasks pending!<button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
+                            <div class="alert alert-danger show flex items-center mb-2" role="alert"> <i data-lucide="alert-circle" class="w-6 h-6 mr-2"></i> This Salesman has 3 tasks pending!<button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close"> <i data-lucide="x" class="w-4 h-4"></i> </button></div>
                         </div>
                         <div class="mt-14 mb-3 grid grid-cols-12 sm:gap-10 intro-y" style="background: #fff;">
                             <div class="col-span-12 sm:col-span-6 md:col-span-4 py-6 sm:pl-5 md:pl-0 lg:pl-5 relative text-center sm:text-left">
@@ -32,7 +32,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="text-sm 2xl:text-base font-medium -mb-1 text-primary"> Hi {{ salesman.first_name }}, <span class="text-slate-600 dark:text-slate-300 font-normal">welcome back!</span> </div>
+                                <div class="text-sm 2xl:text-base font-medium -mb-1 text-primary">{{ salesman.first_name }}, <span class="text-slate-600 dark:text-slate-300 font-normal">{{ salesman.Mobile }}</span> </div>
                                 <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-slate-600 dark:text-slate-300 leading-3 mt-14 2xl:mt-24"> Total Target Assigned <i data-lucide="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i> </div>
                                 <div class="2xl:flex mt-5 mb-3">
                                     <div class="flex items-center justify-center sm:justify-start">
@@ -81,8 +81,8 @@
                                 <div class="max-h-full xl:overflow-y-auto box mt-5">
                                     <div class="xl:sticky top-0 px-5 pt-5 pb-6">
                                         <div class="flex items-center">
-                                            <div class="text-lg font-medium truncate mr-5">Taskbar</div>
-                                            <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw" class="w-4 h-4 mr-3"></i> Refresh </a>
+                                            <div class="text-lg font-medium truncate mr-5">Pending Tasks</div>
+                                            <!-- <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw" class="w-4 h-4 mr-3"></i> Refresh </a> -->
                                         </div>
                                         
                                     </div>
@@ -98,10 +98,10 @@
                                                 </div>
                                             </div>
                                             {% endfor %}
-                                            <button class="btn btn-outline-secondary col-span-12 border-slate-300 dark:border-darkmode-300 border-dashed relative justify-start mb-2"><a href="">
-                                                <span class="truncate mr-5">View All Tasks</span> 
-                                                <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-lucide="arrow-right" class="w-4 h-4"></i> </span></a>
-                                            </button>
+                                            <a href="{% url 'task-staff-view' salesman.id %}"><button class="btn btn-outline-secondary col-span-12 border-slate-300 dark:border-darkmode-300 border-dashed relative justify-start mb-2"><a href="">
+                                                <a href="{% url 'task-staff-view' salesman.id %}"><span class="truncate mr-5">View All Tasks</span></a>
+                                                <a href="{% url 'task-staff-view' salesman.id %}"><span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-lucide="arrow-right" class="w-4 h-4"></i> </span></a></a>
+                                            </button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -123,14 +123,14 @@
                         <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box py-10 sm:py-20 mt-5">
         
-        <br><br><hr>
+       
         <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Proposal</h2>
  -->
                         <div class="container" style="padding: 40px;">
 <ul class="nav nav-link-tabs" role="tablist">
     <li id="example-5-tab" class="nav-item flex-1" role="presentation">
         <button class="nav-link w-full py-2 active" data-tw-toggle="pill" data-tw-target="#example-tab-5" type="button" role="tab" aria-controls="example-tab-5" aria-selected="true">
-            Lead
+            Leads
         </button>
     </li>
     <li id="example-6-tab" class="nav-item flex-1" role="presentation">
@@ -180,7 +180,7 @@
                         <th class="whitespace-nowrap">COMPANY NAME</th>
                         <th class="whitespace-nowrap">PRIMARY CONTACT</th>
                         <th class="whitespace-nowrap">SALESMAN</th>
-                        <th class="text-center whitespace-nowrap">TOTAL MEETINGS</th>
+                        <th class="text-center whitespace-nowrap">MEETINGS</th>
                         <th class="text-center whitespace-nowrap">SUMMARY</th>
                         
                     </tr>

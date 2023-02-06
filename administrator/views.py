@@ -40,16 +40,16 @@ def setreport():
         report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
         report.Lead_Total = Lead.objects.filter(Salesman=user).count()
-        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Lead_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).filter(Status=1).count()
+        report.Lead_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).filter(Status=3).count()
 
         report.Opportunity_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Opportunity_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.Opportunity_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Opportunity_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).filter(Status=1).count()
+        report.Opportunity_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).filter(Status=3).count()
 
         report.Proposal_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.Proposal_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.Proposal_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.Proposal_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=3).count()
+        report.Proposal_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=3).filter(Status=3).count()
 
         report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
         report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()

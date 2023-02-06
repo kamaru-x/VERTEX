@@ -36,12 +36,24 @@ def setreport():
         user = User.objects.get(id=i)
         report = Salesman_Report.objects.get(Salesman=user)
 
+        lead_total = 0
+        lead_failed = 0
+        lead_success = 0
+
+        opportunity_total = 0
+        opportunity_failed = 0
+        opportunity_success = 0
+
+        proposal_total = 0
+        proposal_failed = 0
+        proposal_success = 0
+
         report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
         report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
-        report.Lead_Total = Lead.objects.filter(Salesman=user).count()
-        report.Lead_Succes = Lead.objects.filter(Salesman=user).filter(Status = 1).count()
-        report.Lead_Faild = Lead.objects.filter(Salesman=user).filter(Lead_Status=4).filter(Status=3).count()
+        report.Lead_Total = Lead.objects.filter(Salesman=user,Status=1).count()
+        report.Lead_Faild = Lead.objects.filter(Salesman=user,Lead_Status=3).count()
+        report.Lead_Succes = Lead.objects.filter(Salesman=user,Status=1).count() 
 
         report.Opportunity_Total = Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
         report.Opportunity_Success = Lead.objects.filter(Salesman=user).filter(Lead_Status=2).filter(Status=1).count()

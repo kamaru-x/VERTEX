@@ -815,6 +815,7 @@
                                                         <!-- <th class="whitespace-nowrap">Salesman Name</th> -->
                                                         <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                         <th class="whitespace-nowrap">Time </th>
+                                                        <th class="whitespace-nowrap">Description</th>
                                                         
                                                     </tr>
                                                 </thead>
@@ -827,7 +828,7 @@
                                                         <!-- {{ u.Lead.Salesman.Qid }}</td> -->
                                                         <td>{{ u.Mode }}</td>
                                                         <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
-                                                       
+                                                        <td>{{ u.Description }}</td>
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>

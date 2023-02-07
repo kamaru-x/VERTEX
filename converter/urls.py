@@ -20,6 +20,7 @@ urlpatterns = [
     path('client-view/<int:cid>/',views.client_view,name='client-view'),
 
     path('accept/<int:lid>/',views.accept,name='accept'),
+    path('reject/<int:lid>/',views.reject,name='reject'),
 
     path('projects/',views.projects,name='projects'),
     path('projects/<int:pid>/',views.view_project,name='view-project'),

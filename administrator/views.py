@@ -24,65 +24,65 @@ def setcount():
         category.save()
 
 
-def setreport():
-    users = User.objects.filter(is_salesman=True)
+# def setreport():
+#     users = User.objects.filter(is_salesman=True)
 
-    ids = []
+#     ids = []
 
-    for u in users:
-        ids.append(u.id)
+#     for u in users:
+#         ids.append(u.id)
     
-    for i in ids:
-        user = User.objects.get(id=i)
-        report = Salesman_Report.objects.get(Salesman=user)
+#     for i in ids:
+#         user = User.objects.get(id=i)
+#         report = Salesman_Report.objects.get(Salesman=user)
 
-        lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0).count()
-        lead_failed = Lead.objects.filter(Salesman=user,Lead_Status=1,Status=3).count()
-        lead_success = lead_total - lead_failed
+#         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0).count()
+#         lead_failed = Lead.objects.filter(Salesman=user,Lead_Status=1,Status=3).count()
+#         lead_success = lead_total - lead_failed
 
-        opportunity_total = lead_success
-        opportunity_failed = Lead.objects.filter(Salesman=user,Lead_Status=2,Status=3).count()
-        opportunity_success = opportunity_total - opportunity_failed
+#         opportunity_total = lead_success
+#         opportunity_failed = Lead.objects.filter(Salesman=user,Lead_Status=2,Status=3).count()
+#         opportunity_success = opportunity_total - opportunity_failed
 
-        proposal_total = opportunity_success
-        proposal_failed = Lead.objects.filter(Salesman=user,Lead_Status=3,Status=3).count()
-        proposal_success = proposal_total - proposal_failed
+#         proposal_total = opportunity_success
+#         proposal_failed = Lead.objects.filter(Salesman=user,Lead_Status=3,Status=3).count()
+#         proposal_success = proposal_total - proposal_failed
 
-                            ##################################
+#                             ##################################
 
-        report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
-        report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
+#         report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
+#         report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
-        report.Lead_Total = lead_total
-        report.Lead_Faild = lead_failed
-        report.Lead_Succes = lead_success
+#         report.Lead_Total = lead_total
+#         report.Lead_Faild = lead_failed
+#         report.Lead_Succes = lead_success
 
-        report.Opportunity_Total = opportunity_total
-        report.Opportunity_Success = opportunity_success
-        report.Opportunity_Faild = opportunity_failed
+#         report.Opportunity_Total = opportunity_total
+#         report.Opportunity_Success = opportunity_success
+#         report.Opportunity_Faild = opportunity_failed
 
-        report.Proposal_Total = proposal_total
-        report.Proposal_Success = proposal_success
-        report.Proposal_Faild = proposal_failed
+#         report.Proposal_Total = proposal_total
+#         report.Proposal_Success = proposal_success
+#         report.Proposal_Faild = proposal_failed
 
-        report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-        report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-        report.SV_Failed = 145168465 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+#         report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+#         report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+#         report.SV_Failed = 145168465 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
 
-        schedules = Lead_Schedule.objects.filter(Lead__Salesman=user)
-        previous = []
-        upcoming = []
+#         schedules = Lead_Schedule.objects.filter(Lead__Salesman=user)
+#         previous = []
+#         upcoming = []
 
-        for schedule in schedules:
-            if schedule.AddedDate < dt.today() :
-                previous.append(schedule)
-            elif schedule.AddedDate >= dt.today() :
-                upcoming.append(schedule)
+#         for schedule in schedules:
+#             if schedule.AddedDate < dt.today() :
+#                 previous.append(schedule)
+#             elif schedule.AddedDate >= dt.today() :
+#                 upcoming.append(schedule)
 
-        report.Upcoming_Meetings = len(upcoming)
-        report.Previous_Meetings = len(previous)
+#         report.Upcoming_Meetings = len(upcoming)
+#         report.Previous_Meetings = len(previous)
 
-        report.save()
+#         report.save()
 
 def setmeeting():
     leads = Lead.objects.filter(Status=1)
@@ -313,7 +313,6 @@ def add_salesman(request):
 
 @login_required
 def list_salesman(request):
-    setreport()
     salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True).order_by('-id')
     reports = Salesman_Report.objects.filter(Status=1)
     if request.method == 'POST' :
@@ -475,6 +474,11 @@ def add_lead(request):
         Email=email,Phone=phone,ECDate=ecdate,ESValue=esvalue,State=state,CName=cname,CNumber=cnumber,
         CMail=cmail,Salesman=s)
         data.save()
+
+        report = Salesman_Report.objects.get(Salesman=s)
+        report.Lead_Total = report.Lead_Total+1
+        report.save()
+
         messages.success(request,'created new lead')
         return redirect('list-lead')
 
@@ -497,12 +501,23 @@ def list_leads(request):
             lead = Lead.objects.get(id=id)
             lead.Status = 0
             lead.save()
+
+            salesman = lead.Salesman
+            report = Salesman_Report.objects.get(Salesman=salesman)
+            report.Lead_Total = report.Lead_Total - 1
+            report.save()
             return redirect('list-lead')
+        
         if request.POST.get('c'):
             c = request.POST.get('c')
             lead= Lead.objects.get(id=c)
             lead.Status = 3
             lead.save()
+
+            salesman = lead.Salesman
+            report = Salesman_Report.objects.get(Salesman=salesman)
+            report.Lead_Faild = report.Lead_Faild + 1
+            report.save()
             return redirect('list-lead')
 
     context = {
@@ -647,6 +662,11 @@ def opertunity_convertion(request,lid):
     lead.Lead_Status = 1
     lead.To_Opertunity = date.today()
     lead.save()
+    salesman = lead.Salesman
+    report = Salesman_Report.objects.get(Salesman=salesman)
+    report.Lead_Succes = report.Lead_Succes + 1
+    report.Opportunity_Total = report.Opportunity_Total + 1
+    report.save()
     return redirect('list-opportunities')
 
 #################################################################################

@@ -5,8 +5,6 @@ from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
 
-from administrator.views import setreport
-
 # Create your views here.
 
 @login_required
@@ -17,6 +15,11 @@ def list_opertunities(request):
         lead= Lead.objects.get(id=c)
         lead.Status = 3
         lead.save()
+
+        salesman = lead.Salesman
+        report = Salesman_Report.objects.get(Salesman=salesman)
+        report.Opportunity_Faild = report.Opportunity_Faild + 1
+        report.save()
         return redirect('list-opportunities')
     return render(request,'opportunity-list.html',{'opertunitunities':opertunities})
 
@@ -161,6 +164,12 @@ def create_proposal(request,lid):
         proposal.Lead.To_Client = d
         proposal.Lead.To_Proposal = d
         proposal.Lead.save()
+
+        salesman = lead.Salesman
+        report = Salesman_Report.objects.get(Salesman=salesman)
+        report.Opportunity_Success = report.Opportunity_Success + 1
+        report.Proposal_Total = report.Proposal_Total + 1
+        report.save()
         return redirect('clients')
 
     # pro = Proposal.objects.get(lead=lead)
@@ -465,13 +474,28 @@ def accept(request,lid):
     lead.Lead_Status = 3
     lead.To_Project = dt.today()
     lead.save()
+
+    salesman = lead.Salesman
+    report = Salesman_Report.objects.get(Salesman=salesman)
+    report.Proposal_Success = report.Proposal_Success + 1
+    report.save()
     return redirect('projects')
 
 #################################################################################
 
 @login_required
-def reject(request):
-    pass
+def reject(request,lid):
+    lead = Lead.objects.get(id=lid)
+    lead.Lead_Status = 3
+    lead.To_Project = dt.today()
+    lead.Status = 3
+    lead.save()
+
+    salesman = lead.Salesman
+    report = Salesman_Report.objects.get(Salesman=salesman)
+    report.Proposal_Faild = report.Proposal_Faild + 1
+    report.save()
+    return redirect('clients')
 
 #################################################################################
 
@@ -677,7 +701,6 @@ def previous_meetings(request):
 
 @login_required
 def meeting_staff_list(request):
-    setreport()
     salesmans = User.objects.filter(is_salesman=True)
     reports = Salesman_Report.objects.filter(Status=1)
     return render(request,'meeting-staff.html',{'salesmans':salesmans,'reports':reports})
@@ -714,7 +737,6 @@ def previous_meeting_details(request,mid):
 #################################################################################
 
 def task_staff(request):
-    setreport()
     salesmans = User.objects.filter(is_salesman=True)
     reports = Salesman_Report.objects.filter(Status=1)
     return render(request,'task-staff.html',{'salesmans':salesmans,'reports':reports})

@@ -123,6 +123,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
+        {% if proposal.Products.all %}
          <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>
@@ -174,6 +175,22 @@
                 </tbody>
             </table>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
 
     </div>
@@ -245,7 +262,7 @@
                                         {% if proposal.Payment %}
                                         <textarea class="form-control" name="payment" id="" cols="30" rows="10">{{ proposal.Payment }}</textarea>
                                         {% else %}
-                                        <textarea class="form-control" name="payment" id="" cols="30" rows="10"></textarea>
+                                        <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms"></textarea>
                                         {% endif %}
                                     </div>
     
@@ -288,7 +305,7 @@
                                         {% if proposal.Exclusion %}
                                         <textarea class="form-control" name="exclusion" id="" cols="30" rows="10">{{ proposal.Exclusion }}</textarea>
                                         {% else %}
-                                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10"></textarea>
+                                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion"></textarea>
                                         {% endif %}
                                     </div>
     
@@ -330,7 +347,7 @@
                                         {% if proposal.Terms_Condition %}
                                         <textarea class="form-control" name="terms" id="" cols="30" rows="10">{{ proposal.Terms_Condition }}</textarea>
                                         {% else %}
-                                        <textarea class="form-control" name="terms" id="" cols="30" rows="10"></textarea>
+                                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condetion"></textarea>
                                         {% endif %}
                                     </div>
     

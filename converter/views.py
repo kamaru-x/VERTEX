@@ -486,7 +486,6 @@ def accept(request,lid):
 @login_required
 def reject(request,lid):
     lead = Lead.objects.get(id=lid)
-    lead.Lead_Status = 3
     lead.To_Project = dt.today()
     lead.Reject_Date = dt.today()
     lead.save()

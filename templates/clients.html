@@ -61,9 +61,15 @@
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
                         </td>
                         <td class="text-center">
+                            {% if client.Reject_Date %}
                             <div class="flex items-center justify-center whitespace-nowrap text-warning">
-                                Pending approval
+                                {{ client.Reject_Date }}
                             </div>
+                            {% else %}
+                            <div class="flex items-center justify-center whitespace-nowrap text-warning">
+                                pending approval
+                            </div>
+                            {% endif %}
                         </td>
                         
                         <td class="table-report__action">

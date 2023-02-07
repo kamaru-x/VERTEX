@@ -488,14 +488,14 @@ def reject(request,lid):
     lead = Lead.objects.get(id=lid)
     lead.Lead_Status = 3
     lead.To_Project = dt.today()
-    lead.Status = 3
+    lead.Reject_Date = dt.today()
     lead.save()
 
     salesman = lead.Salesman
     report = Salesman_Report.objects.get(Salesman=salesman)
     report.Proposal_Faild = report.Proposal_Faild + 1
     report.save()
-    return redirect('clients')
+    return redirect('/client-view/%s/' %lead.id)
 
 #################################################################################
 

@@ -75,6 +75,7 @@ class Lead(models.Model):
     To_Proposal = models.DateField(null=True)
     To_Client = models.DateField(null=True)
     To_Project = models.DateField(null=True)
+    Reject_Date = models.DateField(null=True)
 
     def __str__(self):
         return self.Company

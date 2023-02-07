@@ -197,15 +197,7 @@
                         </div>
                         <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
                            
-                            <div class="mt-5">
-                                
-
-                                    <!-- <div class="mt-1.5 flex items-center">
-                                             <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>             
-                                     </div><br> -->
-
-
-                                    
+                            <div class="">                                    
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;"></label> {{ proposal.Scope }}
                                     </div>
 
@@ -231,13 +223,9 @@
                         </div>
                         <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
                            
-                            <div class="mt-5">
+                            <div class="">
                                 
                                 <div>
-                                     <!-- <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>                
-                                    </div><br> -->
-
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;"></label>{{ proposal.Payment }}</div>
                                 </div>
                                 
@@ -255,19 +243,10 @@
                         </div>
                         <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
                           
-                            <div class="mt-5">
-                                
+                            <div class="">  
                                 <div>
-
-                                      <!-- <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>
-                                    </div><br> -->
-
-
-                                    
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;"></label>{{ proposal.Exclusion }}</div>
-                                </div>
-                                
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -282,16 +261,9 @@
                         </div>
                         <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">
                            
-                            <div class="mt-5">
+                            <div class="">
                                 
                                 <div>
-
-                                      <!-- <div class="mt-1.5 flex items-center">
-                                         <div class="text-base btn-rounded btn-primary-soft px-3 py-1">12/3/2023</div>
-                                    </div><br> -->
-
-
-                                    
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;"></label> {{ proposal.Terms_Condition }}</div>
                                 </div>
                                 
@@ -309,6 +281,7 @@
                     <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                         
                         </div>
+                    {% if lead_update %}
                     {% for update in lead_update %}
                         <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                                 <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
@@ -369,6 +342,22 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        {% else %}
+                        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+                            <table class="table table-report -mt-2">
+                                <tbody>
+                                    <tr class="intro-x width"> 
+                                        <td class=" width" style="width:100%;">
+                                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                                            </i>
+                                        <div style="text-align: center;">No data available!</div>
+                                        </td>   
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
                     </div>
     </div>
     
@@ -381,7 +370,8 @@
  <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af; padding-top:100px;">Previous Meetings</h2>
          <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br>
-        
+
+        {% if previous %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                     <div class="col-span-12">
@@ -438,6 +428,22 @@
                 
             </div>
         </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i> -->
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
 <!-- /previous meeting -->
 
  
@@ -446,7 +452,7 @@
  <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af; padding-top:100px;">Upcoming Meetings</h2>
        
-        
+        {% if upcoming %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
                                     <div class="col-span-12">
@@ -490,6 +496,22 @@
                                     <!--  -->
                                 </div>
                             </div>
+                            {% else %}
+                            <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible mt-5">
+                                <table class="table table-report -mt-2">
+                                    <tbody>
+                                        <tr class="intro-x width"> 
+                                            <td class=" width" style="width:100%;">
+                                                <!-- <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                                    background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                                                </i> -->
+                                            <div style="text-align: center;">No data available!</div>
+                                            </td>   
+                                        </tr>    
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% endif %}
                         </div>
 
     <!-- END: Wizard Layout -->

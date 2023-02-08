@@ -137,7 +137,9 @@
 
 
                                     
-                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label>{{ meeting.Update_Description }}</div>
+                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label>   {{ meeting.Update_Description }}</div>
+                                    <br>
+                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Participents: </label>  {{ meeting.Members }}</div>
                                 </div>
                                 {% if meeting.Attachment.all %}
                                 <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-5">

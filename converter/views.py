@@ -14,6 +14,8 @@ def list_opertunities(request):
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
         lead.Status = 3
+        lead.Cancel_Date = dt.today()
+        lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
 
         salesman = lead.Salesman
@@ -375,6 +377,8 @@ def client_list(request):
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
         lead.Status = 3
+        lead.Cancel_Date = dt.today()
+        lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
         return redirect('clients')
     return render(request,'clients.html',{'clients':clients})
@@ -505,6 +509,8 @@ def projects(request):
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
         lead.Status = 3
+        lead.Cancel_Date = dt.today()
+        lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
         return redirect('projects')
     return render(request,'projects-list.html',{'projects':projects})

@@ -72,7 +72,7 @@ class Lead(models.Model):
     Previous_Meetings = models.IntegerField(default=0)
 
     Cancel_Date = models.DateField(null=True)
-    Cancel_Reason = models.TextField()
+    Cancel_Reason = models.TextField(null=True,blank=True)
     
     To_Opertunity = models.DateField(null=True)
     To_Proposal = models.DateField(null=True)

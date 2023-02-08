@@ -20,5 +20,12 @@ urlpatterns = [
     path('list-lead/',views.list_leads,name='list-lead'),
     path('edit-lead/<int:lid>/',views.edit_lead,name='edit-lead'),
     path('view-lead/<int:lid>',views.view_lead,name='view-lead'),
+
     path('opertunity-convertion/<int:lid>/',views.opertunity_convertion,name='convert-op'),
+
+    path('canceld-leads/',views.canceld_leads,name='canceld-leads'),
+    path('canceled-view/<int:lid>/',views.view_canceled,name='view-canceled'),
+    path('canceled-opportunity-view/<int:lid>/',views.canceled_opertunity_view,name='canceled-opportunity'),
+    path('canceled-client-view/<int:lid>/',views.canceled_client_view,name='canceled-client'),
+    path('canceled-project-view/<int:lid>/',views.canceled_project_view,name='canceled-project'),
 ]

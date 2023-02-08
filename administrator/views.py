@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report,Review
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report,Review,Proposal
 from datetime import datetime,date
 from datetime import date as dt
 from django.contrib import messages
@@ -512,6 +512,8 @@ def list_leads(request):
             c = request.POST.get('c')
             lead= Lead.objects.get(id=c)
             lead.Status = 3
+            lead.Cancel_Date = date.today()
+            lead.Cancel_Reason = request.POST.get('reason')
             lead.save()
 
             salesman = lead.Salesman
@@ -670,3 +672,142 @@ def opertunity_convertion(request,lid):
     return redirect('/opportunity-view/%s' %lead.id)
 
 #################################################################################
+
+def canceld_leads(request):
+    leads = Lead.objects.filter(Lead_Status=0,Status=3)
+    opportunities = Lead.objects.filter(Status=3,Lead_Status=1)
+    clients = Lead.objects.filter(Status=3,Lead_Status=2)
+    projects = Lead.objects.filter(Status=3,Lead_Status=3)
+
+    context = {
+        'leads':leads,
+        'opportunities':opportunities,
+        'clients':clients,
+        'projects':projects,
+    }
+
+    return render(request,'canceld.html',context)
+
+#################################################################################
+
+@login_required
+def view_canceled(request,lid):
+    lead = Lead.objects.get(id=lid)
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    lead_update = Lead_Update.objects.filter(Lead=lead)
+    # attachments = Attachments.objects.all()
+    schedules = Lead_Schedule.objects.filter(Lead=lead)
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate >= dt.today() :
+            upcoming.append(schedule)
+
+    context = {
+        'lead' : lead,
+        'lead_update' : lead_update,
+        # 'attachments' : attachments,
+        'previous' : previous,
+        'upcoming' : upcoming,
+    }
+    return render(request,'canceled_lead_view.html',context)
+
+#################################################################################
+
+@login_required
+def canceled_opertunity_view(request,lid):
+    lead = Lead.objects.get(id=lid)
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    lead_update = Lead_Update.objects.filter(Lead=lead)
+    # attachments = Attachments.objects.all()
+    schedules = Lead_Schedule.objects.filter(Lead=lead)
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate >= dt.today() :
+            upcoming.append(schedule)
+
+    context = {
+        'lead' : lead,
+        'lead_update' : lead_update,
+        # 'attachments' : attachments,
+        'previous' : previous,
+        'upcoming' : upcoming,
+    }
+    return render(request,'canceled_opportunity_view.html',context)
+
+#################################################################################
+
+@login_required
+def canceled_client_view(request,lid):
+    lead = Lead.objects.get(id=lid)
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    lead_update = Lead_Update.objects.filter(Lead=lead)
+    proposal = Proposal.objects.get(Lead=lead)
+    # attachments = Attachments.objects.all()
+    schedules = Lead_Schedule.objects.filter(Lead=lead)
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate >= dt.today() :
+            upcoming.append(schedule)
+
+    context = {
+        'lead' : lead,
+        'lead_update' : lead_update,
+        # 'attachments' : attachments,
+        'previous' : previous,
+        'upcoming' : upcoming,
+        'proposal' : proposal,
+    }
+    return render(request,'canceled_client_view.html',context)
+
+#################################################################################
+
+@login_required
+def canceled_project_view(request,lid):
+    lead = Lead.objects.get(id=lid)
+    user = request.user.id
+    d = dt.today()
+    ip = setip(request)
+    lead_update = Lead_Update.objects.filter(Lead=lead)
+    proposal = Proposal.objects.get(Lead=lead)
+    # attachments = Attachments.objects.all()
+    schedules = Lead_Schedule.objects.filter(Lead=lead)
+
+    previous = []
+    upcoming = []
+
+    for schedule in schedules:
+        if schedule.AddedDate < dt.today() :
+            previous.append(schedule)
+        elif schedule.AddedDate >= dt.today() :
+            upcoming.append(schedule)
+
+    context = {
+        'lead' : lead,
+        'lead_update' : lead_update,
+        # 'attachments' : attachments,
+        'previous' : previous,
+        'upcoming' : upcoming,
+        'proposal' : proposal,
+    }
+    return render(request,'canceled_project_view.html',context)

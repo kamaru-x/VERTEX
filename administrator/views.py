@@ -667,6 +667,6 @@ def opertunity_convertion(request,lid):
     report.Lead_Succes = report.Lead_Succes + 1
     report.Opportunity_Total = report.Opportunity_Total + 1
     report.save()
-    return redirect('list-opportunities')
+    return redirect('/opportunity-view/%s' %lead.id)
 
 #################################################################################

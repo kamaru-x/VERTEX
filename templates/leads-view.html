@@ -95,7 +95,7 @@
                                             <a class="text-slate-500 ml-4" href=""></a>
                                         </div>
                                         <!-- <div class="mt-4 text-slate-500 text-xs">Last updated 1 hour ago</div> -->
-                                        <a href="{% url 'convert-op' lead.id %}"><button class="btn btn-outline-secondary relative justify-start rounded-full w-60 mt-12" style="    background: #36a920; color:#fff;">
+                                        <a data-tw-toggle="modal" data-tw-target="#button-modal-preview"><button class="btn btn-outline-secondary relative justify-start rounded-full w-60 mt-12" style="    background: #36a920; color:#fff;">
                                             Convert to opportunity 
                                         <span class="w-8 h-8 absolute flex justify-center items-center  text-white rounded-full right-0 top-0 bottom-0 my-auto ml-auto mr-0.5"> <i data-lucide="arrow-right" class="w-4 h-4"></i> </span>
                                         </button></a>
@@ -558,6 +558,36 @@
         </div>
     </div>
     <!-- END: New Order Modal -->
+
+
+
+    <!-- BEGIN: Modal Toggle -->
+    <!-- <div class="text-center">
+        <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#button-modal-preview" class="btn btn-primary">Show Modal</a>
+    </div> -->
+    <!-- END: Modal Toggle -->
+    <!-- BEGIN: Modal Content -->
+    <div id="button-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <a data-tw-dismiss="modal" href="javascript:;">
+                    <i data-lucide="x" class="w-8 h-8 text-slate-400"></i>
+                </a>
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <i data-lucide="check-circle" class="w-16 h-16 text-success mx-auto mt-3"></i>
+                        <div class="text-3xl mt-5">ARE YOU SURE</div>
+                        <div class="text-slate-500 mt-2">you want to convert to opportunity</div>
+                    </div>
+                    <div class="px-5 pb-8 text-center">
+                        <button type="button" data-tw-dismiss="modal" class="btn btn-danger w-32 mr-1">Cancel</button>
+                        <a href="{% url 'convert-op' lead.id %}"><button type="button" data-tw-dismiss="modal" class="btn btn-success text-white w-24">Confirm</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Modal Content -->                   
 
         <!-- BEGIN: Dark Mode Switcher-->
         <div data-url="top-menu-dark-regular-form.html" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">

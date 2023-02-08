@@ -108,8 +108,8 @@
                                     <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'pending-task-view' p.id %}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                     </a>
-                                 <a class="flex items-center text-success whitespace-nowrap mr-5" href="#" title="Mark As Completed">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
+                                    <a style="cursor: pointer;" class="flex items-center text-success whitespace-nowrap mr-5" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Mark As Completed">
+                                        <i onclick="call('{{p.id}}')" data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
                                     </a>
                                 </div>
                             </td>  
@@ -169,7 +169,7 @@
 
                          <td class="table-report__action">
                             <div class="flex justify-center items-center">
-                                <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'pending-task-view' p.id %}">
+                                <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'completed-task-view' p.id %}">
                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                 </a>
                             </div>
@@ -190,6 +190,42 @@
             <div class="dark-mode-switcher__toggle border"></div>
         </div>
         <!-- END: Dark Mode Switcher-->
+    <!-- BEGIN: New Order Modal -->
+    <div id="new-order-modal2" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="font-medium text-base mr-auto">Add Remarks</h2>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="taskid" id="taskid">
+                <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                    <div class="col-span-12">
+                        <label for="pos-form-1" class="form-label">Date</label>
+                         <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400" style="height: 42px;">
+                       <i data-lucide="calendar" class="w-4 h-4"></i>
+                    </div>
+                      <input type="date" name="date" class="pl-12" data-single-mode="true" style="width: 100%!important;">
+                    </div>
+                    <div class="col-span-12">
+                        <label for="pos-form-2" class="form-label">Description</label>
+                        <textarea id="update-profile-form-5" name="update-description" class="form-control" placeholder="Description"></textarea>
+                    </div>
+                    <div class="col-span-12">
+                        <label for="pos-form-3" class="form-label">Upload File</label>
+                        <input id="pos-form-3" multiple name="attachment" type="file" class="form-control flex-1" placeholder="Upload File">
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
+                    <button type="submit" class="btn btn-primary w-32">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END: New Order Modal -->
         <style>
         .dark-mode-switcher{
             display: none;
@@ -199,5 +235,10 @@
         }
         
     </style>
+    <script>
+        function call(id){
+            $('#taskid').val(id);
+        }
+    </script>
     </body>
 {% endblock content %}

@@ -170,7 +170,7 @@ def create_proposal(request,lid):
         report.Opportunity_Success = report.Opportunity_Success + 1
         report.Proposal_Total = report.Proposal_Total + 1
         report.save()
-        return redirect('clients')
+        return redirect('/client-view/%s' %lead.id)
 
     # pro = Proposal.objects.get(lead=lead)
     context = {
@@ -746,6 +746,31 @@ def task_staff_view(request,uid):
     salesman = User.objects.get(id=uid)
     pending = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=0)
     completed = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=1)
+
+    if request.method == "POST" :
+        tid = request.POST.get('taskid')
+        task = Task.objects.get(id=tid)
+        date = request.POST.get('date')
+        description = request.POST.get('update-description')
+        task.Task_Status = 1
+        task.Completed_Date = dt.today()
+        task.save()
+
+        data = Review(Task=task,Message=description,AddedDate=date)
+        data.save()
+
+        ld = Review.objects.last()
+        attachment = request.FILES.getlist('attachment')
+        for a in attachment:
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
+            attach.save()
+            ld.Attachments.add(attach)
+            ld.save()
+        return redirect('/task-staff/%s' %salesman.id)
     
     context = {
         'salesman' : salesman,

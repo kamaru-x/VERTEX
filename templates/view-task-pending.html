@@ -118,7 +118,7 @@
         <!-- BEGIN: Post Content -->
         <div class="intro-y col-span-12 lg:col-span-12">
            
-           {% if replayes %}
+           
             <div class="post intro-y overflow-hidden box mt-5 pb-5">
                 
                 <div class="post__content tab-content">
@@ -127,8 +127,8 @@
                     
                         <div class="post intro-y overflow-hidden box mt-5"><br><br>
                         
-                        <div  style="float:right; margin-right:20px;"><a data-tw-toggle="modal" data-tw-target="#new-order-modal"><button class="btn btn-primary shadow-md mr-2">Add Update</button></a></div><br><br>
-                        
+                        <div  style="float:right; margin-right:20px;"><a data-tw-toggle="modal" data-tw-target="#new-order-modal"><button class="btn btn-primary shadow-md mr-2 mb-5">Add Update</button></a></div><br><br>
+                {% if replayes %}                
                     {% for replay in replayes %}    
                         <div class="post__content tab-content">
                             <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">

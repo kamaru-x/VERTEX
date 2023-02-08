@@ -71,6 +71,9 @@ class Lead(models.Model):
     Upcoming_Meetings = models.IntegerField(default=0)
     Previous_Meetings = models.IntegerField(default=0)
 
+    Cancel_Date = models.DateField(null=True)
+    Cancel_Reason = models.TextField()
+    
     To_Opertunity = models.DateField(null=True)
     To_Proposal = models.DateField(null=True)
     To_Client = models.DateField(null=True)

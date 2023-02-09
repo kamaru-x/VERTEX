@@ -242,8 +242,8 @@
                                                                             <thead class="table-dark">
                                                                                 <tr>
                                                                                     <th class="whitespace-nowrap">Date</th>
-                                                                                    <th class="whitespace-nowrap">Company Name</th>
-                                                                                    <th class="whitespace-nowrap">Salesman</th>
+                                                                                    <th class="whitespace-nowrap">Meeting Reference</th>
+                                                                                    <th class="whitespace-nowrap">Description</th>
                                                                                     <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                                                     <th class="whitespace-nowrap">Time</th>
                                                                                     
@@ -257,13 +257,10 @@
                                                                                 <tr>
                                                                                     <td>{{ p.AddedDate | date:"d M Y" }}</td>
                                                                                      <td class="w-60 text-primary">
-                                                                                        <a href="" class="font-medium whitespace-nowrap ">{{ p.Lead.Company }}</a>
-                                                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ p.Lead.Phone }} / {{ p.Lead.Email }}</div>   
+                                                                                        MEETING-{{ p.id }}   
                                                                                     </td>
                                                                                     <td class="w-60">
-                                                                                    <a href="" class="font-medium whitespace-nowrap text-primary">{{ p.Lead.Salesman.first_name }}</a>
-                                                                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ p.Lead.Salesman.Mobile }}</div>
-                                                                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ p.Lead.Salesman.email }}</div>
+                                                                                        {{ p.Description }}
                                                                                     </td>
                                                                                     <td>Direct</td>
                                                                                     <td class="text-primary">{{ p.From | time:"" }} - {{ p.To | time:"" }}</td>   
@@ -317,11 +314,11 @@
                                                                             <thead class="table-dark">
                                                                                 <tr>
                                                                                     <th class="whitespace-nowrap">Date</th>
-                                                                                    <th class="whitespace-nowrap">Company Name</th>
-                                                                                    <th class="whitespace-nowrap">Salesman</th>
+                                                                                    <th class="whitespace-nowrap">Meeting Reference</th>
+                                                                                    <th class="whitespace-nowrap">Description</th>
                                                                                     <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                                                     <th class="whitespace-nowrap">Time</th>
-                                                                                    <th class="whitespace-nowrap">Description</th>
+                                                                                    <!-- <th class="whitespace-nowrap">Description</th> -->
                                                                                    
                                                                                 </tr>
                                                                             </thead>
@@ -330,18 +327,14 @@
                                                                                  <tr>
                                                                                     <td>{{ u.AddedDate | date:"d M Y" }}</td>
                                                                                     <td class="w-60 text-primary">
-                                                                                        <a href="" class="font-medium whitespace-nowrap">{{ u.Lead.Company }}</a>
-                                                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Phone }} / {{ u.Lead.Email }} </div>
-                                                                                        
+                                                                                        MEETING-{{ u.id }}
                                                                                     </td>
                                                                                     <td class="w-60">
-                                                                                    <a href="" class="font-medium whitespace-nowrap text-primary">{{ u.Lead.Salesman.first_name }}</a>
-                                                                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.Mobile }}</div>
-                                                                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.email }}</div>
+                                                                                        {{ u.Description }}
                                                                                     </td>
                                                                                     <td>{{ u.Mode }}</td>
                                                                                     <td class="text-primary">{{ u.From }} - {{ u.To }}</td> 
-                                                                                    <td>{{ u.Description }}</td>   
+                                                                                    <!-- <td>{{ u.Description }}</td>    -->
                                                                                 </tr>
                                                                                 {% endfor %}
                                                                             </tbody>

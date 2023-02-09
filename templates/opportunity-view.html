@@ -323,10 +323,10 @@
                                                                                 <tr>
                                                                                     <th class="whitespace-nowrap">Date</th>
                                                                                     <th class="whitespace-nowrap">Meeting Reference</th>
-                                                                                    <!-- <th class="whitespace-nowrap">Description</th> -->
+                                                                                    <th class="whitespace-nowrap">Description</th>
                                                                                     <th class="whitespace-nowrap">Mode Of Meeting</th>
                                                                                     <th class="whitespace-nowrap">Time</th>
-                                                                                    <th class="whitespace-nowrap">Description</th>
+                                                                                    <!-- <th class="whitespace-nowrap">Description</th> -->
                                                                                    
                                                                                 </tr>
                                                                             </thead>
@@ -337,12 +337,12 @@
                                                                                     <td class="w-60 text-primary">
                                                                                         MEETING-{{u.id}}
                                                                                     </td>
-                                                                                    <!-- <td class="w-60">
+                                                                                    <td class="w-60">
                                                                                         {{ u.Description }}
-                                                                                    </td> -->
+                                                                                    </td>
                                                                                     <td>{{ u.Mode }}</td>
                                                                                     <td class="text-primary">{{ u.From }} - {{ u.To }}</td> 
-                                                                                    <td>{{ u.Description }}</td>   
+                                                                                    <!-- <td>{{ u.Description }}</td>    -->
                                                                                 </tr>
                                                                                 {% endfor %}
                                                                             </tbody>

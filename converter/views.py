@@ -579,7 +579,7 @@ def view_project(request,pid):
                 meeting.Attachment.add(attach)
                 meeting.save()
 
-        return redirect('/client-view/%s' %lead.id)
+        return redirect('/projects/%s' %lead.id)
 
     schedules = Lead_Schedule.objects.filter(Lead=lead)
 

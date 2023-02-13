@@ -75,7 +75,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="{% url 'view-lead' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="{% url 'view-canceled' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
@@ -215,7 +215,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="{% url 'view-lead' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="{% url 'canceled-opportunity' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
@@ -364,7 +364,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="{% url 'view-lead' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="{% url 'canceled-client' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>
@@ -512,7 +512,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-60">
-                                <a href="{% url 'view-lead' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
+                                <a href="{% url 'canceled-project' lead.id %}" class="font-medium whitespace-nowrap text-primary">{{ lead.Company }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
                                 
                             </td>

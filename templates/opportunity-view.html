@@ -78,17 +78,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                                    <div class="text-slate-500 head">Mobile</div>
-                                                    <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">{{ lead.CNumber }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Salesman</div>
                                                     <div class="mt-1.5 flex items-center">
                                                         <div class="text-base">{{ lead.Salesman.first_name }}<br>{{ lead.Salesman.Mobile }}<br>{{ lead.Salesman.email }}</div>
                                                     </div>
                                                 </div>
+                                                <!-- <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                    <div class="text-slate-500 head">Mobile</div>
+                                                    <div class="mt-1.5 flex items-center">
+                                                        <div class="text-base">{{ lead.CNumber }}</div>
+                                                    </div>
+                                                </div> -->
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500 head">Date of Opportunity Conversion</div>
                                                     <div class="mt-1.5 flex items-center">
@@ -96,15 +96,42 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                                    <div class="text-slate-500 head">Status</div>
+                                                    <div class="text-slate-500 head">Address</div>
                                                     <div class="mt-1.5 flex items-center">
-                                                        <div class="text-base">Confirmed</div>
+                                                        <div class="text-base">{{ lead.Address }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                    <div class="text-slate-500 head">Closing Date</div>
+                                                    <div class="mt-1.5 flex items-center">
+                                                        <div class="text-base">{{ lead.ECDate | date:"d M Y" }}</div>
                                                         
                                                     </div>
                                                 </div>
-                                                
-                                               
-                                               
+                                                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                    <div class="text-slate-500 head">Expected Value</div>
+                                                    <div class="mt-1.5 flex items-center">
+                                                        <div class="text-base">{{ lead.ESValue }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                    <div class="text-slate-500 head">Primary Contact</div>
+                                                    <div class="mt-1.5 flex items-center">
+                                                        <div class="text-base">{{ lead.CName }}<br>
+                                                            {{ lead.CNumber }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                                                    <div class="text-slate-500 head">Status</div>
+                                                    <div class="mt-1.5 flex items-center">
+                                                        {% if lead.State == '1' %}
+                                                            <div class="text-base">Hot</div>
+                                                        {% else %}
+                                                            <div class="text-base">Cold</div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div> -->
 
                                                 <!-- <div class="col-span-12 sm:col-span-6 md:col-span-4">
                                                     <div class="text-slate-500">Phone</div>
@@ -190,7 +217,7 @@
                                                                         {% endif %}
                                                                         {% endfor %}
                                                                 
-                                                                <div class="dropdown ml-auto">
+                                                                <!-- <div class="dropdown ml-auto">
                                                                     <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i> </a>
                                                                     <div class="dropdown-menu w-40">
                                                                         <ul class="dropdown-content">
@@ -202,7 +229,7 @@
                                                                             </li>
                                                                         </ul>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                                 </div>
                                                             </div>

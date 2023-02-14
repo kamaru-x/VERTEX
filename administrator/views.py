@@ -201,14 +201,16 @@ def add_product(request):
     ip = setip(request)
 
     if r:
-        refer = f'PRODUCT-00{r.id+1}'
+        refer = f'PART-00{r.id+1}'
     else:
-        refer = 'PRODUCT-001'
+        refer = 'PART-001'
 
     if request.method == 'POST':
         category = request.POST.get('category')
         name = request.POST.get('name')
         price = request.POST.get('price')
+        sprice = request.POST.get('sprice')
+        description = request.POST.get('description')
 
         try:
             c = Category.objects.get(id=category)
@@ -216,7 +218,7 @@ def add_product(request):
             messages.error(request,'no category selected')
             return redirect('.')
 
-        value = Product(Date=date,AddedBy=user,Ip=ip,Category=c,Name=name,Price=price,Reference=refer)
+        value = Product(Date=date,AddedBy=user,Ip=ip,Category=c,Name=name,Buying_Price=price,Selling_Price=sprice,Reference=refer,Description=description)
         value.save()
         c.Products = c.Products+1
         c.save()
@@ -266,7 +268,9 @@ def edit_product(request,pid):
         c = Category.objects.get(id=category)
         product.Category = c
         product.Name = request.POST.get('name')
-        product.Price = request.POST.get('price')
+        product.Buying_Price = request.POST.get('price')
+        product.Selling_Price = request.POST.get('sprice')
+        product.Description = request.POST.get('description')
         product.save()
         setcount()
 

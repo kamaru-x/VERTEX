@@ -36,8 +36,10 @@ class Product(models.Model):
 
     Category = models.ForeignKey(Category,on_delete=models.DO_NOTHING,null=True)
     Name = models.CharField(max_length=50)
-    Price = models.FloatField()
+    Buying_Price = models.FloatField()
+    Selling_Price = models.FloatField(null=True)
     Reference = models.CharField(max_length=20)
+    Description = models.TextField(null=True)
 
     def __str__(self):
         return self.Name

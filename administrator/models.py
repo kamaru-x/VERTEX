@@ -37,7 +37,7 @@ class Product(models.Model):
     Category = models.ForeignKey(Category,on_delete=models.DO_NOTHING,null=True)
     Name = models.CharField(max_length=50)
     Buying_Price = models.FloatField()
-    Selling_Price = models.FloatField(null=True)
+    Selling_Price = models.FloatField(null=True,blank=True)
     Reference = models.CharField(max_length=20)
     Description = models.TextField(null=True)
 
@@ -146,7 +146,9 @@ class Proposal(models.Model):
     Ip = models.GenericIPAddressField(null=True,blank=True)
 
     Lead = models.ForeignKey(Lead,on_delete=models.DO_NOTHING)
-    Products = models.ManyToManyField(Product)
+    Reference = models.CharField(max_length=20)
+    # Products = models.ManyToManyField(Product)
+    Proposal_Status = models.IntegerField(default=10)
 
     Scope = models.TextField(null=True,blank=True)
     Payment = models.TextField(null=True,blank=True)
@@ -235,3 +237,12 @@ class Salesman_Report(models.Model):
 
     def __str__(self):
         return self.Salesman.first_name
+    
+#################################################################################
+
+class Proposal_Items(models.Model):
+    Proposal = models.ForeignKey(Proposal,on_delete=models.CASCADE)
+    Product = models.ForeignKey(Product,on_delete=models.DO_NOTHING)
+    Sell_Price = models.FloatField()
+    Quantity = models.IntegerField()
+    Total = models.FloatField()

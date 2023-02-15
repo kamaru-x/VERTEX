@@ -91,7 +91,7 @@ WSGI_APPLICATION = "VERTEX.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vertex',
+        'NAME': 'vertex_new',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',

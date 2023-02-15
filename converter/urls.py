@@ -5,7 +5,10 @@ urlpatterns = [
     path('opportunities',views.list_opertunities,name='list-opportunities'),
     path('opportunity-view/<int:lid>',views.view_opertunity,name='view-opportunity'),
 
+    path('set_proposal/<int:lid>/',views.proposal,name='set-proposal'),
     path('proposal/<int:lid>/',views.create_proposal,name='proposal'),
+    path('list-proposals/',views.list_proposals,name='list-proposals'),
+    path('view-proposal/<int:pid>/',views.view_proposal,name='view-proposal'),
 
     path('create-task/',views.create_task,name='create-task'),
     path('pending-task/',views.pending_task,name='pending-task'),
@@ -19,8 +22,8 @@ urlpatterns = [
     path('clients/',views.client_list,name='clients'),
     path('client-view/<int:cid>/',views.client_view,name='client-view'),
 
-    path('accept/<int:lid>/',views.accept,name='accept'),
-    path('reject/<int:lid>/',views.reject,name='reject'),
+    path('accept/<int:pid>/',views.accept,name='accept'),
+    path('reject/<int:pid>/',views.reject,name='reject'),
 
     path('projects/',views.projects,name='projects'),
     path('projects/<int:pid>/',views.view_project,name='view-project'),
@@ -39,5 +42,7 @@ urlpatterns = [
 
     path('previous-meeting-details/<int:mid>/',views.previous_meeting_details,name='p-meeting-d'),
 
-    path('r_p_p/<int:pid>/<int:id>/',views.remove_proposal_product,name='r_p_p')
+    path('r_p_p/<int:pid>/<int:id>/',views.remove_proposal_product,name='r_p_p'),
+
+    path('g-p-d/',views.get_product_data,name='g-p-d')
 ]

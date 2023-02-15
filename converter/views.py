@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items
 from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
 
 # Create your views here.
 
@@ -113,75 +115,122 @@ def view_opertunity(request,lid):
 #################################################################################
 
 @login_required
-def create_proposal(request,lid):
+def proposal(request,lid):
     products = Product.objects.all()
     lead = Lead.objects.get(id=lid)
     user = request.user.id
     d = dt.today()
     ip = setip(request)
+    r = Proposal.objects.last()
 
-    try :
-        proposal = Proposal.objects.get(Lead=lead)
-    except :
-        proposal = Proposal(Date=d,AddedBy=user,Ip=ip,Lead=lead)
-        proposal.save()
+    if r:
+        refer = f'PROPOSAL-00{r.id+1}'
+    else:
+        refer = 'PROPOSAL-001'
 
+    proposal = Proposal(Date=d,AddedBy=user,Ip=ip,Lead=lead,Reference=refer)
+    proposal.save()
 
+    return redirect('/proposal/%s/' %proposal.id)
 
+#################################################################################
+
+@login_required
+def create_proposal(request,lid):
+    products = Product.objects.all()
+    proposal = Proposal.objects.get(id=lid)
+    lead = proposal.Lead
+    pros = Proposal_Items.objects.filter(Proposal=proposal)
+    
     if request.method == 'POST':
         if request.POST.get('product'):
-            product = request.POST.get('product')
-            p = Product.objects.get(id=product)
-            proposal.Products.add(p)
-            proposal.save()
-            return redirect('/proposal/%s' %lead.id)
-        
+            p = request.POST.get('product')
+            pro = Product.objects.get(id=p)
+            quantity = request.POST.get('quantity')
+            price = request.POST.get('price')
+            total = request.POST.get('total')
+            product = Proposal_Items(Proposal=proposal,Product=pro,Quantity=quantity,Sell_Price=price,Total=total)
+            product.save()
+            return redirect('/proposal/%s' %proposal.id)
+
         if request.POST.get('scope'):
             proposal.Scope = request.POST.get('scope')
-            proposal.save()
-            return redirect('/proposal/%s' %lead.id)
-
-        if request.POST.get('payment'):
             proposal.Payment = request.POST.get('payment')
-            proposal.save()
-            return redirect('/proposal/%s' %lead.id)
-
-        if request.POST.get('exclusion'):
             proposal.Exclusion = request.POST.get('exclusion')
-            proposal.save()
-            return redirect('/proposal/%s' %lead.id)
-
-        if request.POST.get('terms'):
             proposal.Terms_Condition = request.POST.get('terms')
             proposal.save()
-            return redirect('/proposal/%s' %lead.id)
+            return redirect('list-proposals')
+        
+        if request.POST.get('id'):
+            id = request.POST.get('id')
+            item = Proposal_Items.objects.get(id=id)
+            item.delete()
+            return redirect('/proposal/%s' %proposal.id)
 
-        if request.POST.get('opportunity'):
-            proposal.Oppertunity = request.POST.get('opportunity')
-            proposal.save()
-            return redirect('/proposal/%s' %lead.id)
-
-    if proposal.Scope and proposal.Payment and proposal.Exclusion and proposal.Terms_Condition :
-        proposal.Lead.Lead_Status = 2
-        proposal.Lead.To_Client = d
-        proposal.Lead.To_Proposal = d
-        proposal.Lead.save()
-
-        salesman = lead.Salesman
-        report = Salesman_Report.objects.get(Salesman=salesman)
-        report.Opportunity_Success = report.Opportunity_Success + 1
-        report.Proposal_Total = report.Proposal_Total + 1
-        report.save()
-        return redirect('/client-view/%s' %lead.id)
-
-    # pro = Proposal.objects.get(lead=lead)
     context = {
         'products' : products,
-        # 'exclude' : exclude,
-        'proposal' : proposal,
-        # 'pro' : pro,
+        'pros' : pros
     }
     return render(request,'proposal.html',context)
+
+#################################################################################
+
+@login_required
+def list_proposals(request):
+    proposals = Proposal.objects.all()
+    return render(request,'list_proposal.html',{'proposals':proposals})
+
+#################################################################################
+
+@login_required
+def view_proposal(request,pid):
+    proposal = Proposal.objects.get(id=pid)
+    pros = Proposal_Items.objects.filter(Proposal=proposal)
+    context = {
+        'proposal' : proposal,
+        'pros' : pros,
+    }
+    return render(request,'proposal_view.html',context)
+
+#################################################################################
+
+@login_required
+def remove_proposal_product(request,pid,id):
+    product = Product.objects.get(id=id)
+    proposal = Proposal.objects.get(id=pid)
+    lid = proposal.Lead.id
+    return redirect('/proposal/%s' %lid)
+
+#################################################################################
+
+@login_required
+def accept(request,pid):
+    proposal = Proposal.objects.get(id=pid)
+    proposal.Proposal_Status = 1
+    proposal.Lead.Lead_Status = 2
+    proposal.save()
+    lead = proposal.Lead
+
+    salesman = proposal.Lead.Salesman
+    report = Salesman_Report.objects.get(Salesman=salesman)
+    report.Proposal_Success = report.Proposal_Success + 1
+    report.save()
+    return redirect('/client-view/%s' %lead.id)
+
+#################################################################################
+
+@login_required
+def reject(request,pid):
+    proposal = Proposal.objects.get(id=pid)
+    proposal.Proposal_Status = 0
+    proposal.save()
+    lead = proposal.Lead
+
+    salesman = proposal.Lead.Salesman
+    report = Salesman_Report.objects.get(Salesman=salesman)
+    report.Proposal_Faild = report.Proposal_Faild + 1
+    report.save()
+    return redirect('/view-proposal/%s' %proposal.id)
 
 #################################################################################
 
@@ -392,7 +441,7 @@ def client_view(request,cid):
     d = dt.today()
     ip = setip(request)
     lead_update = Lead_Update.objects.filter(Lead=lead)
-    proposal = Proposal.objects.get(Lead=lead)
+    proposals = Proposal.objects.filter(Lead=lead)
     # attachments = Attachments.objects.all()
 
     if request.method == 'POST':
@@ -466,39 +515,9 @@ def client_view(request,cid):
         # 'attachments' : attachments,
         'previous' : previous,
         'upcoming' : upcoming,
-        'proposal' : proposal,
+        'proposals' : proposals,
     }
     return render(request,'clients-view.html',context)
-
-#################################################################################
-
-@login_required
-def accept(request,lid):
-    lead = Lead.objects.get(id=lid)
-    lead.Lead_Status = 3
-    lead.To_Project = dt.today()
-    lead.save()
-
-    salesman = lead.Salesman
-    report = Salesman_Report.objects.get(Salesman=salesman)
-    report.Proposal_Success = report.Proposal_Success + 1
-    report.save()
-    return redirect('projects')
-
-#################################################################################
-
-@login_required
-def reject(request,lid):
-    lead = Lead.objects.get(id=lid)
-    lead.To_Project = dt.today()
-    lead.Reject_Date = dt.today()
-    lead.save()
-
-    salesman = lead.Salesman
-    report = Salesman_Report.objects.get(Salesman=salesman)
-    report.Proposal_Faild = report.Proposal_Faild + 1
-    report.save()
-    return redirect('/client-view/%s/' %lead.id)
 
 #################################################################################
 
@@ -828,14 +847,13 @@ def total_propose(request):
 
 #################################################################################
 
-@login_required
-def remove_proposal_product(request,pid,id):
-    product = Product.objects.get(id=id)
-    proposal = Proposal.objects.get(id=pid)
-    lid = proposal.Lead.id
+@csrf_exempt
+def get_product_data(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        pro = Product.objects.get(id=id)
 
-    proposal.Products.remove(product)
-    proposal.save()
-    return redirect('/proposal/%s' %lid)
+        product = {'id':pro.id,'price':pro.Buying_Price,'sprice':pro.Selling_Price}
+        return JsonResponse(product)
 
 #################################################################################

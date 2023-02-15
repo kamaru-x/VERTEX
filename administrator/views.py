@@ -201,9 +201,9 @@ def add_product(request):
     ip = setip(request)
 
     if r:
-        refer = f'PART-00{r.id+1}'
+        refer = f'PRODUCT-00{r.id+1}'
     else:
-        refer = 'PART-001'
+        refer = 'PRODUCT-001'
 
     if request.method == 'POST':
         category = request.POST.get('category')

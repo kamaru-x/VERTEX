@@ -28,4 +28,8 @@ urlpatterns = [
     path('canceled-opportunity-view/<int:lid>/',views.canceled_opertunity_view,name='canceled-opportunity'),
     path('canceled-client-view/<int:lid>/',views.canceled_client_view,name='canceled-client'),
     path('canceled-project-view/<int:lid>/',views.canceled_project_view,name='canceled-project'),
+
+    path('assign-target/',views.assign_target,name='assign-target'),
+    path('target-setup/',views.target_setup,name='target-setup'),
+    path('target-view/<int:year>',views.target_view,name='target-view'),
 ]

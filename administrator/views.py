@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report,Review,Proposal
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Task,Salesman_Report,Review,Proposal,Sales_Target
 from datetime import datetime,date
 from datetime import date as dt
 from django.contrib import messages
 from u_auth.models import User
+from datetime import timedelta
 
 # Create your views here.
 
@@ -815,3 +816,82 @@ def canceled_project_view(request,lid):
         'proposal' : proposal,
     }
     return render(request,'canceled_project_view.html',context)
+
+#################################################################################
+
+@login_required
+def assign_target(request):
+    targets = Sales_Target.objects.all()
+    
+    # total = []
+    # archived = []
+    # balance = []
+
+    # data = []
+
+    # for target in targets:
+    #     years = []
+    #     salesmans = []
+    #     year = target.From.year
+    #     years.append(year)
+    #     yrs = [*set(years)]
+    #     salesman = Sales_Target.objects.filter( From__year = year ).count()
+    #     salesmans.append(salesman)
+    # print(yrs)
+    # print(salesmans)
+
+    yrs = []
+
+    for target in targets:
+        yrs.append(target.From.year)
+    years = [*set(yrs)]
+
+    data = []
+
+    for y in years :
+        salesmans = Sales_Target.objects.filter(From__year = y).count()
+        mans = Sales_Target.objects.filter(From__year = y )
+        total = 0
+        for man in mans:
+            total = int(total + man.Targets)
+        d = {'year':y,'salesmans':salesmans,'total':total}
+        data.append(d)
+
+    print(data)
+
+    return render(request,'assign-target.html',{'data':data})
+
+#################################################################################
+
+@login_required
+def target_setup(request):
+    salesmans = User.objects.filter(is_salesman=True)
+
+    if request.method == 'POST':
+        salesman = request.POST.getlist('salesmans')
+        targets = request.POST.getlist('targets')
+        year = request.POST.get('year')
+
+        Begindate = datetime.strptime(year, "%Y-%m-%d")
+        Enddate = Begindate + timedelta(days=365)
+
+        for (s , t) in zip(salesman,targets):
+            man = User.objects.get(id=s)
+            data = Sales_Target(Salesman=man,Targets=t,From=year,To=Enddate)
+            data.save()
+        return redirect('assign-target')
+
+    context = {
+        'salesmans' : salesmans,
+    }
+
+    return render(request,'target-setup.html',context)
+
+#################################################################################
+
+@login_required
+def target_view(request,year):
+    salesmans = Sales_Target.objects.filter(From__year = year)
+    return render(request,'target-view.html',{'salesmans':salesmans,'year':year})
+
+#################################################################################

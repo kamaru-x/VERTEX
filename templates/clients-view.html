@@ -53,13 +53,10 @@
                     <div class="relative text-2xl font-medium ml-0.5"> <span class="absolute text-xl font-medium top-0 left-0 -ml-0.5"></span>{{ lead.Company }}<br> {{ lead.Phone }} / {{ lead.Email }}</div>
                     <a class="text-slate-500 ml-4" href=""></a>
                 </div>
-                <!-- {% if lead.Reject_Date %}
-                {% else %}
-                    <div class="flex-row mt-8">
-                    <a data-tw-toggle="modal" data-tw-target="#button-modal-preview" class="btn btn-success w-24 inline-block mr-1 mb-2 w-40">Accept</a> 
-                    <a data-tw-toggle="modal" data-tw-target="#cancel-confirmation-modal" class="btn btn-danger w-24 inline-block mr-1 mb-2 w-40">Reject</a>
-                    </div>
-                {% endif %} -->
+                <div class="flex-row mt-8">
+                <!-- <a data-tw-toggle="modal" data-tw-target="#button-modal-preview" class="btn btn-success w-24 inline-block mr-1 mb-2 w-40">Accept</a>  -->
+                <a href="{% url 'set-proposal' lead.id %}" class="btn btn-primary text-white inline-block mr-1 mb-2">Create New Proposal</a>
+                </div>
             </div>
             <div class="col-span-12 lg:col-span-8 p-8 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
                 

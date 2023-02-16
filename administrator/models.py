@@ -209,7 +209,6 @@ class Review(models.Model):
 #################################################################################
 
 class Salesman_Report(models.Model):
-
     Status = models.IntegerField(default=1)
     Salesman = models.ForeignKey(User,on_delete=models.DO_NOTHING)
 
@@ -246,3 +245,14 @@ class Proposal_Items(models.Model):
     Sell_Price = models.FloatField()
     Quantity = models.IntegerField()
     Total = models.FloatField()
+
+#################################################################################
+
+class Sales_Target(models.Model):
+    Salesman = models.ForeignKey(User,on_delete=models.CASCADE)
+    From = models.DateField(null=True,blank=True)
+    To = models.DateField(null=True,blank=True)
+    Targets = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.Salesman.first_name + '  ///  ' + str(self.From) + '  ///  ' + str(self.To)

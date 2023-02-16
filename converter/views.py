@@ -177,7 +177,7 @@ def create_proposal(request,lid):
 
 @login_required
 def list_proposals(request):
-    proposals = Proposal.objects.all()
+    proposals = Proposal.objects.all().order_by('-id')
     return render(request,'list_proposal.html',{'proposals':proposals})
 
 #################################################################################
@@ -207,9 +207,13 @@ def remove_proposal_product(request,pid,id):
 def accept(request,pid):
     proposal = Proposal.objects.get(id=pid)
     proposal.Proposal_Status = 1
-    proposal.Lead.Lead_Status = 2
     proposal.save()
     lead = proposal.Lead
+
+    lead = proposal.Lead
+    lead.Accepted_proposals = lead.Accepted_proposals + 1
+    lead.Lead_Status = 2
+    lead.save()
 
     salesman = proposal.Lead.Salesman
     report = Salesman_Report.objects.get(Salesman=salesman)
@@ -224,7 +228,10 @@ def reject(request,pid):
     proposal = Proposal.objects.get(id=pid)
     proposal.Proposal_Status = 0
     proposal.save()
+    
     lead = proposal.Lead
+    lead.Rejected_Proposals = lead.Rejected_Proposals + 1
+    lead.save()
 
     salesman = proposal.Lead.Salesman
     report = Salesman_Report.objects.get(Salesman=salesman)
@@ -240,8 +247,10 @@ def create_task(request):
     d = dt.today()
     ip = setip(request)
     leads = Lead.objects.all()
+    salesmans = User.objects.filter(is_salesman=True)
     if request.method == 'POST':
         lead = request.POST.get('lead')
+        salesman = request.POST.get('salesman')
         title = request.POST.get('title')
         priority = request.POST.get('priority')
         date = request.POST.get('date')
@@ -251,8 +260,13 @@ def create_task(request):
             ld = Lead.objects.get(id=lead)
         except:
             return redirect('.')
+        
+        try:
+            sm = User.objects.get(id=salesman)
+        except:
+            return redirect('.')
 
-        data = Task(Date=d,AddedBy=user,Ip=ip,Lead=ld,Title=title,Priority=priority,Due_Date=date,Description=description)
+        data = Task(Date=d,AddedBy=user,Ip=ip,Lead=ld,Title=title,Priority=priority,Due_Date=date,Description=description,Salesman=sm)
         data.save()
 
         ls = Task.objects.filter(Lead=ld).filter(AddedBy=user).last()
@@ -269,7 +283,8 @@ def create_task(request):
         return redirect('pending-task')
 
     context = {
-        'leads' : leads
+        'leads' : leads,
+        'salesmans' : salesmans,
     }
     return render(request,'create-task.html',context)
 
@@ -332,12 +347,16 @@ def completed_task(request):
 def edit_task(request,tid):
     task = Task.objects.get(id=tid)
     leads = Lead.objects.all()
+    salesmans = User.objects.filter(is_salesman=True)
     user = request.user.id
     if request.method == 'POST':
         lead = request.POST.get('lead')
+        salesman = request.POST.get('salesman')
         ld = Lead.objects.get(id=lead)
+        sm = User.objects.get(id=salesman)
 
         task.Lead = ld
+        task.Salesman = sm
         task.Title = request.POST.get('title')
         task.Priority = request.POST.get('priority')
         task.Due_Date = request.POST.get('date')
@@ -358,7 +377,8 @@ def edit_task(request,tid):
         return redirect('pending-task')
     context = {
         'leads' : leads,
-        'task' :task,
+        'task' : task,
+        'salesmans' : salesmans,
     }
     return render(request,'task-edit.html',context)
 
@@ -443,6 +463,7 @@ def client_view(request,cid):
     lead_update = Lead_Update.objects.filter(Lead=lead)
     proposals = Proposal.objects.filter(Lead=lead)
     # attachments = Attachments.objects.all()
+    count = Proposal.objects.filter(Lead=lead).count()
 
     if request.method == 'POST':
         if request.POST.get('date'):
@@ -516,6 +537,7 @@ def client_view(request,cid):
         'previous' : previous,
         'upcoming' : upcoming,
         'proposals' : proposals,
+        'count' : count,
     }
     return render(request,'clients-view.html',context)
 
@@ -523,27 +545,28 @@ def client_view(request,cid):
 
 @login_required
 def projects(request):
-    projects = Lead.objects.filter(Lead_Status=3).filter(Status=1).order_by('-id')
-    if request.method == 'POST':
-        c = request.POST.get('c')
-        lead= Lead.objects.get(id=c)
-        lead.Status = 3
-        lead.Cancel_Date = dt.today()
-        lead.Cancel_Reason = request.POST.get('reason')
-        lead.save()
-        return redirect('projects')
+    # projects = Lead.objects.filter(Lead_Status=3).filter(Status=1).order_by('-id')
+    projects = Proposal.objects.all()
+    # if request.method == 'POST':
+    #     c = request.POST.get('c')
+    #     lead= Lead.objects.get(id=c)
+    #     lead.Status = 3
+    #     lead.Cancel_Date = dt.today()
+    #     lead.Cancel_Reason = request.POST.get('reason')
+    #     lead.save()
+    #     return redirect('projects')
     return render(request,'projects-list.html',{'projects':projects})
 
 #################################################################################
 
 @login_required
 def view_project(request,pid):
-    lead = Lead.objects.get(id=pid)
+    lead = Proposal.objects.get(id=pid)
     user = request.user.id
     d = dt.today()
     ip = setip(request)
-    lead_update = Lead_Update.objects.filter(Lead=lead)
-    proposal = Proposal.objects.get(Lead=lead)
+    lead_update = Lead_Update.objects.filter(Lead=lead.Lead)
+    proposal = Proposal.objects.get(Lead=lead.Lead)
     # attachments = Attachments.objects.all()
 
     if request.method == 'POST':
@@ -551,10 +574,10 @@ def view_project(request,pid):
             date = request.POST.get('date')
             description = request.POST.get('update-description')
 
-            data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead,Description=description,AddedDate=date)
+            data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Description=description,AddedDate=date)
             data.save()
 
-            ld = Lead_Update.objects.filter(Lead=lead).filter(AddedBy=user).last()
+            ld = Lead_Update.objects.filter(Lead=lead.Lead).filter(AddedBy=user).last()
             attachment = request.FILES.getlist('attachment')
             for a in attachment:
                 if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -573,7 +596,7 @@ def view_project(request,pid):
             to = request.POST.get('to')
             sdescription = request.POST.get('sdescription')
 
-            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
+            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
             data.save()
 
         if request.POST.get('udate'):
@@ -600,7 +623,7 @@ def view_project(request,pid):
 
         return redirect('/projects/%s' %lead.id)
 
-    schedules = Lead_Schedule.objects.filter(Lead=lead)
+    schedules = Lead_Schedule.objects.filter(Lead=lead.Lead)
 
     previous = []
     upcoming = []

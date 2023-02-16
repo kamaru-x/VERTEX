@@ -58,7 +58,7 @@
                         <th class="whitespace-nowrap">COMPANY NAME</th>
                         <th class="whitespace-nowrap">REFERENCE (LEAD REFERENCE)</th>
                         <th class="text-center whitespace-nowrap">DATE OF OPPORTUNITY CONVERSION</th>
-                        
+                        <th class="text-center whitespace-nowrap">REJECTED PROPOSALS</th>
                         <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
                         </th>
@@ -76,13 +76,16 @@
                             </td>
                             <td class="w-60 ref">
                                   <a href="" class="font-medium whitespace-nowrap">{{ op.Reference }}</a>
-                                
                             </td>
-                            </td>
+
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">
                                      {{ op.To_Opertunity }}
                                 </div>
+                            </td>
+
+                            <td class="w-60 ref">
+                                <a href="" class="font-medium whitespace-nowrap">{{ op.Rejected_Proposals }}</a>
                             </td>
                             
                             <td class="w-60">

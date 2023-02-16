@@ -182,9 +182,10 @@
                 <thead>
                     <tr>  
                         <th class="text-center whitespace-nowrap" style="text-align: left;">SL.NO</th>  
-                        <th class="whitespace-nowrap">PRODUCT TITLE</th>
+                        <th class="whitespace-nowrap">PART NUMBER</th>
                         <th class="text-center whitespace-nowrap" style="text-align: left;">REFERENCE</th>
-                        <th class="text-center whitespace-nowrap">PRICE</th>
+                        <th class="text-center whitespace-nowrap">BUYING PRICE</th>
+                        <th class="text-center whitespace-nowrap">SELLING PRICE</th>
                         <!-- <th class="text-center whitespace-nowrap">ACTIONS</th> -->
                     </tr>
                 </thead>
@@ -194,15 +195,20 @@
                              <td class="w-24">
                                 <a href="" class="font-medium whitespace-nowrap">{{ forloop.counter }}</a> 
                             </td>
-                             <td class="w-64">
-                                <div  class="font-medium whitespace-nowrap text-primary">{{ product.Name }}</div>
+                            <td class="w-64">
+                                <a href="{% url 'view-product' product.id %}"><div  class="font-medium whitespace-nowrap text-primary">{{ product.Name }}</div></a>
                             </td>
                             <td class="w-24">
                                 <div  class="font-medium whitespace-nowrap">{{ product.Reference }}</div> 
                             </td> 
                             <td class="w-40">
                                 <div class="flex items-center justify-center text-primary">
-                                     {{ product.Price }}
+                                     {{ product.Buying_Price }}
+                                </div>
+                            </td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center text-primary">
+                                     {{ product.Selling_Price }}
                                 </div>
                             </td>
                             <!-- <td class="table-report__action w-56">

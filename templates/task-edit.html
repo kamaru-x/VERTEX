@@ -39,6 +39,18 @@
                             </select>
                         </div>
                 </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label>Select Lead</label>
+                         <div class="mt-2">
+                             <select data-placeholder="Select Category" name="salesman" class="tom-select w-full">
+                                <option value="{{ task.Salesman.id }}">{{ task.Salesman.first_name }} ({{ task.Salesman.Qatar_ID }})</option>
+                                {% for salesman in salesmans %}
+                                    <option value="{{ salesman.id }}">{{ salesman.first_name }} ({{ salesman.Qatar_ID }})</option>
+                                {% endfor %}
+                             </select>
+                         </div>
+                 </div>
                
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Task Title</label>

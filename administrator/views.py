@@ -288,6 +288,18 @@ def edit_product(request,pid):
 #################################################################################
 
 @login_required
+def view_product(request,pid):
+    product = Product.objects.get(id=pid)
+
+    context = {
+        'product' : product,
+    }
+
+    return render(request,'view-product.html',context)
+
+#################################################################################
+
+@login_required
 def add_salesman(request):
     if request.method == 'POST':
         name = request.POST.get('name')

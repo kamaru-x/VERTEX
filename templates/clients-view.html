@@ -108,6 +108,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                            <div class="text-slate-500 head">Rejected Proposals</div>
+                            <div class="mt-1.5 flex items-center">
+                                <div class="text-base">{{ lead.Rejected_Proposals }}<br>
+                                </div>
+                            </div>
+                        </div>
                         <!-- <div class="col-span-12 sm:col-span-6 md:col-span-4">
                             <div class="text-slate-500 head">Status</div>
                             {% if lead.Reject_Date %}
@@ -193,6 +200,7 @@
                                 <div class="pr-16">SALESMAN</div>
                             </th>
                             <th class="whitespace-nowrap">CONTACT </th>
+                            <th class="whitespace-nowrap">STATUS</th>
                             <th class="text-center whitespace-nowrap">ACTIONS</th>
                         </tr>
                     </thead>
@@ -225,6 +233,15 @@
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CNumber }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CMail }}</div>
                             </td>
+                            {% if proposal.Proposal_Status == 0 %}
+                            <td class="w-60 text-right">
+                                <div class="pr-16">Rejected</div>
+                            </td>
+                            {% else %}
+                            <td class="w-60 text-right">
+                                <div class="pr-16">Pending</div>
+                            </td>
+                            {% endif %}
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">

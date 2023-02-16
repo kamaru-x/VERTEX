@@ -73,6 +73,9 @@ class Lead(models.Model):
     Upcoming_Meetings = models.IntegerField(default=0)
     Previous_Meetings = models.IntegerField(default=0)
 
+    Rejected_Proposals = models.IntegerField(default=0)
+    Accepted_proposals = models.IntegerField(default=0)
+
     Cancel_Date = models.DateField(null=True)
     Cancel_Reason = models.TextField(null=True,blank=True)
     
@@ -168,6 +171,7 @@ class Task(models.Model):
     Ip = models.GenericIPAddressField(null=True,blank=True)
 
     Lead = models.ForeignKey(Lead,on_delete=models.SET_NULL,null=True)
+    Salesman = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     Title = models.CharField(max_length=50)
     Priority = models.CharField(max_length=25,null=True)
     Due_Date = models.DateField()

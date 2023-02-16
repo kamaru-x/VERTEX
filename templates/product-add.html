@@ -23,7 +23,7 @@
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box py-10 sm:py-20 mt-5">
         <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
-        color: #1e40af;">Add Part</h2>
+        color: #1e40af;">Add Product</h2>
         <form action="" method="post">
         {% csrf_token %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
@@ -43,20 +43,20 @@
                     <!-- </div> -->
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-6">
-                    <label for="input-wizard-2" class="form-label">Enter Part Number</label>
-                    <input id="input-wizard-2" type="text" class="form-control" name="name" placeholder="Part Number" required>
+                    <label for="input-wizard-2" class="form-label">Part Number</label>
+                    <input id="input-wizard-2" type="text" class="form-control" name="name" placeholder="Enter Part Number" required>
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-4">
-                    <label for="input-wizard-4" class="form-label">Part Ref.</label>
+                    <label for="input-wizard-4" class="form-label">Product Ref.</label>
                     <input id="input-wizard-4" type="text" readonly value="{{refer}}" class="form-control" placeholder="Reference">
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-4">
-                    <label for="input-wizard-3" class="form-label">Enter Part Buying Price</label>
-                    <input id="input-wizard-3" type="text" class="form-control" name="price" placeholder="Part Buying Price" required>
+                    <label for="input-wizard-3" class="form-label">Buying Price</label>
+                    <input id="input-wizard-3" type="text" class="form-control" name="price" placeholder="Product Buying Price" required>
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-4">
-                    <label for="input-wizard-3" class="form-label">Enter Part Selling Price</label>
-                    <input id="input-wizard-3" type="text" class="form-control" name="sprice" placeholder="Part Selling Price" required>
+                    <label for="input-wizard-3" class="form-label">Selling Price</label>
+                    <input id="input-wizard-3" type="text" class="form-control" name="sprice" placeholder="Product Selling Price" required>
                 </div>
                 <div class="intro-y col-span-12 sm:col-span-12">
                     <label for="input-wizard-4" class="form-label">Description</label>

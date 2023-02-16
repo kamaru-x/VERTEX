@@ -58,9 +58,9 @@
                             </td>
                            
                            <td class="w-60">
-                                <a href="{% url 'salesman-view' task.Lead.Salesman.id %}" class="font-medium whitespace-nowrap text-primary">{{ task.Lead.Salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Lead.Salesman.email }}</div>
+                                <a href="{% url 'salesman-view' task.Salesman.id %}" class="font-medium whitespace-nowrap text-primary">{{ task.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ task.Salesman.email }}</div>
                             </td>
                             <td class="w-60 text-center">
                                 <div class="pr-16">{{ task.Title }}</div>

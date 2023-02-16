@@ -32,7 +32,7 @@
                         <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
                         </th>
-                        <th class="whitespace-nowrap" style="text-align: center;">STATUS </th>
+                        <th class="whitespace-nowrap" style="text-align: center;">Number of Proposals</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
@@ -61,15 +61,7 @@
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
                         </td>
                         <td class="text-center">
-                            {% if client.Reject_Date %}
-                            <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                Rejected
-                            </div>
-                            {% else %}
-                            <div class="flex items-center justify-center whitespace-nowrap text-warning">
-                                pending approval
-                            </div>
-                            {% endif %}
+                            3
                         </td>
                         
                         <td class="table-report__action">

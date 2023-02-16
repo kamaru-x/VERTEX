@@ -30,22 +30,32 @@
                 
                 <div class="intro-y col-span-12 sm:col-span-6">
                    <label>Select Lead</label>
-                        <div class="mt-2">
-                            <select data-placeholder="Select Category" name="lead" class="tom-select w-full" required>
-                                <option value=" ">select a lead</option>
-                                {% for lead in leads %}
-                                    <option value="{{ lead.id }}">{{ lead.Company }} ({{ lead.Reference }})</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                    <div class="mt-2">
+                        <select data-placeholder="Select Category" name="lead" class="tom-select w-full" required>
+                            <option value=" ">select a lead</option>
+                            {% for lead in leads %}
+                                <option value="{{ lead.id }}">{{ lead.Company }} ({{ lead.Reference }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
+
+                <div class="intro-y col-span-12 sm:col-span-6">
+                    <label>Select Salesman</label>
+                     <div class="mt-2">
+                         <select data-placeholder="Select Category" name="salesman" class="tom-select w-full" required>
+                             <option value=" ">Select a Salesman</option>
+                             {% for salesman in salesmans %}
+                                 <option value="{{ salesman.id }}">{{ salesman.first_name }} ({{ salesman.Qatar_ID }})</option>
+                             {% endfor %}
+                         </select>
+                     </div>
+                 </div>
                
                 <div class="intro-y col-span-12 sm:col-span-6">
                     <label for="input-wizard-4" class="form-label">Task Title</label>
                     <input id="input-wizard-4" name="title" type="text" class="form-control" placeholder="Task Title" required>
                 </div>
-
-            
 
                 <div class="intro-y col-span-12 sm:col-span-6">
                    <label>Select Priority</label>

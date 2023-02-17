@@ -54,10 +54,10 @@
                             <div>{{ d.total }}</div>
                         </td>
                         <td>
-                            <div class="whitespace-nowrap text-success">$245,000</div>
+                            <div class="whitespace-nowrap text-warning">{{ d.archived }}</div>
                         </td>
                         <td>
-                            <div class="whitespace-nowrap text-danger">$100,000</div>
+                            <div class="whitespace-nowrap text-{{ d.color }}">{{ d.balance }}</div>
                         </td>
                         <td class="table-report__action">
                             <div class="flex justify-center items-center">

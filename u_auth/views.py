@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal
 from datetime import date
 
 # Create your views here.
@@ -31,19 +31,20 @@ def signin(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
-    total_leads = Lead.objects.all().count()
-    Lead_Faild = Lead.objects.filter(Status=3).filter(Lead_Status=1).count()
+    total_leads = Lead.objects.filter(Status=1).count()
+    Lead_Faild = Lead.objects.filter(Status=3,Lead_Status=0).count()
     Lead_Succes = total_leads - Lead_Faild
 
-    total_opportunities = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
-    Opportunity_Success = Lead.objects.filter(Lead_Status=3).filter(Status=1).count()
-    Opportunity_Faild = Lead.objects.filter(Lead_Status=2).filter(Status=3).count()
+    total_opportunities = Lead_Succes
+    Opportunity_Faild = Lead.objects.filter(Status=3,Lead_Status=1).count()
+    Opportunity_Success = total_opportunities - Opportunity_Faild
 
-    total_proposals = Lead.objects.filter(Lead_Status=2).filter(Status=1).count()
-    Proposal_Success = Lead.objects.filter(Lead_Status=3).count()
-    Proposal_Faild = Lead.objects.filter(Lead_Status=3).filter(Status=3).count()
+    total_proposals = Proposal.objects.all().count()
+    Proposal_Success = Proposal.objects.filter(Proposal_Status = 1).count()
+    Proposal_Faild = Proposal.objects.filter(Proposal_Status = 0).count()
+    Proposal_Pending = Proposal.objects.filter(Proposal_Status = 10).count()
 
-    total_clients = Lead.objects.filter(Lead_Status=3).filter(Status=1).count()
+    total_clients = Lead.objects.filter(Lead_Status=3,Status=1).count()
     meetings_today = Lead_Schedule.objects.filter(AddedDate=date.today()).count()
 
     context = {
@@ -58,6 +59,7 @@ def dashboard(request):
         'opportunity_failed' : Opportunity_Faild,
         'proposal_success' : Proposal_Success,
         'proposal_failed' : Proposal_Faild,
+        'proposal_pending' : Proposal_Pending
     }
 
     return render(request,'index.html',context)

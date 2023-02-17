@@ -6,6 +6,7 @@ from datetime import date as dt
 from django.contrib import messages
 from u_auth.models import User
 from datetime import timedelta
+from django.db.models import Q
 
 # Create your views here.
 
@@ -25,65 +26,65 @@ def setcount():
         category.save()
 
 
-# def setreport():
-#     users = User.objects.filter(is_salesman=True)
+def setreport():
+    users = User.objects.filter(is_salesman=True)
 
-#     ids = []
+    ids = []
 
-#     for u in users:
-#         ids.append(u.id)
+    for u in users:
+        ids.append(u.id)
     
-#     for i in ids:
-#         user = User.objects.get(id=i)
-#         report = Salesman_Report.objects.get(Salesman=user)
+    for i in ids:
+        user = User.objects.get(id=i)
+        report = Salesman_Report.objects.get(Salesman=user)
 
-#         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0).count()
-#         lead_failed = Lead.objects.filter(Salesman=user,Lead_Status=1,Status=3).count()
-#         lead_success = lead_total - lead_failed
+        lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0)
+        lead_failed = lead_total.filter(Status=3,Lead_Status=0)
+        lead_success = lead_total.exclude(Status=3)
 
-#         opportunity_total = lead_success
-#         opportunity_failed = Lead.objects.filter(Salesman=user,Lead_Status=2,Status=3).count()
-#         opportunity_success = opportunity_total - opportunity_failed
+        opportunity_total = lead_success
+        opportunity_failed = lead_total.filter(Status=3,Lead_Status=1)
+        opportunity_success = lead_total.filter(Q(Lead_Status=2)|Q(Lead_Status=3))
 
-#         proposal_total = opportunity_success
-#         proposal_failed = Lead.objects.filter(Salesman=user,Lead_Status=3,Status=3).count()
-#         proposal_success = proposal_total - proposal_failed
+        proposal_total = Proposal.objects.filter(Lead__Salesman = user)
+        proposal_failed = proposal_total.filter(Proposal_Status = 0)
+        proposal_success = proposal_total.filter(Proposal_Status = 1)
 
-#                             ##################################
+                            ##################################
 
-#         report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
-#         report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
+        report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
+        report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
 
-#         report.Lead_Total = lead_total
-#         report.Lead_Faild = lead_failed
-#         report.Lead_Succes = lead_success
+        report.Lead_Total = lead_total.count()
+        report.Lead_Faild = lead_failed.count()
+        report.Lead_Succes = lead_success.count()
 
-#         report.Opportunity_Total = opportunity_total
-#         report.Opportunity_Success = opportunity_success
-#         report.Opportunity_Faild = opportunity_failed
+        report.Opportunity_Total = opportunity_total.count()
+        report.Opportunity_Faild = opportunity_failed.count()
+        report.Opportunity_Success = opportunity_success.count()
 
-#         report.Proposal_Total = proposal_total
-#         report.Proposal_Success = proposal_success
-#         report.Proposal_Faild = proposal_failed
+        report.Proposal_Total = proposal_total.count()
+        report.Proposal_Success = proposal_success.count()
+        report.Proposal_Faild = proposal_failed.count()
 
-#         report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
-#         report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
-#         report.SV_Failed = 145168465 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
+        report.SV_Pending = 124651684 #Lead.objects.filter(Salesman=user).filter(Lead_Status=1).count()
+        report.SV_Success = 1398498498 #Lead.objects.filter(Salesman=user).filter(Lead_Status=2).count()
+        report.SV_Failed = 145168465 #Lead.objects.filter(Salesman=user).filter(Lead_Status=4).count()
 
-#         schedules = Lead_Schedule.objects.filter(Lead__Salesman=user)
-#         previous = []
-#         upcoming = []
+        schedules = Lead_Schedule.objects.filter(Lead__Salesman=user)
+        previous = []
+        upcoming = []
 
-#         for schedule in schedules:
-#             if schedule.AddedDate < dt.today() :
-#                 previous.append(schedule)
-#             elif schedule.AddedDate >= dt.today() :
-#                 upcoming.append(schedule)
+        for schedule in schedules:
+            if schedule.AddedDate < dt.today() :
+                previous.append(schedule)
+            elif schedule.AddedDate >= dt.today() :
+                upcoming.append(schedule)
 
-#         report.Upcoming_Meetings = len(upcoming)
-#         report.Previous_Meetings = len(previous)
+        report.Upcoming_Meetings = len(upcoming)
+        report.Previous_Meetings = len(previous)
 
-#         report.save()
+        report.save()
 
 def setmeeting():
     leads = Lead.objects.filter(Status=1)
@@ -330,6 +331,7 @@ def add_salesman(request):
 
 @login_required
 def list_salesman(request):
+    setreport()
     salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True).order_by('-id')
     reports = Salesman_Report.objects.filter(Status=1)
     if request.method == 'POST' :
@@ -374,14 +376,17 @@ def edit_salesman(request,uid):
 @login_required
 def salesman_view(request,sid):
     setmeeting()
+    setreport()
+    d = dt.today()
     salesman = User.objects.get(id=sid)
     schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
     leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0)
     opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1)
     clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2)
     projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3)
-    p_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=0).order_by('Due_Date')
-    c_task = Task.objects.filter(Lead__Salesman=salesman).filter(Task_Status=1).order_by('-Completed_Date')
+    p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).order_by('Due_Date')
+    c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).order_by('-Completed_Date')
+    sales = Sales_Target.objects.filter(Salesman=salesman).filter(From__year = d.year)
 
     t_count = len(p_task)
 
@@ -455,6 +460,7 @@ def salesman_view(request,sid):
         'ptasks' : p_task,
         'ctasks' : c_task,
         't_count' : t_count,
+        'sales' : sales,
     }
     return render(request,'salesman-view.html',context)
 
@@ -492,9 +498,9 @@ def add_lead(request):
         CMail=cmail,Salesman=s)
         data.save()
 
-        report = Salesman_Report.objects.get(Salesman=s)
-        report.Lead_Total = report.Lead_Total+1
-        report.save()
+        # report = Salesman_Report.objects.get(Salesman=s)
+        # report.Lead_Total = report.Lead_Total+1
+        # report.save()
 
         messages.success(request,'created new lead')
         return redirect('list-lead')
@@ -533,10 +539,10 @@ def list_leads(request):
             lead.Cancel_Reason = request.POST.get('reason')
             lead.save()
 
-            salesman = lead.Salesman
-            report = Salesman_Report.objects.get(Salesman=salesman)
-            report.Lead_Faild = report.Lead_Faild + 1
-            report.save()
+            # salesman = lead.Salesman
+            # report = Salesman_Report.objects.get(Salesman=salesman)
+            # report.Lead_Faild = report.Lead_Faild + 1
+            # report.save()
             return redirect('list-lead')
 
     context = {
@@ -681,11 +687,11 @@ def opertunity_convertion(request,lid):
     lead.Lead_Status = 1
     lead.To_Opertunity = date.today()
     lead.save()
-    salesman = lead.Salesman
-    report = Salesman_Report.objects.get(Salesman=salesman)
-    report.Lead_Succes = report.Lead_Succes + 1
-    report.Opportunity_Total = report.Opportunity_Total + 1
-    report.save()
+    # salesman = lead.Salesman
+    # report = Salesman_Report.objects.get(Salesman=salesman)
+    # report.Lead_Succes = report.Lead_Succes + 1
+    # report.Opportunity_Total = report.Opportunity_Total + 1
+    # report.save()
     return redirect('/opportunity-view/%s' %lead.id)
 
 #################################################################################
@@ -834,6 +840,7 @@ def canceled_project_view(request,lid):
 @login_required
 def assign_target(request):
     targets = Sales_Target.objects.all()
+    t_s = User.objects.filter(is_salesman=True)
     
     # total = []
     # archived = []
@@ -858,18 +865,40 @@ def assign_target(request):
         yrs.append(target.From.year)
     years = [*set(yrs)]
 
+    for year in years:
+        salesmans = Sales_Target.objects.filter(From__year=year)
+        for salesman in salesmans:
+            projects = Lead.objects.filter(Salesman=salesman.Salesman,Lead_Status=3,Date__year=year)
+            archived = 0
+            for project in projects:
+                archived = int(archived + project.ESValue)
+            balance = int(salesman.Targets - archived)
+
+            salesman.Archived = archived
+            salesman.Balance = balance
+            salesman.save()
+
     data = []
 
     for y in years :
         salesmans = Sales_Target.objects.filter(From__year = y).count()
         mans = Sales_Target.objects.filter(From__year = y )
         total = 0
+        archived = 0
+        balance = 0
         for man in mans:
             total = int(total + man.Targets)
-        d = {'year':y,'salesmans':salesmans,'total':total}
-        data.append(d)
+            archived = int(archived + man.Archived)
+            balance = int(balance + man.Balance)
+        if archived > total :
+            balance = abs(balance)
+            color = 'success'
+        else:
+            color = 'danger'
 
-    print(data)
+
+        d = {'year':y,'salesmans':salesmans,'total':total,'archived':archived,'balance':balance,'color':color}
+        data.append(d)
 
     return render(request,'assign-target.html',{'data':data})
 

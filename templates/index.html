@@ -58,9 +58,9 @@
                                             <div class="flex">
                                                 <i data-lucide="clipboard" class="report-box__icon text-warning"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="70% Success" style="float: left;"> 85 <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="20% Pending" style="float: left;"> 15 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="10% Failed" style="float: left;"> 10 <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="70% Success" style="float: left;"> {{ proposal_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="20% Pending" style="float: left;"> {{ proposal_pending }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="10% Failed" style="float: left;"> {{ proposal_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_proposals }}</div>
@@ -74,7 +74,7 @@
                                             <div class="flex">
                                                 <i data-lucide="users" class="report-box__icon text-success"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer" title="22 new this month"> 22 new this month <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <!-- <div class="report-box__indicator bg-success tooltip cursor-pointer" title="22 new this month"> 22 new this month <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div> -->
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_clients }}</div>

@@ -30,10 +30,10 @@ def list_opertunities(request):
         lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
 
-        salesman = lead.Salesman
-        report = Salesman_Report.objects.get(Salesman=salesman)
-        report.Opportunity_Faild = report.Opportunity_Faild + 1
-        report.save()
+        # salesman = lead.Salesman
+        # report = Salesman_Report.objects.get(Salesman=salesman)
+        # report.Opportunity_Faild = report.Opportunity_Faild + 1
+        # report.save()
         return redirect('list-opportunities')
     return render(request,'opportunity-list.html',{'opertunitunities':opertunities})
 
@@ -160,9 +160,14 @@ def create_proposal(request,lid):
             quantity = request.POST.get('quantity')
             price = request.POST.get('price')
             total = request.POST.get('total')
-            product = Proposal_Items(Proposal=proposal,Product=pro,Quantity=quantity,Sell_Price=price,Total=total)
-            product.save()
-            return redirect('/proposal/%s' %proposal.id)
+            try:
+                pr = Proposal_Items.objects.get(Proposal=proposal,Product=pro)
+                if pr:
+                    return redirect('/proposal/%s' %proposal.id)
+            except:
+                product = Proposal_Items(Proposal=proposal,Product=pro,Quantity=quantity,Sell_Price=price,Total=total)
+                product.save()
+                return redirect('/proposal/%s' %proposal.id)
 
         if request.POST.get('scope'):
             proposal.Scope = request.POST.get('scope')
@@ -204,6 +209,7 @@ def view_proposal(request,pid):
         proposal.PO_Date = request.POST.get('today')
         proposal.PO_Number = request.POST.get('po-number')
         proposal.Proposal_Status = 1
+        proposal.save()
 
         lead = proposal.Lead
         lead.To_Client = dt.today()
@@ -218,10 +224,10 @@ def view_proposal(request,pid):
             proposal.Attachments.add(attach)
             proposal.save()
         
-        salesman = proposal.Lead.Salesman
-        report = Salesman_Report.objects.get(Salesman=salesman)
-        report.Proposal_Success = report.Proposal_Success + 1
-        report.save()
+        # salesman = proposal.Lead.Salesman
+        # report = Salesman_Report.objects.get(Salesman=salesman)
+        # report.Proposal_Success = report.Proposal_Success + 1
+        # report.save()
 
         return redirect('/view-proposal/%s/' %proposal.id)
     
@@ -250,10 +256,10 @@ def accept(request,pid):
     lead = proposal.Lead
     lead.To_Client = dt.today()
 
-    salesman = proposal.Lead.Salesman
-    report = Salesman_Report.objects.get(Salesman=salesman)
-    report.Proposal_Success = report.Proposal_Success + 1
-    report.save()
+    # salesman = proposal.Lead.Salesman
+    # report = Salesman_Report.objects.get(Salesman=salesman)
+    # report.Proposal_Success = report.Proposal_Success + 1
+    # report.save()
     return redirect('/client-view/%s' %lead.id)
 
 #################################################################################
@@ -264,10 +270,10 @@ def reject(request,pid):
     proposal.Proposal_Status = 0
     proposal.save()
 
-    salesman = proposal.Lead.Salesman
-    report = Salesman_Report.objects.get(Salesman=salesman)
-    report.Proposal_Faild = report.Proposal_Faild + 1
-    report.save()
+    # salesman = proposal.Lead.Salesman
+    # report = Salesman_Report.objects.get(Salesman=salesman)
+    # report.Proposal_Faild = report.Proposal_Faild + 1
+    # report.save()
     return redirect('/view-proposal/%s' %proposal.id)
 
 #################################################################################

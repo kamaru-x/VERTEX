@@ -47,11 +47,17 @@
                             <div>{{ salesman.Targets }}</div>
                         </td>
                         <td>
-                            <div class="whitespace-nowrap text-success">$245,000</div>
+                            <div class="whitespace-nowrap text-success">{{ salesman.Archived }}</div>
                         </td>
-                        <td>
-                                <div class="whitespace-nowrap text-danger">$100,000</div>
-                        </td>
+                        {% if salesman.Balance > 0 %}
+                            <td>
+                                <div class="whitespace-nowrap text-danger">{{ salesman.Balance }}</div>
+                            </td>
+                        {% else %}
+                            <td>
+                                <div class="whitespace-nowrap text-success">{{ salesman.Balance | stringformat:"+d"|slice:"1:" }}</div>
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

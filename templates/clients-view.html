@@ -237,6 +237,10 @@
                             <td class="w-60 text-right">
                                 <div class="pr-16">Rejected</div>
                             </td>
+                            {% elif proposal.Proposal_Status == 1 %}
+                            <td class="w-60 text-right">
+                                <div class="pr-16">Accepted</div>
+                            </td>
                             {% else %}
                             <td class="w-60 text-right">
                                 <div class="pr-16">Pending</div>

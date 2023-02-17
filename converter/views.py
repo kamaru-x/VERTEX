@@ -9,6 +9,16 @@ from django.http.response import JsonResponse
 
 # Create your views here.
 
+def set_proposals():
+    leads = Lead.objects.filter(Status=1)
+    for lead in leads:
+        r_proposals = Proposal.objects.filter(Lead=lead).filter(Proposal_Status=0).count()
+        a_proposals = Proposal.objects.filter(Lead=lead).filter(Proposal_Status=1).count()
+        lead.Rejected_Proposals = r_proposals
+        lead.Accepted_proposals = a_proposals
+        lead.save()
+
+
 @login_required
 def list_opertunities(request):
     opertunities = Lead.objects.filter(Lead_Status=1).filter(Status=1).order_by('-id')
@@ -31,6 +41,7 @@ def list_opertunities(request):
 
 @login_required
 def view_opertunity(request,lid):
+    set_proposals()
     lead = Lead.objects.get(id=lid)
     user = request.user.id
     d = dt.today()
@@ -177,6 +188,7 @@ def create_proposal(request,lid):
 
 @login_required
 def list_proposals(request):
+    set_proposals()
     proposals = Proposal.objects.all().order_by('-id')
     return render(request,'list_proposal.html',{'proposals':proposals})
 
@@ -186,6 +198,33 @@ def list_proposals(request):
 def view_proposal(request,pid):
     proposal = Proposal.objects.get(id=pid)
     pros = Proposal_Items.objects.filter(Proposal=proposal)
+    if request.method == 'POST':
+        attachment = request.FILES.getlist('attachment')
+
+        proposal.PO_Date = request.POST.get('today')
+        proposal.PO_Number = request.POST.get('po-number')
+        proposal.Proposal_Status = 1
+
+        lead = proposal.Lead
+        lead.To_Client = dt.today()
+
+        for a in attachment:
+            if str(a).endswith(('.png', '.jpg', '.jpeg')):
+                format = 'image'
+            else:
+                format = 'file'
+            attach = Attachments(Attachment=a,Name=a,Format=format)
+            attach.save()
+            proposal.Attachments.add(attach)
+            proposal.save()
+        
+        salesman = proposal.Lead.Salesman
+        report = Salesman_Report.objects.get(Salesman=salesman)
+        report.Proposal_Success = report.Proposal_Success + 1
+        report.save()
+
+        return redirect('/view-proposal/%s/' %proposal.id)
+    
     context = {
         'proposal' : proposal,
         'pros' : pros,
@@ -209,11 +248,7 @@ def accept(request,pid):
     proposal.Proposal_Status = 1
     proposal.save()
     lead = proposal.Lead
-
-    lead = proposal.Lead
-    lead.Accepted_proposals = lead.Accepted_proposals + 1
-    lead.Lead_Status = 2
-    lead.save()
+    lead.To_Client = dt.today()
 
     salesman = proposal.Lead.Salesman
     report = Salesman_Report.objects.get(Salesman=salesman)
@@ -228,10 +263,6 @@ def reject(request,pid):
     proposal = Proposal.objects.get(id=pid)
     proposal.Proposal_Status = 0
     proposal.save()
-    
-    lead = proposal.Lead
-    lead.Rejected_Proposals = lead.Rejected_Proposals + 1
-    lead.save()
 
     salesman = proposal.Lead.Salesman
     report = Salesman_Report.objects.get(Salesman=salesman)
@@ -441,6 +472,7 @@ def view_completed_task(request,tid):
 
 @login_required
 def client_list(request):
+    set_proposals()
     clients = Lead.objects.filter(Lead_Status=2).filter(Status=1).order_by('-id')
     if request.method == 'POST':
         c = request.POST.get('c')

@@ -32,7 +32,8 @@
                         <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
                         </th>
-                        <th class="whitespace-nowrap" style="text-align: center;">Number of Proposals</th>
+                        <th class="whitespace-nowrap" style="text-align: center;">Rejected Proposals</th>
+                        <th class="whitespace-nowrap" style="text-align: center;">Accepted Proposals</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
@@ -61,9 +62,11 @@
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ client.Salesman.email }}</div>
                         </td>
                         <td class="text-center">
-                            3
+                            {{ client.Rejected_Proposals }}
                         </td>
-                        
+                        <td class="text-center">
+                            {{ client.Accepted_proposals }}
+                        </td>
                         <td class="table-report__action">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'client-view' client.id %}">

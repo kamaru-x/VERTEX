@@ -159,6 +159,10 @@ class Proposal(models.Model):
     Terms_Condition = models.TextField(null=True,blank=True)
     Oppertunity = models.TextField(null=True,blank=True)
 
+    PO_Number = models.CharField(max_length=50,null=True)
+    PO_Date = models.DateField(null=True)
+    Attachments = models.ManyToManyField(Attachments)
+
     def __str__(self):
         return self.Lead.Company
 

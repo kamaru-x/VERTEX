@@ -34,7 +34,7 @@
 
         </div>
         <br><br><hr> 
-        <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Proposal</h2>
+        <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc21;">Edit Proposal</h2>
 
 
 <div class="container" style="padding: 40px;">
@@ -253,7 +253,7 @@
                     <div class="mt-5">
                         <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                         <div>
-                            <textarea class="form-control" name="scope" id="" cols="30" rows="10" placeholder="Enter Scope of work"></textarea>
+                            <textarea class="form-control" name="scope" id="" cols="30" rows="10" placeholder="Enter Scope of work">{{ proposal.Scope }}</textarea>
                         </div>
                     </div>
                 <!--  -->
@@ -270,7 +270,7 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms"></textarea>
+                        <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms">{{ proposal.Payment }}</textarea>
                     </div>
                 </div>
             </div>
@@ -286,7 +286,7 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion"></textarea>
+                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion">{{ proposal.Exclusion }}</textarea>
                     </div>
                 </div>
             </div>
@@ -301,7 +301,7 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condetion"></textarea>
+                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condetion">{{ proposal.Terms_Condition }}</textarea>
                     </div>
                     <div style="margin-left: auto;
                         margin-right: auto;display: block;margin-top: 10px; width:90px;"><button type="submit" class="btn btn-primary shadow-md mr-2">Save</button>

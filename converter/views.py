@@ -240,11 +240,58 @@ def view_proposal(request,pid):
 #################################################################################
 
 @login_required
+def edit_proposal(request,pid):
+    products = Product.objects.all()
+    proposal = Proposal.objects.get(id=pid)
+    lead = proposal.Lead
+    pros = Proposal_Items.objects.filter(Proposal=proposal)
+    
+    if request.method == 'POST':
+        if request.POST.get('product'):
+            p = request.POST.get('product')
+            pro = Product.objects.get(id=p)
+            quantity = request.POST.get('quantity')
+            price = request.POST.get('price')
+            total = request.POST.get('total')
+            try:
+                pr = Proposal_Items.objects.get(Proposal=proposal,Product=pro)
+                if pr:
+                    return redirect('/proposal/%s' %proposal.id)
+            except:
+                product = Proposal_Items(Proposal=proposal,Product=pro,Quantity=quantity,Sell_Price=price,Total=total)
+                product.save()
+                return redirect('/proposal/%s' %proposal.id)
+
+        if request.POST.get('scope'):
+            proposal.Scope = request.POST.get('scope')
+            proposal.Payment = request.POST.get('payment')
+            proposal.Exclusion = request.POST.get('exclusion')
+            proposal.Terms_Condition = request.POST.get('terms')
+            proposal.save()
+            return redirect('list-proposals')
+        
+        if request.POST.get('id'):
+            id = request.POST.get('id')
+            item = Proposal_Items.objects.get(id=id)
+            item.delete()
+            return redirect('/proposal/%s' %proposal.id)
+
+    context = {
+        'products' : products,
+        'pros' : pros,
+        'proposal' : proposal,
+    }
+
+    return render(request,'proposal_edit.html',context)
+
+#################################################################################
+
+@login_required
 def remove_proposal_product(request,pid,id):
     product = Product.objects.get(id=id)
     proposal = Proposal.objects.get(id=pid)
     lid = proposal.Lead.id
-    return redirect('/proposal/%s' %lid)
+    return redirect('.')
 
 #################################################################################
 

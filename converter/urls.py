@@ -9,6 +9,7 @@ urlpatterns = [
     path('proposal/<int:lid>/',views.create_proposal,name='proposal'),
     path('list-proposals/',views.list_proposals,name='list-proposals'),
     path('view-proposal/<int:pid>/',views.view_proposal,name='view-proposal'),
+    path('edit-proposal/<int:pid>/',views.edit_proposal,name='edit-proposal'),
 
     path('create-task/',views.create_task,name='create-task'),
     path('pending-task/',views.pending_task,name='pending-task'),

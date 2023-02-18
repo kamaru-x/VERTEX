@@ -213,6 +213,8 @@ def view_proposal(request,pid):
 
         lead = proposal.Lead
         lead.To_Client = dt.today()
+        lead.Lead_Status = 2
+        lead.save()
 
         for a in attachment:
             if str(a).endswith(('.png', '.jpg', '.jpeg')):

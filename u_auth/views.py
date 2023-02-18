@@ -47,6 +47,8 @@ def dashboard(request):
     total_clients = Lead.objects.filter(Lead_Status=3,Status=1).count()
     meetings_today = Lead_Schedule.objects.filter(AddedDate=date.today()).count()
 
+    
+
     context = {
         'total_leads' : total_leads,
         'total_opportunities' : total_opportunities,

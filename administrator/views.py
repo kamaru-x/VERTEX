@@ -40,7 +40,7 @@ def setreport():
 
         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0)
         lead_failed = lead_total.filter(Status=3,Lead_Status=0)
-        lead_success = lead_total.exclude(Status=3)
+        lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
 
         opportunity_total = lead_success
         opportunity_failed = lead_total.filter(Status=3,Lead_Status=1)

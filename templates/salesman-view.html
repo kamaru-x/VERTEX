@@ -36,7 +36,7 @@
                                 <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-slate-600 dark:text-slate-300 leading-3 mt-14 2xl:mt-24"> Total Target Assigned <i data-lucide="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i> </div>
                                 <div class="2xl:flex mt-5 mb-3">
                                     <div class="flex items-center justify-center sm:justify-start">
-                                        <div class="relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4 text-primary"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0 ">$</span> 142,402,210 </div>
+                                        <div class="relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4 text-primary"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0 "></span> {{ total_target.Targets }} </div>
                                         <a class="text-slate-500 ml-4 2xl:ml-16" href=""> <i data-lucide="refresh-ccw" class="w-4 h-4"></i> </a>
                                     </div>
                                     <div class="mt-5 2xl:flex 2xl:justify-center 2xl:mt-0 2xl:-ml-20 2xl:w-14 2xl:flex-none 2xl:pl-2.5">
@@ -44,8 +44,8 @@
                                     </div>
                                 </div>
                                 
-                                <div class="2xl:text-base text-slate-600 dark:text-slate-300 mt-6 -mb-1 "> Target Achieved <a href="" class="underline decoration-dotted underline-offset-4 text-success dark:text-slate-400">$12,921,050</a> </div>
-                                <div class="2xl:text-base text-slate-600 dark:text-slate-300 mt-6 -mb-1">  Target Failed <a href="" class="underline decoration-dotted underline-offset-4 text-danger dark:text-slate-400">$2,921,050</a> </div>
+                                <div class="2xl:text-base text-slate-600 dark:text-slate-300 mt-6 -mb-1 "> Target Achieved <a href="" class="underline decoration-dotted underline-offset-4 text-success dark:text-slate-400">{{ target_archived }}</a> </div>
+                                <div class="2xl:text-base text-slate-600 dark:text-slate-300 mt-6 -mb-1">  Target Failed <a href="" class="underline decoration-dotted underline-offset-4 text-danger dark:text-slate-400">{{ target_failed }}</a> </div>
                                 
                             </div>
 

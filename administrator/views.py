@@ -378,6 +378,7 @@ def salesman_view(request,sid):
     setmeeting()
     setreport()
     d = dt.today()
+    year = d.year
     salesman = User.objects.get(id=sid)
     schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
     leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0)
@@ -387,8 +388,23 @@ def salesman_view(request,sid):
     p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).order_by('Due_Date')
     c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).order_by('-Completed_Date')
     sales = Sales_Target.objects.filter(Salesman=salesman).filter(From__year = d.year)
-
     t_count = len(p_task)
+
+    total_target = Sales_Target.objects.filter(From__year = year,Salesman=salesman).last()
+
+    s_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=1)
+    f_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=0)
+
+    target_archived = 0
+    target_failed = 0
+
+    for proposal in s_proposals:
+        target_archived += proposal.Grand_Total
+
+    for proposal in f_proposals:
+        target_failed += proposal.Grand_Total
+
+    print(year,total_target)
 
     if request.method == 'POST':
 
@@ -461,6 +477,9 @@ def salesman_view(request,sid):
         'ctasks' : c_task,
         't_count' : t_count,
         'sales' : sales,
+        'total_target' : total_target,
+        'target_archived' : target_archived,
+        'target_failed' : target_failed
     }
     return render(request,'salesman-view.html',context)
 

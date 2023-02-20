@@ -163,6 +163,8 @@ class Proposal(models.Model):
     PO_Date = models.DateField(null=True)
     Attachments = models.ManyToManyField(Attachments)
 
+    Grand_Total = models.FloatField(null=True)
+
     def __str__(self):
         return self.Lead.Company
 
@@ -263,6 +265,7 @@ class Sales_Target(models.Model):
     Targets = models.FloatField(default=0)
     Archived = models.FloatField(default=0)
     Balance = models.FloatField(default=0)
+    Failed = models.FloatField(default=0)
 
     def __str__(self):
         return self.Salesman.first_name + '  ///  ' + str(self.From) + '  ///  ' + str(self.To)

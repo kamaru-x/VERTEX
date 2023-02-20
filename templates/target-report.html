@@ -44,117 +44,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <tr class="intro-x">
+                    {% for target in targets %}
+                    <tr class="intro-x">  
+                        <td class="w-72">
+                            <a href="" class="font-medium whitespace-nowrap">{{ target.Salesman.first_name }}</a>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ target.Salesman.Mobile }}</div>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ target.Salesman.email }}</div>
+                        </td>
+                        <td class="w-60">
+                            <a href="" class="font-medium whitespace-nowrap">{{ target.Targets }}</a>
                             
-                            <td class="w-72">
-                               <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">345,000</a>
-                                
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                     245,000
-                                </div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">100,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-center">70%</div>
-                                   
-                            </td>
-                            
-                            
-                        </tr>
-
-                        <tr class="intro-x">
-                            
-                            <td class="w-72">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">345,000</a>
-                                
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                      245,000
-                                </div>
-                            </td>
-                             <td class="w-60 text-right text-danger">
-                                <div class="pr-16">100,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-center">70% </div>
-                                    
-                            </td>
-                           
-                            
-                        </tr>
-
-                        <tr class="intro-x">
-                           
-                            <td class="w-72">
-                                 <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">345,000</a>
-                               
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                      245,000
-                                </div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">100,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-center">70% 
-                             </div>
-                                   
-                            </td>
-                            
-                            
-                        </tr>
-
-                        <tr class="intro-x">
-                           
-                            <td class="w-72">
-                                <a href="" class="font-medium whitespace-nowrap">Ramshad Hassan</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">5500 3488</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">ramshad@vertex.com.qa</div>
-                            </td>
-                            <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">345,000</a>
-                                 
-                            </td>
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                      245,000
-                                </div>
-                            </td>
-                            <td class="w-60 text-right text-danger">
-                                <div class="pr-16">100,000</div>
-                            </td>
-                            <td>
-                             <div class="whitespace-nowrap text-center">70% 
-                             </div>
-                                   
-                            </td>
-                            
-                            
-                        </tr>
-                        
-                    </tbody>
+                        </td>
+                        <td class="text-center">
+                            <div class="flex items-center justify-center whitespace-nowrap text-success">
+                                {{ target.Archived }}
+                            </div>
+                        </td>
+                        <td class="w-60 text-right text-danger">
+                            <div class="pr-16">{{ target.Balance }}</div>
+                        </td>
+                        <td>
+                            <div class="whitespace-nowrap text-center">70%</div>     
+                        </td>  
+                    </tr>
+                    {% endfor %} 
+                </tbody>
             </table>
         </div>
         <!-- END: Data List -->

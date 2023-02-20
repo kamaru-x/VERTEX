@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items,Sales_Target
 from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
+from administrator.set_fun import setTarget
 
 # Create your views here.
 
@@ -174,6 +175,7 @@ def create_proposal(request,lid):
             proposal.Payment = request.POST.get('payment')
             proposal.Exclusion = request.POST.get('exclusion')
             proposal.Terms_Condition = request.POST.get('terms')
+            proposal.Grand_Total = request.POST.get('grand_total')
             proposal.save()
             return redirect('list-proposals')
         
@@ -215,6 +217,7 @@ def view_proposal(request,pid):
         lead.To_Client = dt.today()
         lead.Lead_Status = 2
         lead.save()
+        setTarget()
 
         for a in attachment:
             if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -263,20 +266,20 @@ def edit_proposal(request,pid):
                 product = Proposal_Items(Proposal=proposal,Product=pro,Quantity=quantity,Sell_Price=price,Total=total)
                 product.save()
                 return redirect('/proposal/%s' %proposal.id)
-
-        if request.POST.get('scope'):
-            proposal.Scope = request.POST.get('scope')
-            proposal.Payment = request.POST.get('payment')
-            proposal.Exclusion = request.POST.get('exclusion')
-            proposal.Terms_Condition = request.POST.get('terms')
-            proposal.save()
-            return redirect('list-proposals')
-        
+            
         if request.POST.get('id'):
             id = request.POST.get('id')
             item = Proposal_Items.objects.get(id=id)
             item.delete()
             return redirect('/proposal/%s' %proposal.id)
+
+        proposal.Scope = request.POST.get('scope')
+        proposal.Payment = request.POST.get('payment')
+        proposal.Exclusion = request.POST.get('exclusion')
+        proposal.Terms_Condition = request.POST.get('terms')
+        proposal.Grand_Total = request.POST.get('grand_total')
+        proposal.save()
+        return redirect('list-proposals')
 
     context = {
         'products' : products,
@@ -318,6 +321,7 @@ def reject(request,pid):
     proposal = Proposal.objects.get(id=pid)
     proposal.Proposal_Status = 0
     proposal.save()
+    setTarget()
 
     # salesman = proposal.Lead.Salesman
     # report = Salesman_Report.objects.get(Salesman=salesman)
@@ -932,15 +936,39 @@ def salestarget(request):
 
 @login_required
 def target_report(request):
-    return render(request,'target-report.html')
+    salesmans = User.objects.filter(is_salesman = True)
+    d = dt.today()
+    y = d.year
+    datas = []
+    setTarget()
+    # for salesman in salesmans:
+    #     report = Sales_Target.objects.filter(Salesman=salesman,From__year=y).last()
+    #     dict1 = {'name':salesman.first_name,'email':salesman.email,'number':salesman.Mobile}
+    #     dict2 = {'target':report.Targets,'archived':report.Archived,'balance':report.Balance}
+    #     dict1.update(dict2)
+    #     datas.append(dict1)
+
+    targets = Sales_Target.objects.filter(From__year=y)
+
+    context = {
+        'targets' : targets
+    }
+    return render(request,'target-report.html',context)
 
 #################################################################################
 
 @login_required
 def top_customers(request):
-    reports = Salesman_Report.objects.filter(Status=1)
-    leads = Lead.objects.filter(Status=1).order_by('-ESValue')
-    return render(request,'top-customers.html',{'reports':reports,'leads':leads})
+    lds = Lead.objects.filter(Status=1).order_by('-id')
+    leads = []
+    for lead in lds:
+        volume = 0
+        a_proposals = Proposal.objects.filter(Lead=lead,Proposal_Status=1)
+        for a in a_proposals:
+            volume += a.Grand_Total
+        company = {'Company':lead.Company,'Email':lead.Email,'Mobile':lead.Phone,'Reference':lead.Reference,'Salesman':lead.Salesman.first_name,'semail':lead.Salesman.email,'smobile':lead.Salesman.Mobile,'proposals':lead.Accepted_proposals+lead.Rejected_Proposals,'volume':volume}
+        leads.append(company)
+    return render(request,'top-customers.html',{'leads':leads})
 
 #################################################################################
 
@@ -952,8 +980,8 @@ def proposal_report(request):
 
 @login_required
 def total_propose(request):
-    reports = Lead.objects.filter(Status=1)
-    return render(request,'report-proposal-total.html',{'reports':reports})
+    proposals = Proposal.objects.filter(Status=1)
+    return render(request,'report-proposal-total.html',{'proposals':proposals})
 
 #################################################################################
 

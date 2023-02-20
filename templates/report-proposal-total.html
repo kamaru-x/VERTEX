@@ -18,7 +18,7 @@
         <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
         color: #1e40af;">Add Category</h2>
     </div> -->
-    {% if reports %}
+    {% if proposals %}
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
             
@@ -74,27 +74,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for report in reports %}
+                    {% for proposal in proposals %}
                         <tr class="intro-x">
                             <td class="w-72 text-primary">
-                               <a href="" class="font-medium whitespace-nowrap">{{ report.CName }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.CNumber }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.CMail }}</div>
+                               <a href="" class="font-medium whitespace-nowrap">{{ proposal.Lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Phone }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Email }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap">{{ report.To_Proposal }}</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ proposal.Date | date:'d M Y' }}</a>
                                 
                             </td>
                             <td class="w-72 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">{{ report.Salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.email }}</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ proposal.Lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.email }}</div>
                             </td>
                             <td class="w-60 text-right text-danger">
-                                <div class="pr-16">{{ report.ESValue }}</div>
+                                <div class="pr-16">{{ proposal.Grand_Total }}</div>
                             </td>
                             <td>
-                             <div class="whitespace-nowrap text-primary">{{ report.To_Client }}</div>     
+                             <div class="whitespace-nowrap text-primary">{{ proposal.Date }}</div>     
                             </td>  
                         </tr>
                     {% endfor %}

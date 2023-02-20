@@ -41,7 +41,7 @@
                         <tr class="intro-x">
                             <td class="w-72 text-primary">
                                 <a href="" class="font-medium whitespace-nowrap">{{ lead.Company }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Phone }} / {{ lead.Email }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Mobile }} / {{ lead.Email }}</div>
                                
                             </td>
                             <td class="w-40">
@@ -50,16 +50,16 @@
                             </td>
                             
                             <td class="w-60 text-right">
-                                <div class="pr-16">{{ lead.To_Proposal }}</div>
+                                <div class="pr-16">{{ lead.proposals }}</div>
                             </td>
                             <td class="w-60">
-                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ lead.Salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.Salesman.email }}</div>
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ lead.Salesman }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.smobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ lead.semail }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                     95% ( {{ lead.ESValue }} )
+                                     95% ( {{ lead.volume }} )
                                 </div>
                             </td>
                             

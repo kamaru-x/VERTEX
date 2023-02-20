@@ -11,5 +11,5 @@ $(document).ready(function(){
 	}
 
 	$('#total_sum_value').html(calculated_total_sum)
-    
+    $('#grand_total').val(calculated_total_sum)
 })

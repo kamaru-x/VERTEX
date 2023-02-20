@@ -30,5 +30,6 @@ def setTarget():
 
         target.Archived = archived
         target.Failed = faild
-        target.Balance = pending
+        target.Pending = pending
+        target.Balance = target.Targets - archived
         target.save()

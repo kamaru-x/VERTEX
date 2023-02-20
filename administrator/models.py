@@ -263,8 +263,9 @@ class Sales_Target(models.Model):
     From = models.DateField(null=True,blank=True)
     To = models.DateField(null=True,blank=True)
     Targets = models.FloatField(default=0)
-    Archived = models.FloatField(default=0)
     Balance = models.FloatField(default=0)
+    Archived = models.FloatField(default=0)
+    Pending = models.FloatField(default=0)
     Failed = models.FloatField(default=0)
 
     def __str__(self):

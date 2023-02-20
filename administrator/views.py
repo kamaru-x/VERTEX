@@ -860,23 +860,6 @@ def canceled_project_view(request,lid):
 def assign_target(request):
     targets = Sales_Target.objects.all()
     t_s = User.objects.filter(is_salesman=True)
-    
-    # total = []
-    # archived = []
-    # balance = []
-
-    # data = []
-
-    # for target in targets:
-    #     years = []
-    #     salesmans = []
-    #     year = target.From.year
-    #     years.append(year)
-    #     yrs = [*set(years)]
-    #     salesman = Sales_Target.objects.filter( From__year = year ).count()
-    #     salesmans.append(salesman)
-    # print(yrs)
-    # print(salesmans)
 
     yrs = []
 
@@ -887,15 +870,14 @@ def assign_target(request):
     for year in years:
         salesmans = Sales_Target.objects.filter(From__year=year)
         for salesman in salesmans:
-            projects = Lead.objects.filter(Salesman=salesman.Salesman,Lead_Status=3,Date__year=year)
+            proposals = Proposal.objects.filter(Date__year=year,Proposal_Status=1)
             archived = 0
-            for project in projects:
-                archived = int(archived + project.ESValue)
+            for proposal in proposals:
+                archived += proposal.Grand_Total
             balance = int(salesman.Targets - archived)
 
             salesman.Archived = archived
             salesman.Balance = balance
-            salesman.save()
 
     data = []
 

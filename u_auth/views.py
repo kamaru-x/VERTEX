@@ -65,11 +65,14 @@ def dashboard(request):
 
     for p in total_proposals:
         if p.Proposal_Status == 1:
-            proposal_success_volume += int(p.Grand_Total)
+            if p.Grand_Total:
+                proposal_success_volume += p.Grand_Total
         elif p.Proposal_Status == 0:
-            proposal_failed_volume += int(p.Grand_Total)
+            if p.Grand_Total:
+                proposal_failed_volume += p.Grand_Total
         elif p.Proposal_Status == 10:
-            proposal_pending_volume += int(p.Grand_Total)
+            if p.Grand_Total:
+                proposal_pending_volume += p.Grand_Total
 
     
     for s in salesmans:

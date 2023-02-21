@@ -134,7 +134,7 @@
                         <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                             <div class="intro-y flex items-center h-10">
                                 <h2 class="text-lg font-medium truncate mr-5">
-                                    Sales Target (Jan 2023)
+                                    Sales Target (2023)
                                 </h2>
                                 <a href="" class="ml-auto text-primary truncate">Show More</a> 
                             </div>
@@ -147,15 +147,15 @@
                                 <div class="w-52 sm:w-auto mx-auto mt-8">
                                     <div class="flex items-center">
                                         <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                        <span class="truncate">100% Achieved</span> <span class="font-medium ml-auto">33 Salesman</span> 
+                                        <span class="truncate">100% Achieved</span> <span class="font-medium ml-auto">{{fa}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                        <span class="truncate">50% - 100% Achieved</span> <span class="font-medium ml-auto">20 Salesman</span> 
+                                        <span class="truncate">50% - 100% Achieved</span> <span class="font-medium ml-auto">{{hf}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                        <span class="truncate"> 50% Achieved</span> <span class="font-medium ml-auto">15 Salesman</span> 
+                                        <span class="truncate"> 50% Achieved</span> <span class="font-medium ml-auto">{{mhf}} Salesman</span> 
                                     </div>
                                 </div>
                             </div>
@@ -178,15 +178,15 @@
                                 <div class="w-52 sm:w-auto mx-auto mt-8">
                                     <div class="flex items-center">
                                         <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                        <span class="truncate">Success</span> <span class="font-medium ml-auto">123,000.00</span> 
+                                        <span class="truncate">Success</span> <span class="font-medium ml-auto">{{psv}}</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                        <span class="truncate">Failed</span> <span class="font-medium ml-auto">80,000.00</span> 
+                                        <span class="truncate">Failed</span> <span class="font-medium ml-auto">{{pfv}}</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                        <span class="truncate">Pending</span> <span class="font-medium ml-auto">154,000.00</span> 
+                                        <span class="truncate">Pending</span> <span class="font-medium ml-auto">{{ppv}}</span> 
                                     </div>
                                 </div>
                             </div>
@@ -198,12 +198,28 @@
                 
             </div>
         </div>
+        <div class="vals">
+            <input type="hidden" name="" id="full_archived" value="{{fa}}">
+            <input type="hidden" name="" id="half_archived" value="{{hf}}">
+            <input type="hidden" name="" id="morethanhalf_archived" value="{{mhf}}">
+
+            <input type="hidden" name="" id="success_value" value="{{psv}}">
+            <input type="hidden" name="" id="pending_value" value="{{ppv}}">
+            <input type="hidden" name="" id="failed_value" value="{{pfv}}">
+
+            <input type="hidden" name="" value="{{reports}}" id="reports">
+        </div>
         <!-- END: Content -->
         <style>
             .dark-mode-switcher{
                 display: none;
             }
         </style>
+        <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+        <!-- <script>
+            report = $('#reports').val()
+            alert(report)
+        </script> -->
         <!-- BEGIN: Dark Mode Switcher-->
         <div data-url="#" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
             <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>

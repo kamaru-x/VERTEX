@@ -33,6 +33,7 @@ urlpatterns = [
     path('previous-meetings/',views.previous_meetings,name='previous-meetings'),
     path('meeting-staff-list/',views.meeting_staff_list,name='meeting-staff-list'),
     path('meeting-staff-view/<int:uid>/',views.meeting_staff_view,name='meeting-staff-view'),
+    path('edit-meeting/<int:id>/',views.edit_upcoming_meeting,name='edit-meeting'),
 
     path('salesman-report/',views.salesman_report,name='salesman-report'),
     path('salestarget/',views.salestarget,name='sales-target'),

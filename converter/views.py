@@ -7,6 +7,7 @@ from administrator.views import setip
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from administrator.set_fun import setTarget
+import math
 
 # Create your views here.
 
@@ -778,6 +779,29 @@ def upcoming_meetings(request):
 
 #################################################################################
 
+def edit_upcoming_meeting(request,id):
+    meeting = Lead_Schedule.objects.get(id=id)
+    leads = Lead.objects.filter(Status=1)
+
+    if request.method == 'POST':
+        meeting.AddedDate = request.POST.get('date')
+        meeting.Mode = request.POST.get('mode')
+        meeting.From = request.POST.get('from')
+        meeting.To = request.POST.get('to')
+        meeting.Description = request.POST.get('description')
+        l = request.POST.get('lead')
+        meeting.Lead = Lead.objects.get(id=l)
+        meeting.save()
+        return redirect('upcoming-meetings')
+
+    context = {
+        'meeting':meeting,
+        'leads':leads,
+    }
+    return render(request,'meeting-upcoming-edit.html',context)
+
+#################################################################################
+
 @login_required
 def previous_meetings(request):
     schedules = Lead_Schedule.objects.all().order_by('-AddedDate')
@@ -930,7 +954,22 @@ def salesman_report(request):
 
 @login_required
 def salestarget(request):
-    return render(request,'salestarget-report.html')
+    target = 0
+    archived = 0
+    balance = 0
+    d = dt.today()
+    year = d.year
+    targets = Sales_Target.objects.filter(From__year=year)
+    for t in targets:
+        target += t.Targets
+        archived += t.Archived
+        balance = target - archived
+    context = {
+        'target' : target,
+        'archived' : archived,
+        'balance' : balance,
+    }
+    return render(request,'salestarget-report.html',context)
 
 #################################################################################
 
@@ -939,20 +978,26 @@ def target_report(request):
     salesmans = User.objects.filter(is_salesman = True)
     d = dt.today()
     y = d.year
-    datas = []
-    setTarget()
-    # for salesman in salesmans:
-    #     report = Sales_Target.objects.filter(Salesman=salesman,From__year=y).last()
-    #     dict1 = {'name':salesman.first_name,'email':salesman.email,'number':salesman.Mobile}
-    #     dict2 = {'target':report.Targets,'archived':report.Archived,'balance':report.Balance}
-    #     dict1.update(dict2)
-    #     datas.append(dict1)
 
-    targets = Sales_Target.objects.filter(From__year=y)
+    trgts = Sales_Target.objects.filter(From__year=y)
+    targets = []
+    setTarget()
+
+    for t in trgts:
+
+        if t.Targets and t.Archived != 0:
+            p = (int(t.Targets) / int(t.Archived)) * 100
+            percentage = math.trunc(p)
+        else :
+            percentage = 0
+
+        target = {'Salesman':t.Salesman,'Targets':t.Targets,'Archived':t.Archived,'Pending':t.Balance,'Percentage':percentage}
+        targets.append(target)
 
     context = {
         'targets' : targets
     }
+
     return render(request,'target-report.html',context)
 
 #################################################################################
@@ -963,10 +1008,23 @@ def top_customers(request):
     leads = []
     for lead in lds:
         volume = 0
+        total_volume = 0
+        proposals =  Proposal.objects.filter(Proposal_Status=1)
         a_proposals = Proposal.objects.filter(Lead=lead,Proposal_Status=1)
+
+        for p in proposals:
+            total_volume += p.Grand_Total
+
         for a in a_proposals:
             volume += a.Grand_Total
-        company = {'Company':lead.Company,'Email':lead.Email,'Mobile':lead.Phone,'Reference':lead.Reference,'Salesman':lead.Salesman.first_name,'semail':lead.Salesman.email,'smobile':lead.Salesman.Mobile,'proposals':lead.Accepted_proposals+lead.Rejected_Proposals,'volume':volume}
+
+        if volume and total_volume != 0:
+            p = volume / total_volume * 100
+            percentage = math.trunc(p)
+        else:
+            percentage = 0
+
+        company = {'Company':lead.Company,'Email':lead.Email,'Mobile':lead.Phone,'Reference':lead.Reference,'Salesman':lead.Salesman.first_name,'semail':lead.Salesman.email,'smobile':lead.Salesman.Mobile,'proposals':lead.Accepted_proposals+lead.Rejected_Proposals,'volume':volume,'Percentage':percentage}
         leads.append(company)
     return render(request,'top-customers.html',{'leads':leads})
 
@@ -974,7 +1032,17 @@ def top_customers(request):
 
 @login_required
 def proposal_report(request):
-    return render(request,'report-proposal.html')
+    total = Proposal.objects.all().count()
+    faild = Proposal.objects.filter(Proposal_Status = 0).count()
+    success = Proposal.objects.filter(Proposal_Status = 1).count()
+
+    context = {
+        'total' : total,
+        'faild' : faild,
+        'success' : success,
+    }
+
+    return render(request,'report-proposal.html',context)
 
 #################################################################################
 

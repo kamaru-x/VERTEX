@@ -7,6 +7,7 @@ from django.contrib import messages
 from u_auth.models import User
 from datetime import timedelta
 from django.db.models import Q
+from administrator.set_fun import setTarget
 
 # Create your views here.
 
@@ -344,11 +345,14 @@ def list_salesman(request):
         f_proposals = Proposal.objects.filter(Lead__Salesman = report.Salesman).filter(Proposal_Status=0)
 
         for a in a_proposals:
-            archived += a.Grand_Total
+            if a.Grand_Total:
+                archived += a.Grand_Total
         for p in p_proposals:
-            pending += p.Grand_Total
+            if p.Grand_Total:
+                pending += p.Grand_Total
         for f in f_proposals:
-            faild += f.Grand_Total
+            if f.Grand_Total:
+                faild += f.Grand_Total
         
         r = {'report':report,'archived':archived,'pending':pending,'faild':faild}
         reports.append(r)
@@ -400,12 +404,12 @@ def salesman_view(request,sid):
     year = d.year
     salesman = User.objects.get(id=sid)
     schedules = Lead_Schedule.objects.filter(Lead__Salesman=salesman)
-    leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0)
-    opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1)
-    clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2)
-    projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3)
-    p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).order_by('Due_Date')
-    c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).order_by('-Completed_Date')
+    leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0,Status=1)
+    opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1,Status=1)
+    clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2,Status=1)
+    projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3,Status=1)
+    p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).exclude(Status=0).order_by('Due_Date')
+    c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).exclude(Status=0).order_by('-Completed_Date')
     sales = Sales_Target.objects.filter(Salesman=salesman).filter(From__year = d.year)
     t_count = len(p_task)
 
@@ -974,6 +978,7 @@ def target_setup(request):
 
 @login_required
 def target_view(request,year):
+    setTarget()
     salesmans = Sales_Target.objects.filter(From__year = year)
     return render(request,'target-view.html',{'salesmans':salesmans,'year':year})
 

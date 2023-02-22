@@ -36,8 +36,13 @@
                                 <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-slate-600 dark:text-slate-300 leading-3 mt-14 2xl:mt-24"> Total Target Assigned <i data-lucide="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i> </div>
                                 <div class="2xl:flex mt-5 mb-3">
                                     <div class="flex items-center justify-center sm:justify-start">
-                                        <div class="relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4 text-primary"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0 "></span> {{ total_target.Targets }} </div>
-                                        <a class="text-slate-500 ml-4 2xl:ml-16" href=""> <i data-lucide="refresh-ccw" class="w-4 h-4"></i> </a>
+                                        {% if total_target.Targets %}
+                                            <div class="relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4 text-primary"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0 "></span> {{ total_target.Targets }} </div>
+                                            <a class="text-slate-500 ml-4 2xl:ml-16" href="."> <i data-lucide="refresh-ccw" class="w-4 h-4"></i> </a>
+                                        {% else %}
+                                            <div class="relative text-2xl 2xl:text-3xl font-medium leading-6 pl-3 2xl:pl-4 text-primary"> <span class="absolute text-xl 2xl:text-2xl top-0 left-0 -mt-1 2xl:mt-0 "></span> 00.00 </div>
+                                            <a class="text-slate-500 ml-4 2xl:ml-16" href="."> <i data-lucide="refresh-ccw" class="w-4 h-4"></i> </a>
+                                        {% endif %}
                                     </div>
                                     <div class="mt-5 2xl:flex 2xl:justify-center 2xl:mt-0 2xl:-ml-20 2xl:w-14 2xl:flex-none 2xl:pl-2.5">
                                         <div class="font-medium inline-flex bg-success text-white rounded-full px-2 py-1 text-xs 2xl:text-sm 2xl:p-0 2xl:text-success 2xl:bg-transparent 2xl:flex items-center tooltip cursor-pointer 2xl:justify-center" title="49% Higher than last month"> 49% <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
@@ -729,54 +734,53 @@
 
 
 <!-- previous meeting -->
-
-{% if previous %}
 <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
-        color: #1e40af; padding-top: 50px; padding-bottom:10px;">Previous Meeting</h2>
+color: #1e40af; padding-top: 100px; padding-bottom:60px;">Previous Meeting</h2>
+{% if previous %}
          <!-- <div  style="float:right; margin-right:20px;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal1"><button class="btn btn-primary shadow-md mr-2">Add Schedule</button></a></div><br><br><br> -->
-                                        <br>
-                                        <div class="overflow-x-auto">
-                                            <table class="table">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th class="whitespace-nowrap">Date</th>
-                                                        <th class="whitespace-nowrap">Company Name</th>
-                                                        <!-- <th class="whitespace-nowrap">Salesman</th> -->
-                                                        <th class="whitespace-nowrap">Mode Of Meeting</th>
-                                                        <th class="whitespace-nowrap">Time </th>
-                                                        
-                                                        <th class="whitespace-nowrap">Remark</th>
-                                                       
-                                                         <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for p in previous %}
-                                                    <tr>
-                                                        <td>{{ p.AddedDate }}</td>
-                                                         <td class="text-primary"><a href="{% url 'p-meeting-d' p.id %}">{{ p.Lead.Company }}<br>{{ p.Lead.Phone }} / {{ p.Lead.Email }}</a></td>
-                                                        <!-- <td>{{ p.Lead.Salesman.first_name }}<br> -->
-                                                         <!-- {{ p.Lead.Salesman.Qid }}</td> -->
-                                                        <td>{{ p.Mode }}</td>
-                                                        <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
-                                                        
-                                                        
-                                                        {% if p.Update_Date %}<td>Status updated</td>{% else %}<td>Status not updated</td>{% endif %}
-                                                        <td class="table-report__action">
-                                                            <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
-                                                            <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
-                                                            </a>
-                                                            {% if p.Update_Date %}
-                                                            {% else %}
-                                                                <a class="text-primary" style="cursor: pointer;" onclick="pop('{{p.id}}')" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
-                                                            {% endif %}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
+            <br>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="whitespace-nowrap">Date</th>
+                            <th class="whitespace-nowrap">Company Name</th>
+                            <!-- <th class="whitespace-nowrap">Salesman</th> -->
+                            <th class="whitespace-nowrap">Mode Of Meeting</th>
+                            <th class="whitespace-nowrap">Time </th>
+                            
+                            <th class="whitespace-nowrap">Remark</th>
+                            
+                                <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in previous %}
+                        <tr>
+                            <td>{{ p.AddedDate }}</td>
+                                <td class="text-primary"><a href="{% url 'p-meeting-d' p.id %}">{{ p.Lead.Company }}<br>{{ p.Lead.Phone }} / {{ p.Lead.Email }}</a></td>
+                            <!-- <td>{{ p.Lead.Salesman.first_name }}<br> -->
+                                <!-- {{ p.Lead.Salesman.Qid }}</td> -->
+                            <td>{{ p.Mode }}</td>
+                            <td class="text-primary">{{ p.From }} - {{ p.To }}</td>
+                            
+                            
+                            {% if p.Update_Date %}<td>Status updated</td>{% else %}<td>Status not updated</td>{% endif %}
+                            <td class="table-report__action">
+                                <div class="flex justify-center items-center">  <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
+                                <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
+                                </a>
+                                {% if p.Update_Date %}
+                                {% else %}
+                                    <a class="text-primary" style="cursor: pointer;" onclick="pop('{{p.id}}')" data-tw-toggle="modal" data-tw-target="#new-order-modal2" title="Add Update"> <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> </a>
+                                {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 {% else %}
 <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
     <table class="table table-report -mt-2">
@@ -798,62 +802,59 @@
 
 <!-- /previous meeting -->
 <!-- upcoming meeting -->
-
-{% if upcoming %}
 <h2 style=" font-size: 30px; font-weight: 500; text-align: center;
-        color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
+color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
+{% if upcoming %}
+        <div>
+            
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="whitespace-nowrap">Date</th>
+                                <th class="whitespace-nowrap">Company Name</th>
+                                <!-- <th class="whitespace-nowrap">Salesman Name</th> -->
+                                <th class="whitespace-nowrap">Mode Of Meeting</th>
+                                <th class="whitespace-nowrap">Time </th>
+                                <th class="whitespace-nowrap">Description</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in upcoming %}
+                            <tr>
+                                <td>{{ u.AddedDate }}</td>
+                                <td class="text-primary"><a href="{% url 'upcoming-meetings' %}">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
+                                <!-- <td>{{ u.Lead.Salesman.first_name }}<br> -->
+                                <!-- {{ u.Lead.Salesman.Qid }}</td> -->
+                                <td>{{ u.Mode }}</td>
+                                <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
+                                <td>{{ u.Description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
 
-       
-                                <div>
-                                    
-                                        <div class="overflow-x-auto">
-                                            <table class="table">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th class="whitespace-nowrap">Date</th>
-                                                        <th class="whitespace-nowrap">Company Name</th>
-                                                        <!-- <th class="whitespace-nowrap">Salesman Name</th> -->
-                                                        <th class="whitespace-nowrap">Mode Of Meeting</th>
-                                                        <th class="whitespace-nowrap">Time </th>
-                                                        <th class="whitespace-nowrap">Description</th>
-                                                        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for u in upcoming %}
-                                                    <tr>
-                                                        <td>{{ u.AddedDate }}</td>
-                                                        <td class="text-primary"><a href="{% url 'upcoming-meetings' %}">{{ u.Lead.Company }}<br>{{ u.Lead.Phone }} / {{ u.Lead.Email }}</a></td>
-                                                        <!-- <td>{{ u.Lead.Salesman.first_name }}<br> -->
-                                                        <!-- {{ u.Lead.Salesman.Qid }}</td> -->
-                                                        <td>{{ u.Mode }}</td>
-                                                        <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
-                                                        <td>{{ u.Description }}</td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    
-
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
-                                <table class="table table-report -mt-2">
-                                    <tbody>
-                                        <tr class="intro-x width"> 
-                                            <td class=" width" style="width:100%;">
-                                                <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
-                                                    background: #e8e4e4;" class="w-4 h-4 mr-2">  
-                                                </i>
-                                            <div style="text-align: center;">No data available!</div>
-                                            </td>   
-                                        </tr>    
-                                    </tbody>
-                                </table>
-                            </div>  
-                            {% endif %} 
+        </div>
+    </div>
+    {% else %}
+    <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+        <table class="table table-report -mt-2">
+            <tbody>
+                <tr class="intro-x width"> 
+                    <td class=" width" style="width:100%;">
+                        <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                            background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                        </i>
+                    <div style="text-align: center;">No data available!</div>
+                    </td>   
+                </tr>    
+            </tbody>
+        </table>
+    </div>  
+    {% endif %} 
 
 <div class="intro-y box mt-5">  
 

@@ -27,9 +27,9 @@ def setTarget():
                 pending += p.Grand_Total
 
         target = Sales_Target.objects.filter(Salesman=salesman,From__year=year).last()
-
-        target.Archived = archived
-        target.Failed = faild
-        target.Pending = pending
-        target.Balance = target.Targets - archived
-        target.save()
+        if target:
+            target.Archived = archived
+            target.Failed = faild
+            target.Pending = pending
+            target.Balance = target.Targets - archived
+            target.save()

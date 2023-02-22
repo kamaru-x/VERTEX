@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from administrator.set_fun import setTarget
 import math
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -150,7 +151,7 @@ def proposal(request,lid):
 
 @login_required
 def create_proposal(request,lid):
-    products = Product.objects.all()
+    products = Product.objects.filter(Status=1)
     proposal = Proposal.objects.get(id=lid)
     lead = proposal.Lead
     pros = Proposal_Items.objects.filter(Proposal=proposal)
@@ -162,8 +163,8 @@ def create_proposal(request,lid):
             quantity = request.POST.get('quantity')
             price = request.POST.get('price')
             total = request.POST.get('total')
-            proposal.Grand_Total = request.POST.get('grand_total')
-            proposal.save()
+            # proposal.Grand_Total = request.POST.get('grand_total')
+            # proposal.save()
             try:
                 pr = Proposal_Items.objects.get(Proposal=proposal,Product=pro)
                 if pr:
@@ -178,8 +179,8 @@ def create_proposal(request,lid):
             proposal.Payment = request.POST.get('payment')
             proposal.Exclusion = request.POST.get('exclusion')
             proposal.Terms_Condition = request.POST.get('terms')
-            # proposal.Grand_Total = request.POST.get('grand_total')
-            # proposal.save()
+            proposal.Grand_Total = request.POST.get('grand_total')
+            proposal.save()
             return redirect('list-proposals')
         
         if request.POST.get('id'):
@@ -309,6 +310,7 @@ def accept(request,pid):
     proposal.save()
     lead = proposal.Lead
     lead.To_Client = dt.today()
+    setTarget()
 
     # salesman = proposal.Lead.Salesman
     # report = Salesman_Report.objects.get(Salesman=salesman)
@@ -324,6 +326,8 @@ def reject(request,pid):
     proposal.Proposal_Status = 0
     proposal.save()
 
+    setTarget()
+
     # salesman = proposal.Lead.Salesman
     # report = Salesman_Report.objects.get(Salesman=salesman)
     # report.Proposal_Faild = report.Proposal_Faild + 1
@@ -337,7 +341,7 @@ def create_task(request):
     user = request.user.id
     d = dt.today()
     ip = setip(request)
-    leads = Lead.objects.all()
+    leads = Lead.objects.filter(Status=1)
     salesmans = User.objects.filter(is_salesman=True)
     if request.method == 'POST':
         lead = request.POST.get('lead')
@@ -907,8 +911,8 @@ def task_staff(request):
 
 def task_staff_view(request,uid):
     salesman = User.objects.get(id=uid)
-    pending = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=0)
-    completed = Task.objects.filter(Lead__Salesman = salesman).filter(Task_Status=1)
+    pending = Task.objects.filter(Salesman = salesman).filter(Task_Status=0)
+    completed = Task.objects.filter(Salesman = salesman).filter(Task_Status=1)
 
     if request.method == "POST" :
         tid = request.POST.get('taskid')
@@ -947,7 +951,41 @@ def task_staff_view(request,uid):
 
 @login_required
 def salesman_report(request):
-    reports = Salesman_Report.objects.filter(Status=1)
+    reports = []
+    salesmans = User.objects.filter(is_salesman=True)
+    for salesman in salesmans:
+        leads = Lead.objects.filter(Salesman=salesman,Status=1).count()
+        total_proposals = Proposal.objects.filter(Lead__Salesman=salesman)
+        accepteted_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=1)
+        rejected_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=0)
+
+        sum_total_proposals = 0
+        sum_accepteted_proposals = 0
+        sum_rejected_proposals = 0
+
+        for p in total_proposals:
+            if p.Grand_Total:
+                sum_total_proposals += p.Grand_Total
+
+        for a in accepteted_proposals:
+            if a.Grand_Total:
+                sum_accepteted_proposals += a.Grand_Total
+        
+        for r in rejected_proposals:
+            if r.Grand_Total:
+                sum_rejected_proposals += r.Grand_Total
+
+        report = {
+            'salesman':salesman,
+            'leads':leads,
+            'total':total_proposals.count(),
+            'accepteted_proposals':accepteted_proposals.count(),
+            'rejected_proposals':rejected_proposals.count(),
+            'sum_total_proposals':sum_total_proposals,
+            'sum_accepteted_proposals':sum_accepteted_proposals,
+            'sum_rejected_proposals':sum_rejected_proposals,
+            }
+        reports.append(report)
     return render(request,'salesman-report.html',{'reports':reports})
 
 #################################################################################

@@ -111,7 +111,7 @@
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
-                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="">
+                                    <a title="Reset Password" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'change-salesman-password' s.report.Salesman.id %}">
                                         <i data-lucide="key" class="w-4 h-4 mr-1"></i>
                                     </a>
                                     <a title="Edit" class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-salesman' s.report.Salesman.id %}">

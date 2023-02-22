@@ -254,7 +254,11 @@
                     <div class="mt-5">
                         <!-- <div  style="float:right;"><a href="#" data-tw-toggle="modal" data-tw-target="#new-order-modal2"><button class="btn btn-primary shadow-md mr-2">Reply</button></a></div> -->
                         <div>
-                            <textarea class="form-control" name="scope" id="" cols="30" rows="10" placeholder="Enter Scope of work">{{ proposal.Scope }}</textarea>
+                            {% if proposal.Scope %}
+                                <textarea class="form-control" name="scope" id="" cols="30" rows="10" placeholder="Enter Scope of work">{{ proposal.Scope }}</textarea>
+                            {% else %}
+                                <textarea class="form-control" name="scope" id="" cols="30" rows="10" placeholder="Enter Scope of work"></textarea>
+                            {% endif %}
                         </div>
                     </div>
                 <!--  -->
@@ -271,7 +275,11 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms">{{ proposal.Payment }}</textarea>
+                        {% if proposal.Payment %}
+                            <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms">{{ proposal.Payment }}</textarea>
+                        {% else %}
+                            <textarea class="form-control" name="payment" id="" cols="30" rows="10" placeholder="Enter payment terms"></textarea>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -287,7 +295,11 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion">{{ proposal.Exclusion }}</textarea>
+                        {% if proposal.Exclusion %}
+                            <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion">{{ proposal.Exclusion }}</textarea>
+                        {% else %}
+                            <textarea class="form-control" name="exclusion" id="" cols="30" rows="10" placeholder="Enter Exclusion"></textarea>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -302,7 +314,11 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condetion">{{ proposal.Terms_Condition }}</textarea>
+                        {% if proposal.Terms_Condition %}
+                            <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condition">{{ proposal.Terms_Condition }}</textarea>
+                        {% else %}
+                            <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condition"></textarea>
+                        {% endif %}
                     </div>
                     <div style="margin-left: auto;
                         margin-right: auto;display: block;margin-top: 10px; width:90px;"><button type="submit" class="btn btn-primary shadow-md mr-2">Save</button>

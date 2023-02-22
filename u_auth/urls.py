@@ -7,4 +7,5 @@ urlpatterns = [
     path('sign-out/',views.signout,name='sign-out'),
     path('salesboard/',views.salesboard,name='salesboard'),
     path('change-password',views.changepassword,name='change-password'),
+    path('change-salesman-password/<int:id>/',views.change_salesman_password,name='change-salesman-password')
 ]

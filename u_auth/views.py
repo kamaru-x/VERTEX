@@ -150,7 +150,7 @@ def changepassword(request):
 #################################################################################
 
 def change_salesman_password(request,id):
-    user = request.user
+    user = User.objects.get(id=id)
     if request.method == 'POST':
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -160,7 +160,7 @@ def change_salesman_password(request,id):
         else:
             user.set_password(password1)
             user.save()
-            return redirect('dashboard')
+            return redirect('list-salesman')
     return render(request,'salesman-password.html')
 
 #################################################################################

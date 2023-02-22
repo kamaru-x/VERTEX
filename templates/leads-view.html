@@ -203,7 +203,7 @@
                                                         <div id="content" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
                                                             <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                                                 <div class="mt-1.5 flex items-center" style="float:right;">
-                                                                    <div class="text-base btn-rounded btn-primary-soft px-3 py-1 mb-2">{{ update.Date | date:"d M Y" }}</div><br>               
+                                                                    <div class="text-base btn-rounded btn-primary-soft px-3 py-1 mb-2">{{ update.AddedDate | date:"d M Y" }}</div><br>               
                                                                 </div>
                                                                 <div class="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5"> <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Description </div>
                             
@@ -317,9 +317,9 @@
                                                                                         {{ p.Description }}
                                                                                     </td>
                                                                                     <td>Direct</td>
-                                                                                    <td class="text-primary">{{ p.From | time:"" }} - {{ p.To | time:"" }}</td>   
+                                                                                    <td class="text-primary w-60">{{ p.From | time:"" }} - {{ p.To | time:"" }}</td>   
                                                                                     {% if p.Update_Date %}<td>Status updated</td>{% else %}<td>Status not updated</td>{% endif %}
-                                                                                    <td class="table-report__action">
+                                                                                    <td class="table-report__action w-60">
                                                                                         <div class="flex justify-center items-center">      <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'p-meeting-d' p.id %}" title="view">
                                                                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> 
                                                                                         </a>
@@ -393,7 +393,7 @@
                                                                                         {{ u.Description }}
                                                                                     </td>
                                                                                     <td>{{ u.Mode }}</td>
-                                                                                    <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
+                                                                                    <td class="text-primary w-60">{{ u.From }} - {{ u.To }}</td>
                                                                                     <!-- <td class="">{{ u.Description }}</td>     -->
                                                                                 </tr>
                                                                                 {% endfor %}

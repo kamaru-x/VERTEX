@@ -74,24 +74,24 @@
                     {% for report in reports %}
                         <tr class="intro-x"> 
                             <td class="w-64 !py-4">
-                                <a href="" class="font-medium whitespace-nowrap">{{ report.Salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.Salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.Salesman.email }}</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ report.salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ report.salesman.email }}</div>
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">{{ report.Lead_Total }}</a>
+                                <a href="" class="font-medium whitespace-nowrap">{{ report.leads }}</a>
                                  <!-- <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div> -->
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-primary">
-                                    {{ report.Proposal_Total }}
+                                    {{ report.total }} ({{ report.sum_total_proposals }})
                                 </div>
                             </td>
                             <td class="w-40 text-right text-success">
-                                <div class="pr-16">{{ report.Proposal_Success }}</div>
+                                <div class="pr-16">{{ report.accepteted_proposals }} ({{report.sum_accepteted_proposals}})</div>
                             </td>
                             <td>
-                             <div class="text-center text-danger">{{ report.Proposal_Faild }}</div>
+                             <div class="text-center text-danger">{{ report.rejected_proposals }} ({{report.sum_rejected_proposals}})</div>
                                     <!-- <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">#ID345</div> -->
                             </td>  
                         </tr>

@@ -79,7 +79,7 @@
            <!--  <div class="font-medium text-base">Add / Manage Products</div> -->
            <form action="" method="post">
             {% csrf_token %}
-                <input type="hidden" name="grand_total" id="grand_total">
+                <!-- <input type="hidden" name="grand_total" id="grand_total"> -->
                 <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
                     
                     <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
@@ -303,7 +303,7 @@
             <div class="">
                 <div class="mt-5">
                     <div>
-                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condetion"></textarea>
+                        <textarea class="form-control" name="terms" id="" cols="30" rows="10" placeholder="Enter Terms And condition"></textarea>
                     </div>
                     <div style="margin-left: auto;
                         margin-right: auto;display: block;margin-top: 10px; width:90px;"><button type="submit" class="btn btn-primary shadow-md mr-2">Save</button>

@@ -944,8 +944,13 @@ def target_setup(request):
         for (s , t) in zip(salesman,targets):
             man = User.objects.get(id=s)
             if s and t:
-                data = Sales_Target(Salesman=man,Targets=t,From=year,To=Enddate)
-                data.save()
+                try:
+                    data = Sales_Target.objects.get(Salesman=s,From=year)
+                    data.Targets = t
+                    data.save()
+                except:
+                    data = Sales_Target(Salesman=man,Targets=t,From=year,To=Enddate)
+                    data.save()
         return redirect('assign-target')
 
     context = {

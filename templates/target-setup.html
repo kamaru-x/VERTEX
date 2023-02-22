@@ -40,20 +40,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for salesman in salesmans %}
+                    {% for s in salesmans %}
                         <tr class="intro-x"> 
                             <td class="w-64">
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-64 text-primary">
-                                <a href="" class="font-medium whitespace-nowrap">{{ salesman.first_name }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.Mobile }}</div>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ salesman.email }}</div>
-                                <input type="hidden" name="salesmans" value="{{ salesman.id }}">
+                                <a href="" class="font-medium whitespace-nowrap">{{ s.salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ s.salesman.email }}</div>
+                                <input type="hidden" name="salesmans" value="{{ s.salesman.id }}">
                             </td>
                             
                             <td class="w-72 text-primary">
-                                <div>$345,000</div>
+                                <div>{{ s.target.Targets }}</div>
                             </td>
                             <td  class="w-72">
                                 <div class="whitespace-nowrap"><input id="input-wizard-2" type="text" class="form-control" name="targets" placeholder="Assign target"></div>

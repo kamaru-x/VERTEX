@@ -333,7 +333,26 @@ def add_salesman(request):
 def list_salesman(request):
     setreport()
     salesmans = User.objects.exclude(is_superuser=True).filter(is_active=True).order_by('-id')
-    reports = Salesman_Report.objects.filter(Status=1)
+    rpts = Salesman_Report.objects.filter(Status=1)
+    reports = []
+    for report in rpts:
+        archived = 0
+        pending = 0
+        faild = 0
+        a_proposals = Proposal.objects.filter(Lead__Salesman = report.Salesman).filter(Proposal_Status=1)
+        p_proposals = Proposal.objects.filter(Lead__Salesman = report.Salesman).filter(Proposal_Status=10)
+        f_proposals = Proposal.objects.filter(Lead__Salesman = report.Salesman).filter(Proposal_Status=0)
+
+        for a in a_proposals:
+            archived += a.Grand_Total
+        for p in p_proposals:
+            pending += p.Grand_Total
+        for f in f_proposals:
+            faild += f.Grand_Total
+        
+        r = {'report':report,'archived':archived,'pending':pending,'faild':faild}
+        reports.append(r)
+
     if request.method == 'POST' :
         id = request.POST.get('id')
         salesman = User.objects.get(id=id)
@@ -907,7 +926,12 @@ def assign_target(request):
 
 @login_required
 def target_setup(request):
-    salesmans = User.objects.filter(is_salesman=True)
+    smans = User.objects.filter(is_salesman=True)
+    salesmans = []
+    for s in smans:
+        target = Sales_Target.objects.filter(Salesman=s).last()
+        d = {'salesman':s,'target':target}
+        salesmans.append(d)
 
     if request.method == 'POST':
         salesman = request.POST.getlist('salesmans')

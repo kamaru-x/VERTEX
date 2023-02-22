@@ -149,6 +149,22 @@ def changepassword(request):
 
 #################################################################################
 
+def change_salesman_password(request,id):
+    user = request.user
+    if request.method == 'POST':
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1 != password2:
+            messages.warning(request,'password does not matching')
+            return redirect('.')
+        else:
+            user.set_password(password1)
+            user.save()
+            return redirect('dashboard')
+    return render(request,'salesman-password.html')
+
+#################################################################################
+
 @user_passes_test(lambda u: u.is_superuser)
 def signout(request):
     logout(request)

@@ -178,8 +178,8 @@ def create_proposal(request,lid):
             proposal.Payment = request.POST.get('payment')
             proposal.Exclusion = request.POST.get('exclusion')
             proposal.Terms_Condition = request.POST.get('terms')
-            proposal.Grand_Total = request.POST.get('grand_total')
-            proposal.save()
+            # proposal.Grand_Total = request.POST.get('grand_total')
+            # proposal.save()
             return redirect('list-proposals')
         
         if request.POST.get('id'):
@@ -220,7 +220,6 @@ def view_proposal(request,pid):
         lead.To_Client = dt.today()
         lead.Lead_Status = 2
         lead.save()
-        setTarget()
 
         for a in attachment:
             if str(a).endswith(('.png', '.jpg', '.jpeg')):
@@ -324,7 +323,6 @@ def reject(request,pid):
     proposal = Proposal.objects.get(id=pid)
     proposal.Proposal_Status = 0
     proposal.save()
-    setTarget()
 
     # salesman = proposal.Lead.Salesman
     # report = Salesman_Report.objects.get(Salesman=salesman)

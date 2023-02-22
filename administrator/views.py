@@ -928,6 +928,13 @@ def assign_target(request):
 def target_setup(request):
     smans = User.objects.filter(is_salesman=True)
     salesmans = []
+    d = dt.today()
+    y = d.year
+    years = []
+    for x in range(1990,y+5):
+        years.append(x)
+        years.sort(reverse=True)
+        
     for s in smans:
         target = Sales_Target.objects.filter(Salesman=s).last()
         d = {'salesman':s,'target':target}
@@ -938,23 +945,27 @@ def target_setup(request):
         targets = request.POST.getlist('targets')
         year = request.POST.get('year')
 
-        Begindate = datetime.strptime(year, "%Y-%m-%d")
+        stryear = str(year)+'-'+'01'+'-'+'01'
+
+        Begindate = datetime.strptime(stryear, "%Y-%m-%d")
         Enddate = Begindate + timedelta(days=365)
 
         for (s , t) in zip(salesman,targets):
             man = User.objects.get(id=s)
             if s and t:
                 try:
-                    data = Sales_Target.objects.get(Salesman=s,From=year)
+                    data = Sales_Target.objects.get(Salesman=s,From__year=year)
                     data.Targets = t
                     data.save()
                 except:
-                    data = Sales_Target(Salesman=man,Targets=t,From=year,To=Enddate)
+                    data = Sales_Target(Salesman=man,Targets=t,From=Begindate,To=Enddate)
                     data.save()
         return redirect('assign-target')
 
     context = {
         'salesmans' : salesmans,
+        'years' : years,
+        'y' : y
     }
 
     return render(request,'target-setup.html',context)

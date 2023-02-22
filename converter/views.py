@@ -162,6 +162,8 @@ def create_proposal(request,lid):
             quantity = request.POST.get('quantity')
             price = request.POST.get('price')
             total = request.POST.get('total')
+            proposal.Grand_Total = request.POST.get('grand_total')
+            proposal.save()
             try:
                 pr = Proposal_Items.objects.get(Proposal=proposal,Product=pro)
                 if pr:

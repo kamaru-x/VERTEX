@@ -214,6 +214,7 @@ def view_proposal(request,pid):
 
         proposal.PO_Date = request.POST.get('today')
         proposal.PO_Number = request.POST.get('po-number')
+        proposal.PO_Value = request.POST.get('po-value')
         proposal.Proposal_Status = 1
         proposal.save()
 
@@ -1070,7 +1071,7 @@ def top_customers(request):
 
 @login_required
 def proposal_report(request):
-    total = Proposal.objects.all().count()
+    total = Proposal.objects.filter(Proposal_Status = 10).count()
     faild = Proposal.objects.filter(Proposal_Status = 0).count()
     success = Proposal.objects.filter(Proposal_Status = 1).count()
 

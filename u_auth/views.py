@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
 from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User
 from datetime import date
+from django.db.models import Q
 
 # Create your views here.
 
@@ -35,13 +36,13 @@ def dashboard(request):
     d = date.today()
     year = d.year
 
-    total_leads = Lead.objects.filter(Status=1).count()
-    Lead_Faild = Lead.objects.filter(Status=3,Lead_Status=0).count()
-    Lead_Succes = total_leads - Lead_Faild
+    total_leads = Lead.objects.exclude(Status=0)
+    Lead_Faild = total_leads.filter(Status=3,Lead_Status=0)
+    Lead_Succes = total_leads.exclude(Status=3,Lead_Status=0)
 
-    total_opportunities = Lead_Succes
-    Opportunity_Faild = Lead.objects.filter(Status=3,Lead_Status=1).count()
-    Opportunity_Success = total_opportunities - Opportunity_Faild
+    total_opportunities = Lead_Succes.count()
+    Opportunity_Faild = total_leads.filter(Status=3,Lead_Status=1)
+    Opportunity_Success = total_leads.filter(Q(Lead_Status=2)|Q(Lead_Status=3))
 
     total_proposals = Proposal.objects.all()
     Proposal_Success = Proposal.objects.filter(Proposal_Status = 1)
@@ -55,13 +56,13 @@ def dashboard(request):
 
     targets = Sales_Target.objects.all()
 
-    proposal_success_volume = 0
+    proposal_success_volume = 0 
     proposal_failed_volume = 0
     proposal_pending_volume = 0
 
-    full_archived = 0
-    half_archived = 0
-    morethan_half_archived = 0
+    full_archived = 0 # 80 above
+    half_archived = 0 # 50 - 80
+    morethan_half_archived = 0 # below 50
 
     for p in total_proposals:
         if p.Proposal_Status == 1:
@@ -76,12 +77,12 @@ def dashboard(request):
 
     
     for s in salesmans:
-        t = s.Archived / s.Targets 
-        if t >= 1 :
+        t = s.Archived / s.Targets * 100
+        if t >= 80 :
             full_archived += 1
-        elif t > 0.5:
+        elif t > 50 and t < 80 :
             morethan_half_archived += 1
-        elif t == 0.5:
+        elif t < 50:
             half_archived += 1
 
     
@@ -102,15 +103,15 @@ def dashboard(request):
         reports.append(report)
 
     context = {
-        'total_leads' : total_leads,
+        'total_leads' : total_leads.count(),
         'total_opportunities' : total_opportunities,
         'total_proposals' : total_proposals.count(),
         'total_clients' : total_clients,
         'meetings_today' : meetings_today,
-        'lead_success' : Lead_Succes,
-        'lead_faild' : Lead_Faild,
-        'opportunity_success' : Opportunity_Success,
-        'opportunity_failed' : Opportunity_Faild,
+        'lead_success' : Lead_Succes.count(),
+        'lead_faild' : Lead_Faild.count(),
+        'opportunity_success' : Opportunity_Success.count(),
+        'opportunity_failed' : Opportunity_Faild.count(),
         'proposal_success' : Proposal_Success.count(),
         'proposal_failed' : Proposal_Faild.count(),
         'proposal_pending' : Proposal_Pending.count(),

@@ -1017,10 +1017,32 @@ def proposal_report(request):
     faild = Proposal.objects.filter(Proposal_Status = 0).count()
     success = Proposal.objects.filter(Proposal_Status = 1).count()
 
+    proposals = Proposal.objects.all()
+
+    total_value = 0
+    failed_value = 0
+    success_value = 0
+
+    for proposal in proposals:
+        if proposal.Proposal_Status == 10:
+            if proposal.Grand_Total:
+                total_value += proposal.Grand_Total
+
+        if proposal.Proposal_Status == 1:
+            if proposal.Grand_Total:
+                success_value += proposal.Grand_Total
+
+        if proposal.Proposal_Status == 0:
+            if proposal.Grand_Total:
+                failed_value += proposal.Grand_Total
+
     context = {
         'total' : total,
         'faild' : faild,
         'success' : success,
+        'total_value' : total_value,
+        'failed_value' : failed_value,
+        'success_value' : success_value,
     }
 
     return render(request,'report-proposal.html',context)

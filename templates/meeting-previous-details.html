@@ -132,11 +132,9 @@
                                     <!-- <label for="post-form-7" class="form-label" style="font-weight:600;">Name</label> -->
                                     <!-- <div>{{ meeting.Members }}</div><br> -->
 
-                                    <label for="post-form-7" class="form-label" style="font-weight:600;">Date</label>
-                                    <div>{{ meeting.Update_Date }}</div><br>
-
-
-                                    
+                                    <!-- <label for="post-form-7" class="form-label" style="font-weight:600;">Date: </label><div>{{ meeting.Update_Date }}</div><br> -->
+                                    <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Date: </label>   {{ meeting.Update_Date }}</div>
+                                    <br>
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Description: </label>   {{ meeting.Update_Description }}</div>
                                     <br>
                                     <div style="text-align:justify;"><label for="post-form-7" class="form-label" style="font-weight:600;">Participents: </label>  {{ meeting.Members }}</div>

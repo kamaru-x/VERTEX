@@ -200,7 +200,7 @@ def create_proposal(request,lid):
 @login_required
 def list_proposals(request):
     set_proposals()
-    proposals = Proposal.objects.all().order_by('-id')
+    proposals = Proposal.objects.filter(Status=1).order_by('-id')
     return render(request,'list_proposal.html',{'proposals':proposals})
 
 #################################################################################
@@ -643,7 +643,7 @@ def client_view(request,cid):
 @login_required
 def projects(request):
     # projects = Lead.objects.filter(Lead_Status=3).filter(Status=1).order_by('-id')
-    projects = Proposal.objects.all()
+    projects = Proposal.objects.filter(Proposal_Status=1).order_by('-id')
     # if request.method == 'POST':
     #     c = request.POST.get('c')
     #     lead= Lead.objects.get(id=c)
@@ -658,85 +658,85 @@ def projects(request):
 
 @login_required
 def view_project(request,pid):
-    lead = Proposal.objects.get(id=pid)
+    lead = Proposal.objects.filter(id=pid).last()
     user = request.user.id
     d = dt.today()
     ip = setip(request)
     lead_update = Lead_Update.objects.filter(Lead=lead.Lead)
-    proposal = Proposal.objects.get(Lead=lead.Lead)
+    proposal = Proposal.objects.get(id=pid)
     # attachments = Attachments.objects.all()
 
-    if request.method == 'POST':
-        if request.POST.get('date'):
-            date = request.POST.get('date')
-            description = request.POST.get('update-description')
+    # if request.method == 'POST':
+    #     if request.POST.get('date'):
+    #         date = request.POST.get('date')
+    #         description = request.POST.get('update-description')
 
-            data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Description=description,AddedDate=date)
-            data.save()
+    #         data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Description=description,AddedDate=date)
+    #         data.save()
 
-            ld = Lead_Update.objects.filter(Lead=lead.Lead).filter(AddedBy=user).last()
-            attachment = request.FILES.getlist('attachment')
-            for a in attachment:
-                if str(a).endswith(('.png', '.jpg', '.jpeg')):
-                    format = 'image'
-                else:
-                    format = 'file'
-                attach = Attachments(Attachment=a,Name=a,Format=format)
-                attach.save()
-                ld.Attachments.add(attach)
-                ld.save()
+    #         ld = Lead_Update.objects.filter(Lead=lead.Lead).filter(AddedBy=user).last()
+    #         attachment = request.FILES.getlist('attachment')
+    #         for a in attachment:
+    #             if str(a).endswith(('.png', '.jpg', '.jpeg')):
+    #                 format = 'image'
+    #             else:
+    #                 format = 'file'
+    #             attach = Attachments(Attachment=a,Name=a,Format=format)
+    #             attach.save()
+    #             ld.Attachments.add(attach)
+    #             ld.save()
 
-        if request.POST.get('sdate'):
-            sdate = request.POST.get('sdate')
-            mode = request.POST.get('mode')
-            ftime = request.POST.get('from')
-            to = request.POST.get('to')
-            sdescription = request.POST.get('sdescription')
+    #     if request.POST.get('sdate'):
+    #         sdate = request.POST.get('sdate')
+    #         mode = request.POST.get('mode')
+    #         ftime = request.POST.get('from')
+    #         to = request.POST.get('to')
+    #         sdescription = request.POST.get('sdescription')
 
-            data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
-            data.save()
+    #         data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
+    #         data.save()
 
-        if request.POST.get('udate'):
-            udate = request.POST.get('udate')
-            udescription = request.POST.get('u-description')
-            participends = request.POST.get('participents')
-            id = request.POST.get('id')
-            meeting = Lead_Schedule.objects.get(id=id)
-            meeting.Update_Description = udescription
-            meeting.Update_Date = udate
-            meeting.Members = participends
-            meeting.save()
+    #     if request.POST.get('udate'):
+    #         udate = request.POST.get('udate')
+    #         udescription = request.POST.get('u-description')
+    #         participends = request.POST.get('participents')
+    #         id = request.POST.get('id')
+    #         meeting = Lead_Schedule.objects.get(id=id)
+    #         meeting.Update_Description = udescription
+    #         meeting.Update_Date = udate
+    #         meeting.Members = participends
+    #         meeting.save()
 
-            attachment = request.FILES.getlist('attach')
-            for a in attachment:
-                if str(a).endswith(('.png', '.jpg', '.jpeg')):
-                    format = 'image'
-                else:
-                    format = 'file'
-                attach = Attachments(Attachment=a,Name=a,Format=format)
-                attach.save()
-                meeting.Attachment.add(attach)
-                meeting.save()
+    #         attachment = request.FILES.getlist('attach')
+    #         for a in attachment:
+    #             if str(a).endswith(('.png', '.jpg', '.jpeg')):
+    #                 format = 'image'
+    #             else:
+    #                 format = 'file'
+    #             attach = Attachments(Attachment=a,Name=a,Format=format)
+    #             attach.save()
+    #             meeting.Attachment.add(attach)
+    #             meeting.save()
 
-        return redirect('/projects/%s' %lead.id)
+    #     return redirect('/projects/%s' %lead.id)
 
-    schedules = Lead_Schedule.objects.filter(Lead=lead.Lead)
+    # schedules = Lead_Schedule.objects.filter(Lead=lead.Lead)
 
-    previous = []
-    upcoming = []
+    # previous = []
+    # upcoming = []
 
-    for schedule in schedules:
-        if schedule.AddedDate < dt.today() :
-            previous.append(schedule)
-        elif schedule.AddedDate >= dt.today() :
-            upcoming.append(schedule)
+    # for schedule in schedules:
+    #     if schedule.AddedDate < dt.today() :
+    #         previous.append(schedule)
+    #     elif schedule.AddedDate >= dt.today() :
+    #         upcoming.append(schedule)
 
     context = {
         'lead' : lead,
         'lead_update' : lead_update,
         # 'attachments' : attachments,
-        'previous' : previous,
-        'upcoming' : upcoming,
+        # 'previous' : previous,
+        # 'upcoming' : upcoming,
         'proposal' : proposal,
     }
     return render(request,'project-view.html',context)

@@ -664,72 +664,12 @@ def view_project(request,pid):
     ip = setip(request)
     lead_update = Lead_Update.objects.filter(Lead=lead.Lead)
     proposal = Proposal.objects.get(id=pid)
-    # attachments = Attachments.objects.all()
 
-    # if request.method == 'POST':
-    #     if request.POST.get('date'):
-    #         date = request.POST.get('date')
-    #         description = request.POST.get('update-description')
-
-    #         data = Lead_Update(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Description=description,AddedDate=date)
-    #         data.save()
-
-    #         ld = Lead_Update.objects.filter(Lead=lead.Lead).filter(AddedBy=user).last()
-    #         attachment = request.FILES.getlist('attachment')
-    #         for a in attachment:
-    #             if str(a).endswith(('.png', '.jpg', '.jpeg')):
-    #                 format = 'image'
-    #             else:
-    #                 format = 'file'
-    #             attach = Attachments(Attachment=a,Name=a,Format=format)
-    #             attach.save()
-    #             ld.Attachments.add(attach)
-    #             ld.save()
-
-    #     if request.POST.get('sdate'):
-    #         sdate = request.POST.get('sdate')
-    #         mode = request.POST.get('mode')
-    #         ftime = request.POST.get('from')
-    #         to = request.POST.get('to')
-    #         sdescription = request.POST.get('sdescription')
-
-    #         data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead.Lead,Mode=mode,From=ftime,To=to,Description=sdescription,AddedDate=sdate)
-    #         data.save()
-
-    #     if request.POST.get('udate'):
-    #         udate = request.POST.get('udate')
-    #         udescription = request.POST.get('u-description')
-    #         participends = request.POST.get('participents')
-    #         id = request.POST.get('id')
-    #         meeting = Lead_Schedule.objects.get(id=id)
-    #         meeting.Update_Description = udescription
-    #         meeting.Update_Date = udate
-    #         meeting.Members = participends
-    #         meeting.save()
-
-    #         attachment = request.FILES.getlist('attach')
-    #         for a in attachment:
-    #             if str(a).endswith(('.png', '.jpg', '.jpeg')):
-    #                 format = 'image'
-    #             else:
-    #                 format = 'file'
-    #             attach = Attachments(Attachment=a,Name=a,Format=format)
-    #             attach.save()
-    #             meeting.Attachment.add(attach)
-    #             meeting.save()
-
-    #     return redirect('/projects/%s' %lead.id)
-
-    # schedules = Lead_Schedule.objects.filter(Lead=lead.Lead)
-
-    # previous = []
-    # upcoming = []
-
-    # for schedule in schedules:
-    #     if schedule.AddedDate < dt.today() :
-    #         previous.append(schedule)
-    #     elif schedule.AddedDate >= dt.today() :
-    #         upcoming.append(schedule)
+    products = Proposal_Items.objects.filter(Proposal=proposal)
+    catagories = []
+    for product in products:
+        catagories.append(product.Product.Category.Name)
+        catagories = [*set(catagories)]
 
     context = {
         'lead' : lead,
@@ -738,6 +678,8 @@ def view_project(request,pid):
         # 'previous' : previous,
         # 'upcoming' : upcoming,
         'proposal' : proposal,
+        'catagories' : catagories,
+        'products' : products,
     }
     return render(request,'project-view.html',context)
 
@@ -749,10 +691,10 @@ def upcoming_meetings(request):
     user = request.user.id
     d = dt.today()
     ip = setip(request)
-    leads = Lead.objects.all()
+    leads = Lead.objects.filter(Status=1)
 
     if request.method == 'POST':
-        if request.POST.get('dste'):
+        if request.POST.get('date'):
             date = request.POST.get('date')
             mode = request.POST.get('mode')
             ftime = request.POST.get('from')
@@ -763,7 +705,7 @@ def upcoming_meetings(request):
 
             data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
             data.save()
-            return redirect('upcoming-meetings')
+            return redirect('.')
 
         if request.POST.get('id'):
             id = request.POST.get('id')
@@ -813,7 +755,7 @@ def previous_meetings(request):
     user = request.user.id
     d = dt.today()
     ip = setip(request)
-    leads = Lead.objects.all()
+    leads = Lead.objects.filter(Status=1)
 
     if request.method == 'POST':
         if request.POST.get('date'):
@@ -955,7 +897,7 @@ def salesman_report(request):
     reports = []
     salesmans = User.objects.filter(is_salesman=True)
     for salesman in salesmans:
-        leads = Lead.objects.filter(Salesman=salesman,Status=1).count()
+        leads = Lead.objects.filter(Salesman=salesman).count()
         total_proposals = Proposal.objects.filter(Lead__Salesman=salesman)
         accepteted_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=1)
         rejected_proposals = Proposal.objects.filter(Lead__Salesman=salesman,Proposal_Status=0)

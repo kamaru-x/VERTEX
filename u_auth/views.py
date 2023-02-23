@@ -48,7 +48,7 @@ def dashboard(request):
     Proposal_Faild = Proposal.objects.filter(Proposal_Status = 0)
     Proposal_Pending = Proposal.objects.filter(Proposal_Status = 10)
 
-    total_clients = Lead.objects.filter(Lead_Status=3,Status=1).count()
+    total_clients = Lead.objects.filter(Lead_Status=2,Status=1).count()
     meetings_today = Lead_Schedule.objects.filter(AddedDate=date.today()).count()
 
     salesmans = Sales_Target.objects.filter(From__year = year)

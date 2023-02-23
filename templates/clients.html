@@ -67,14 +67,14 @@
                         <td class="text-center">
                             {{ client.Accepted_proposals }}
                         </td>
-                        <td class="table-report__action">
+                        <td class="table-report__action text-center">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'client-view' client.id %}">
                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
                                 </a>
-                                <a class="flex items-right text-danger whitespace-nowrap" data-tw-toggle="modal" data-tw-target="#cancel-confirmation-modal" onclick="cancel('{{client.id}}')" style="cursor: pointer;" title="cancel">
+                                <!-- <a class="flex items-right text-danger whitespace-nowrap" data-tw-toggle="modal" data-tw-target="#cancel-confirmation-modal" onclick="cancel('{{client.id}}')" style="cursor: pointer;" title="cancel">
                                     <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
-                                </a> 
+                                </a>  -->
                             </div>
                         </td>
                     </tr>

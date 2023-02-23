@@ -143,6 +143,11 @@
             Opportunity
         </button>
     </li>
+    <li id="example-9-tab" class="nav-item flex-1" role="presentation">
+        <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#example-tab-9" type="button" role="tab" aria-controls="example-tab-9" aria-selected="false">
+            Proposals
+        </button>
+    </li>
     <li id="example-7-tab" class="nav-item flex-1" role="presentation">
         <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#example-tab-7" type="button" role="tab" aria-controls="example-tab-5" aria-selected="true">
             Clients
@@ -360,6 +365,175 @@
                         </tr>
                     {% endfor %}
                     </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <tbody>
+                    <tr class="intro-x width"> 
+                        <td class=" width" style="width:100%;">
+                            <i data-lucide="hard-drive" style="width:60px; height:60px; margin-left: auto; margin-right: auto; display: block; color:blue; color: #1e40af;padding: 10px; border-radius: 50%;
+                                background: #e8e4e4;" class="w-4 h-4 mr-2">  
+                            </i>
+                        <div style="text-align: center;">No data available!</div>
+                        </td>   
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        <!-- END: Data List -->
+        <!-- BEGIN: Pagination -->
+        {% if opportunity %}
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+            <nav class="w-full sm:w-auto sm:mr-auto">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <select class="w-20 form-select box mt-3 sm:mt-0">
+                <option>10</option>
+                <option>25</option>
+                <option>35</option>
+                <option>50</option>
+            </select>
+        </div>
+        {% endif %}
+        <!-- END: Pagination -->
+   
+    
+         </div>
+    </div>
+
+    <div id="example-tab-9" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-9-tab">
+
+        
+        <!-- <h2 class="intro-y text-lg font-medium mt-10" style="text-align: center;font-size: 35px;color:#1e40af;padding-top: 30px;padding-bottom: 30px;border-bottom: solid 1px #bcbcbc;">Opportunities</h2> -->
+        <div class="grid grid-cols-12 gap-6 mt-5">
+        
+        <!-- BEGIN: Data List -->
+        {% if proposals %}
+        <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
+                    <tr>
+                        <!-- <th class="whitespace-nowrap">
+                            <input class="form-check-input" type="checkbox">
+                        </th> -->
+                        
+                       
+                        <th class="whitespace-nowrap">COMPANY NAME</th>
+                         <th class="whitespace-nowrap">REFERENCE </th>
+                        
+                        <th class="text-center whitespace-nowrap" style="text-align: center;">PROPOSAL DATE</th>
+                        <!-- <th class="whitespace-nowrap">
+                            <div class="pr-16">SALESMAN</div>
+                        </th> -->
+                        <th class="whitespace-nowrap">CONTACT </th>
+                        <th class="whitespace-nowrap text-center">VOLUME </th>
+                        <th class="whitespace-nowrap text-center">STATUS </th>
+                        <!-- <th class="text-center whitespace-nowrap">ACTIONS</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proposal in proposals %}
+                    <tr class="intro-x">
+                        <!-- <td class="w-10">
+                            <input class="form-check-input" type="checkbox">
+                        </td> -->
+                        <td class="w-72 text-primary">
+                            <a href="#" class="font-medium whitespace-nowrap">{{ proposal.Lead.Company }}</a>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Phone }} / {{ proposal.Lead.Email }}</div>
+                            
+                        </td>
+                        <td class="w-40">
+                            <a href="" class="font-medium whitespace-nowrap">{{ proposal.Reference }}</a>
+                                
+                        </td>
+                        
+                        <td class="w-60 text-right">
+                            <div class="pr-16">{{ proposal.Date | date:"d M Y" }}</div>
+                        </td>
+                        <!-- <td class="w-60">
+                            <a href="" class="font-medium whitespace-nowrap text-primary">{{ proposal.Lead.Salesman.first_name }}</a>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.Mobile }}</div>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.email }}</div>
+                        </td> -->
+                        <td class="w-60">
+                            <a href="" class="font-medium whitespace-nowrap text-primary">{{ proposal.Lead.CName }}</a>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CNumber }}</div>
+                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CMail }}</div>
+                        </td>
+
+                        <td class="w-60 text-right">
+                            <div class="pr-16">{{ proposal.Grand_Total }}</div>
+                        </td>
+
+                        {% if proposal.Proposal_Status == 0 %}
+                        <td class="w-60 text-right">
+                            <div class="text-center">Rejected</div>
+                        </td>
+                        {% elif proposal.Proposal_Status == 1 %}
+                        <td class="w-60 text-right">
+                            <div class="text-center">Accepted</div>
+                        </td>
+                        {% else %}
+                        <td class="w-60 text-right">
+                            <div class="text-center">Pending</div>
+                        </td>
+                        {% endif %}
+                        
+                        <!-- <td class="table-report__action">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'view-proposal' proposal.id %}">
+                                    <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+                                </a>
+                                <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-proposal' proposal.id %}">
+                                    <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
+                                </a>
+                                <a class="flex items-right text-danger whitespace-nowrap" data-tw-toggle="modal" data-tw-target="#cancel-confirmation-modal" onclick="cancel('{{proposal.id}}')" style="cursor: pointer;" title="cancel">
+                                    <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
+                                </a> 
+                            </div>
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         {% else %}

@@ -90,7 +90,7 @@
                                 <a href="" class=" whitespace-nowrap">{{ forloop.counter }}</a>
                             </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">{{ product.Reference }}</a>     
+                                <a href="{% url 'view-product' product.id %}" class="font-medium whitespace-nowrap">{{ product.Reference }}</a>     
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center whitespace-nowrap text-success">

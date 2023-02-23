@@ -41,7 +41,8 @@ def setreport():
 
         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0)
         lead_failed = lead_total.filter(Status=3,Lead_Status=0)
-        lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
+        # lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
+        lead_success = lead_total.exclude(Status=3,Lead_Status=0)
 
         opportunity_total = lead_success
         opportunity_failed = lead_total.filter(Status=3,Lead_Status=1)
@@ -53,8 +54,8 @@ def setreport():
 
                             ##################################
 
-        report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Lead__Salesman=user).count()
-        report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Lead__Salesman=user).count()
+        report.Pending_Tasks = Task.objects.filter(Task_Status=0).filter(Salesman=user).count()
+        report.Completed_Tasks = Task.objects.filter(Task_Status=1).filter(Salesman=user).count()
 
         report.Lead_Total = lead_total.count()
         report.Lead_Faild = lead_failed.count()
@@ -411,6 +412,7 @@ def salesman_view(request,sid):
     p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).exclude(Status=0).order_by('Due_Date')
     c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).exclude(Status=0).order_by('-Completed_Date')
     sales = Sales_Target.objects.filter(Salesman=salesman).filter(From__year = d.year)
+    proposals = Proposal.objects.filter(Lead__Salesman = salesman)
     t_count = len(p_task)
 
     total_target = Sales_Target.objects.filter(From__year = year,Salesman=salesman).last()
@@ -502,7 +504,8 @@ def salesman_view(request,sid):
         'sales' : sales,
         'total_target' : total_target,
         'target_archived' : target_archived,
-        'target_failed' : target_failed
+        'target_failed' : target_failed,
+        'proposals' : proposals,
     }
     return render(request,'salesman-view.html',context)
 

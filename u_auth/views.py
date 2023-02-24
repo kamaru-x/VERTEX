@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User
 from datetime import date
 from django.db.models import Q
+import math
 
 # Create your views here.
 
@@ -60,9 +61,9 @@ def dashboard(request):
     proposal_failed_volume = 0
     proposal_pending_volume = 0
 
-    full_archived = 0 # 80 above
-    half_archived = 0 # 50 - 80
-    morethan_half_archived = 0 # below 50
+    above_80 = 0
+    above_50 = 0
+    below_50 = 0
 
     for p in total_proposals:
         if p.Proposal_Status == 1:
@@ -77,13 +78,13 @@ def dashboard(request):
 
     
     for s in salesmans:
-        t = s.Archived / s.Targets * 100
+        t = (s.Archived / s.Targets) * 100
         if t >= 80 :
-            full_archived += 1
+            above_80 += 1
         elif t > 50 and t < 80 :
-            morethan_half_archived += 1
+            above_50 += 1
         elif t < 50:
-            half_archived += 1
+            below_50 += 1
 
     
     yrs = []
@@ -102,6 +103,26 @@ def dashboard(request):
         report = {'year':year,'archived':archived}
         reports.append(report)
 
+    
+    lead_success_percentage = (Lead_Succes.count() / total_leads.count()) * 100
+    lead_failed_percentage = (Lead_Faild.count() / total_leads.count()) * 100
+    opportunity_success_percentage = (Opportunity_Success.count() / total_opportunities) * 100
+    opportunity_faild_percentage = (Opportunity_Faild.count() / total_opportunities) * 100
+    proposal_pending_percentage = (Proposal_Pending.count() / total_proposals.count()) * 100
+    proposal_success_percentage = (Proposal_Success.count() / total_proposals.count()) * 100
+    proposal_failed_percentage = (Proposal_Faild.count() / total_proposals.count()) * 100
+
+
+    ls_percentage = math.floor(lead_success_percentage)
+    lf_percentage = math.ceil(lead_failed_percentage)
+
+    os_percentage = math.floor(opportunity_success_percentage)
+    of_percentage = math.ceil(opportunity_faild_percentage)
+
+    pp_percentage = math.ceil(proposal_pending_percentage)
+    ps_percentage = math.floor(proposal_success_percentage)
+    pf_percentage = math.ceil(proposal_failed_percentage)
+
     context = {
         'total_leads' : total_leads.count(),
         'total_opportunities' : total_opportunities,
@@ -118,10 +139,17 @@ def dashboard(request):
         'psv' : proposal_success_volume,
         'ppv' : proposal_pending_volume,
         'pfv' : proposal_failed_volume,
-        'fa' : full_archived,
-        'hf' : half_archived,
-        'mhf' : morethan_half_archived,
-        'reports':reports
+        'ab80' : above_80,
+        'ab50' : above_50,
+        'bl50' : below_50,
+        'reports':reports,
+        'success_percentage' : ls_percentage,
+        'faild_percentage' : lf_percentage,
+        'os_percentage' : os_percentage,
+        'of_percentage' : of_percentage,
+        'pp_percentage' : pp_percentage,
+        'ps_percentage' : ps_percentage,
+        'pf_percentage' : pf_percentage
     }
 
     return render(request,'index.html',context)

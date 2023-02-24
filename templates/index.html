@@ -24,8 +24,8 @@
                                             <div class="flex">
                                                 <i data-lucide="briefcase" class="report-box__icon text-primary"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="60% Success" style="float: left;"> {{ lead_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="40% Failed" style="float: left;"> {{ lead_faild }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{success_percentage}}% Success" style="float: left;"> {{ lead_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{faild_percentage}}% Failed" style="float: left;"> {{ lead_faild }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_leads }}</div>
@@ -43,8 +43,8 @@
                                             <div class="flex">
                                                 <i data-lucide="credit-card" class="report-box__icon text-pending"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="87% Success" style="float: left;"> {{ opportunity_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="13% Failed" style="float: left;"> {{ opportunity_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{os_percentage}}% Success" style="float: left;"> {{ opportunity_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{of_percentage}}% Failed" style="float: left;"> {{ opportunity_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_opportunities }}</div>
@@ -58,9 +58,9 @@
                                             <div class="flex">
                                                 <i data-lucide="clipboard" class="report-box__icon text-warning"></i> 
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="70% Success" style="float: left;"> {{ proposal_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="20% Pending" style="float: left;"> {{ proposal_pending }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="10% Failed" style="float: left;"> {{ proposal_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{ ps_percentage }}% Success" style="float: left;"> {{ proposal_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="{{ pp_percentage }}% Pending" style="float: left;"> {{ proposal_pending }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{ pf_percentage }}% Failed" style="float: left;"> {{ proposal_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
                                                 </div>
                                             </div>
                                             <div class="text-3xl font-medium leading-8 mt-6">{{ total_proposals }}</div>
@@ -147,15 +147,15 @@
                                 <div class="w-52 sm:w-auto mx-auto mt-8">
                                     <div class="flex items-center">
                                         <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                        <span class="truncate">100% Achieved</span> <span class="font-medium ml-auto">{{fa}} Salesman</span> 
+                                        <span class="truncate">100% Achieved</span> <span class="font-medium ml-auto">{{ab80}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                        <span class="truncate">50% - 100% Achieved</span> <span class="font-medium ml-auto">{{hf}} Salesman</span> 
+                                        <span class="truncate">50% - 80% Achieved</span> <span class="font-medium ml-auto">{{ab50}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
                                         <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                        <span class="truncate"> 50% Achieved</span> <span class="font-medium ml-auto">{{mhf}} Salesman</span> 
+                                        <span class="truncate">below 50% Achieved</span> <span class="font-medium ml-auto">{{bl50}} Salesman</span> 
                                     </div>
                                 </div>
                             </div>
@@ -199,9 +199,9 @@
             </div>
         </div>
         <div class="vals">
-            <input type="hidden" name="" id="full_archived" value="{{fa}}">
-            <input type="hidden" name="" id="half_archived" value="{{hf}}">
-            <input type="hidden" name="" id="morethanhalf_archived" value="{{mhf}}">
+            <input type="hidden" name="" id="above_80" value="{{ab80}}">
+            <input type="hidden" name="" id="above_50" value="{{ab50}}">
+            <input type="hidden" name="" id="below_50" value="{{bl50}}">
 
             <input type="hidden" name="" id="success_value" value="{{psv}}">
             <input type="hidden" name="" id="pending_value" value="{{ppv}}">

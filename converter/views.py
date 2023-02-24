@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items,Sales_Target
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items,Sales_Target,Invoice,Receipt
 from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
@@ -665,12 +665,48 @@ def view_project(request,pid):
     lead_update = Lead_Update.objects.filter(Lead=lead.Lead)
     proposal = Proposal.objects.get(id=pid)
 
+    invoices = Invoice.objects.filter(Proposal=proposal)
+    receipts = Receipt.objects.filter(Proposal=proposal)
+
     products = Proposal_Items.objects.filter(Proposal=proposal)
     catagories = []
     for product in products:
         catagories.append(product.Product.Category.Name)
         catagories = [*set(catagories)]
 
+    ir = Invoice.objects.last()
+
+    if ir:
+        irefer = f'INVOICE-00{ir.id+1}'
+    else:
+        irefer = 'INVOICE-001'
+
+    rr = Receipt.objects.last()
+
+    if rr:
+        rrefer = f'RECEIPT-00{rr.id+1}'
+    else:
+        rrefer = 'RECEIPT-001'
+
+    if request.method == 'POST':
+        if request.POST.get('invoice'):
+            date = request.POST.get('i-date')
+            refer = request.POST.get('irefer')
+            amount = request.POST.get('i-amount')
+
+            data = Invoice(Date=date,AddedBy=user,Ip=ip,Proposal=proposal,Reference=refer,Amount=amount)
+            data.save()
+            return redirect ('.')
+        
+        if request.POST.get('receipt'):
+            date = request.POST.get('r-date')
+            refer = request.POST.get('rrefer')
+            amount = request.POST.get('r-amount')
+
+            data = Receipt(Date=date,AddedBy=user,Ip=ip,Proposal=proposal,Reference=refer,Amount=amount)
+            data.save()
+            return redirect ('.')
+        
     context = {
         'lead' : lead,
         'lead_update' : lead_update,
@@ -680,6 +716,10 @@ def view_project(request,pid):
         'proposal' : proposal,
         'catagories' : catagories,
         'products' : products,
+        'irefer' : irefer,
+        'rrefer' : rrefer,
+        'invoices' : invoices,
+        'receipts' : receipts,
     }
     return render(request,'project-view.html',context)
 
@@ -967,8 +1007,10 @@ def target_report(request):
     for t in trgts:
 
         if t.Targets and t.Archived != 0:
-            p = (int(t.Targets) / int(t.Archived)) * 100
+            p = (t.Archived / t.Targets) * 100
             percentage = math.trunc(p)
+            if percentage > 100:
+                percentage = 100
         else :
             percentage = 0
 

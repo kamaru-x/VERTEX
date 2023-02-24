@@ -272,3 +272,35 @@ class Sales_Target(models.Model):
 
     def __str__(self):
         return self.Salesman.first_name + '  ///  ' + str(self.From) + '  ///  ' + str(self.To)
+    
+#################################################################################
+
+class Invoice(models.Model):
+    Date = models.DateField()
+    Status = models.IntegerField(default=1)
+    AddedBy = models.IntegerField(default=0)
+    Ip = models.GenericIPAddressField(null=True,blank=True)
+
+    Proposal = models.ForeignKey(Proposal,on_delete=models.DO_NOTHING)
+    Reference = models.CharField(max_length=25)
+    Amount = models.FloatField()
+
+    def __str__(self):
+        return self.Reference
+    
+#################################################################################
+
+class Receipt(models.Model):
+    Date = models.DateField()
+    Status = models.IntegerField(default=1)
+    AddedBy = models.IntegerField(default=0)
+    Ip = models.GenericIPAddressField(null=True,blank=True)
+
+    Proposal = models.ForeignKey(Proposal,on_delete=models.DO_NOTHING)
+    Reference = models.CharField(max_length=25)
+    Amount = models.FloatField()
+
+    def __str__(self):
+        return self.Reference
+    
+#################################################################################

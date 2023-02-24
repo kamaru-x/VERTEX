@@ -28,7 +28,7 @@ def list_opertunities(request):
     if request.method == 'POST':
         c = request.POST.get('c')
         lead= Lead.objects.get(id=c)
-        lead.Status = 3
+        lead.Status = 2
         lead.Cancel_Date = dt.today()
         lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
@@ -1027,7 +1027,7 @@ def target_report(request):
 
 @login_required
 def top_customers(request):
-    lds = Lead.objects.filter(Status=1).order_by('-id')
+    lds = Lead.objects.filter(Status=1,Lead_Status=2).order_by('-id')
     leads = []
     for lead in lds:
         volume = 0

@@ -41,11 +41,11 @@ def setreport():
 
         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0)
         lead_failed = lead_total.filter(Status=3,Lead_Status=0)
-        # lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
-        lead_success = lead_total.exclude(Status=3,Lead_Status=0)
+        lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
+        # lead_success = lead_total.exclude(Status=3,Lead_Status=0)
 
         opportunity_total = lead_success
-        opportunity_failed = lead_total.filter(Status=3,Lead_Status=1)
+        opportunity_failed = lead_total.filter(Status=2,Lead_Status=1)
         opportunity_success = lead_total.filter(Q(Lead_Status=2)|Q(Lead_Status=3))
 
         proposal_total = Proposal.objects.filter(Lead__Salesman = user)

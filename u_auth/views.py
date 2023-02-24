@@ -39,10 +39,10 @@ def dashboard(request):
 
     total_leads = Lead.objects.exclude(Status=0)
     Lead_Faild = total_leads.filter(Status=3,Lead_Status=0)
-    Lead_Succes = total_leads.exclude(Status=3,Lead_Status=0)
+    Lead_Succes = total_leads.exclude(Status=3).exclude(Lead_Status=0)
 
     total_opportunities = Lead_Succes.count()
-    Opportunity_Faild = total_leads.filter(Status=3,Lead_Status=1)
+    Opportunity_Faild = total_leads.filter(Status=2,Lead_Status=1)
     Opportunity_Success = total_leads.filter(Q(Lead_Status=2)|Q(Lead_Status=3))
 
     total_proposals = Proposal.objects.all()
@@ -103,14 +103,40 @@ def dashboard(request):
         report = {'year':year,'archived':archived}
         reports.append(report)
 
+    try:
+        lead_success_percentage = (Lead_Succes.count() / total_leads.count()) * 100
+    except:
+        lead_success_percentage = 0
     
-    lead_success_percentage = (Lead_Succes.count() / total_leads.count()) * 100
-    lead_failed_percentage = (Lead_Faild.count() / total_leads.count()) * 100
-    opportunity_success_percentage = (Opportunity_Success.count() / total_opportunities) * 100
-    opportunity_faild_percentage = (Opportunity_Faild.count() / total_opportunities) * 100
-    proposal_pending_percentage = (Proposal_Pending.count() / total_proposals.count()) * 100
-    proposal_success_percentage = (Proposal_Success.count() / total_proposals.count()) * 100
-    proposal_failed_percentage = (Proposal_Faild.count() / total_proposals.count()) * 100
+    try:
+        lead_failed_percentage = (Lead_Faild.count() / total_leads.count()) * 100
+    except:
+        lead_failed_percentage = 0
+
+    try:
+        opportunity_success_percentage = (Opportunity_Success.count() / total_opportunities) * 100
+    except:
+        opportunity_success_percentage = 0
+
+    try:
+        opportunity_faild_percentage = (Opportunity_Faild.count() / total_opportunities) * 100
+    except:
+        opportunity_faild_percentage = 0
+
+    try:
+        proposal_pending_percentage = (Proposal_Pending.count() / total_proposals.count()) * 100
+    except:
+        proposal_pending_percentage = 0
+    
+    try:
+        proposal_success_percentage = (Proposal_Success.count() / total_proposals.count()) * 100
+    except:
+        proposal_success_percentage = 0
+    
+    try:
+        proposal_failed_percentage = (Proposal_Faild.count() / total_proposals.count()) * 100
+    except:
+        proposal_failed_percentage = 0
 
 
     ls_percentage = math.floor(lead_success_percentage)

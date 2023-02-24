@@ -917,6 +917,9 @@ def assign_target(request):
             total = int(total + man.Targets)
             archived = int(archived + man.Archived)
             balance = int(balance + man.Balance)
+
+        if balance == 0:
+            balance = total
         if archived > total :
             balance = abs(balance)
             color = 'success'

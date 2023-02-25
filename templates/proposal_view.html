@@ -21,7 +21,7 @@
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button class="w-10 h-10 rounded-full btn btn-primary">3</button>
-                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Created Proposal / Client</div>
+                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Created Proposal</div>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 {% if proposal.Proposal_Status == 1 %}
@@ -365,6 +365,10 @@
     function pop(id){
         $('#id').val(id)
     }
+    $(window).on('beforeunload' , function(){
+		alert('do you want to exit the page')
+		return '';
+	})
 </script>
 <!-- BEGIN: Modal Content -->
 <div id="button-modal-preview" class="modal" tabindex="-1" aria-hidden="true">

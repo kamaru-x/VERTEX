@@ -41,8 +41,8 @@ def setreport():
 
         lead_total = Lead.objects.filter(Salesman=user).exclude(Status=0)
         lead_failed = lead_total.filter(Status=3,Lead_Status=0)
-        lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
-        # lead_success = lead_total.exclude(Status=3,Lead_Status=0)
+        # lead_success = lead_total.exclude(Status=3).exclude(Lead_Status=0)
+        lead_success = lead_total.exclude(Status=3).filter(Q(Lead_Status=1)|Q(Lead_Status=2))
 
         opportunity_total = lead_success
         opportunity_failed = lead_total.filter(Status=2,Lead_Status=1)
@@ -884,6 +884,7 @@ def canceled_project_view(request,lid):
 
 @login_required
 def assign_target(request):
+    setTarget()
     targets = Sales_Target.objects.all()
     t_s = User.objects.filter(is_salesman=True)
 

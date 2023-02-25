@@ -1034,6 +1034,7 @@ def top_customers(request):
         total_volume = 0
         proposals =  Proposal.objects.filter(Proposal_Status=1)
         a_proposals = Proposal.objects.filter(Lead=lead,Proposal_Status=1)
+        pro = Proposal.objects.filter(Lead=lead).count()
 
         for p in proposals:
             total_volume += p.Grand_Total
@@ -1047,7 +1048,14 @@ def top_customers(request):
         else:
             percentage = 0
 
-        company = {'Company':lead.Company,'Email':lead.Email,'Mobile':lead.Phone,'Reference':lead.Reference,'Salesman':lead.Salesman.first_name,'semail':lead.Salesman.email,'smobile':lead.Salesman.Mobile,'proposals':lead.Accepted_proposals+lead.Rejected_Proposals,'volume':volume,'Percentage':percentage}
+        company = {
+            'Company':lead.Company,'Email':lead.Email,
+            'Mobile':lead.Phone,'Reference':lead.Reference,
+            'Salesman':lead.Salesman.first_name,'semail':lead.Salesman.email,
+            'smobile':lead.Salesman.Mobile,#'proposals':lead.Accepted_proposals+lead.Rejected_Proposals,
+            'proposals':pro,
+            'volume':volume,'Percentage':percentage
+            }
         leads.append(company)
     return render(request,'top-customers.html',{'leads':leads})
 

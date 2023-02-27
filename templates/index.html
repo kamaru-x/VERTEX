@@ -14,12 +14,13 @@
                                 <h2 class="text-lg font-medium truncate mr-5">
                                     General Summary
                                 </h2>
-                                <a href="" class="ml-auto flex items-center text-danger"> <i data-lucide="alert-triangle" class="w-4 h-4 mr-3"></i> You have {{ meetings_today }} meetings today </a>
+                                <a href="{% url 'upcoming-meetings' %}" class="ml-auto flex items-center text-danger"> <i data-lucide="alert-triangle" class="w-4 h-4 mr-3"></i> You have {{ meetings_today }} meetings today </a>
                                 <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data </a>
                             </div>
                             <div class="grid grid-cols-12 gap-6 mt-5">
                                 <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                                     <div class="report-box zoom-in">
+                                    <a href="{% url 'list-lead' %}">
                                         <div class="box p-5">
                                             <div class="flex">
                                                 <i data-lucide="briefcase" class="report-box__icon text-primary"></i> 
@@ -35,51 +36,58 @@
                                                 <div class="alert-danger p-1" style="width:40%; float: left; text-align: center;" title="40% Failed">171</div>
                                             </div> -->
                                         </div>
+                                    </a>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                                    <a href="{% url 'list-opportunities' %}">
+                                        <div class="report-box zoom-in">
+                                            <div class="box p-5">
+                                                <div class="flex">
+                                                    <i data-lucide="credit-card" class="report-box__icon text-pending"></i> 
+                                                    <div class="ml-auto">
+                                                        <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{os_percentage}}% Success" style="float: left;"> {{ opportunity_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                        <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{of_percentage}}% Failed" style="float: left;"> {{ opportunity_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-3xl font-medium leading-8 mt-6">{{ total_opportunities }}</div>
+                                                <div class="text-base text-slate-500 mt-1">Total Opportunities</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                                    <div class="report-box zoom-in">
+                                        <a href="{% url 'list-proposals' %}">
+                                            <div class="box p-5">
+                                                <div class="flex">
+                                                    <i data-lucide="clipboard" class="report-box__icon text-warning"></i> 
+                                                    <div class="ml-auto">
+                                                        <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{ ps_percentage }}% Success" style="float: left;"> {{ proposal_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                        <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="{{ pp_percentage }}% Pending" style="float: left;"> {{ proposal_pending }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                        <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{ pf_percentage }}% Failed" style="float: left;"> {{ proposal_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-3xl font-medium leading-8 mt-6">{{ total_proposals }}</div>
+                                                <div class="text-base text-slate-500 mt-1">Total Proposals</div>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                                     <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-lucide="credit-card" class="report-box__icon text-pending"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{os_percentage}}% Success" style="float: left;"> {{ opportunity_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{of_percentage}}% Failed" style="float: left;"> {{ opportunity_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                        <a href="{% url 'clients' %}">
+                                            <div class="box p-5">
+                                                <div class="flex">
+                                                    <i data-lucide="users" class="report-box__icon text-success"></i> 
+                                                    <div class="ml-auto">
+                                                        <!-- <div class="report-box__indicator bg-success tooltip cursor-pointer" title="22 new this month"> 22 new this month <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div> -->
+                                                    </div>
                                                 </div>
+                                                <div class="text-3xl font-medium leading-8 mt-6">{{ total_clients }}</div>
+                                                <div class="text-base text-slate-500 mt-1">Total Clients</div>
                                             </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_opportunities }}</div>
-                                            <div class="text-base text-slate-500 mt-1">Total Opportunities</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-lucide="clipboard" class="report-box__icon text-warning"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-success tooltip cursor-pointer mr-3" title="{{ ps_percentage }}% Success" style="float: left;"> {{ proposal_success }} <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-warning tooltip cursor-pointer mr-3" title="{{ pp_percentage }}% Pending" style="float: left;"> {{ proposal_pending }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
-                                                    <div class="report-box__indicator bg-danger tooltip cursor-pointer" title="{{ pf_percentage }}% Failed" style="float: left;"> {{ proposal_failed }} <i data-lucide="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_proposals }}</div>
-                                            <div class="text-base text-slate-500 mt-1">Total Proposals</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-lucide="users" class="report-box__icon text-success"></i> 
-                                                <div class="ml-auto">
-                                                    <!-- <div class="report-box__indicator bg-success tooltip cursor-pointer" title="22 new this month"> 22 new this month <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div> -->
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-medium leading-8 mt-6">{{ total_clients }}</div>
-                                            <div class="text-base text-slate-500 mt-1">Total Clients</div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +144,7 @@
                                 <h2 class="text-lg font-medium truncate mr-5">
                                     Sales Target (2023)
                                 </h2>
-                                <a href="" class="ml-auto text-primary truncate">Show More</a> 
+                                <!-- <a href="" class="ml-auto text-primary truncate">Show More</a>  -->
                             </div>
                             <div class="intro-y box p-5 mt-5">
                                 <div class="mt-3">
@@ -167,7 +175,7 @@
                                 <h2 class="text-lg font-medium truncate mr-5">
                                     Proposal Volume
                                 </h2>
-                                <a href="" class="ml-auto text-primary truncate">Show More</a> 
+                                <!-- <a href="" class="ml-auto text-primary truncate">Show More</a>  -->
                             </div>
                             <div class="intro-y box p-5 mt-5">
                                 <div class="mt-3">

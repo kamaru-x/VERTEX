@@ -16,7 +16,7 @@ def setTarget():
 
         for a in a_proposals:
             if a.Grand_Total:
-                archived += a.Grand_Total
+                archived += int(a.PO_Value)
 
         for r in r_proposals:
             if r.Grand_Total:

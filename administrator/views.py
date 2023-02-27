@@ -361,7 +361,7 @@ def list_salesman(request):
 
         for a in a_proposals:
             if a.Grand_Total:
-                archived += a.Grand_Total
+                archived += int(a.PO_Value)
         for p in p_proposals:
             if p.Grand_Total:
                 pending += p.Grand_Total
@@ -422,7 +422,7 @@ def salesman_view(request,sid):
     leads = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=0,Status=1)
     opportunities = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=1,Status=1)
     clients = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=2,Status=1)
-    projects = Lead.objects.filter(Salesman=salesman).filter(Lead_Status=3,Status=1)
+    projects = Proposal.objects.filter(Lead__Salesman=salesman).filter(Proposal_Status=1)
     p_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=0).exclude(Status=0).order_by('Due_Date')
     c_task = Task.objects.filter(Salesman=salesman).filter(Task_Status=1).exclude(Status=0).order_by('-Completed_Date')
     sales = Sales_Target.objects.filter(Salesman=salesman).filter(From__year = d.year)
@@ -438,7 +438,7 @@ def salesman_view(request,sid):
     target_failed = 0
 
     for proposal in s_proposals:
-        target_archived += proposal.Grand_Total
+        target_archived += int(proposal.PO_Value)
 
     for proposal in f_proposals:
         target_failed += proposal.Grand_Total

@@ -162,7 +162,7 @@ class Proposal(models.Model):
 
     PO_Number = models.CharField(max_length=50,null=True)
     PO_Date = models.DateField(null=True)
-    PO_Value = models.CharField(max_length=225, null=True)
+    PO_Value = models.FloatField()
     PO_Description = models.TextField(null=True)
     Attachments = models.ManyToManyField(Attachments)
 

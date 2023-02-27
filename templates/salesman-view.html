@@ -456,17 +456,16 @@
                             <input class="form-check-input" type="checkbox">
                         </th> -->
                         
-                       
+                        <th class="whitespace-nowrap">REFERENCE </th>
                         <th class="whitespace-nowrap">COMPANY NAME</th>
-                         <th class="whitespace-nowrap">REFERENCE </th>
-                        
-                        <th class="text-center whitespace-nowrap" style="text-align: center;">PROPOSAL DATE</th>
                         <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN</div>
                         </th> -->
                         <th class="whitespace-nowrap">CONTACT </th>
-                        <th class="whitespace-nowrap text-center">VOLUME </th>
                         <th class="whitespace-nowrap text-center">STATUS </th>
+                        <th class="text-center whitespace-nowrap" style="text-align: center;">PO DATE</th>
+                        <th class="whitespace-nowrap text-center">VOLUME </th>
+                        
                         <!-- <th class="text-center whitespace-nowrap">ACTIONS</th> -->
                     </tr>
                 </thead>
@@ -476,32 +475,25 @@
                         <!-- <td class="w-10">
                             <input class="form-check-input" type="checkbox">
                         </td> -->
+                        <td class="w-40">
+                            <a href="{% url 'view-proposal' proposal.id %}" class="font-medium whitespace-nowrap text-primary">{{ proposal.Reference }}</a>
+                                
+                        </td>
                         <td class="w-72 text-primary">
-                            <a href="#" class="font-medium whitespace-nowrap">{{ proposal.Lead.Company }}</a>
+                            <a href="{% url 'client-view' proposal.Lead.id %}" class="font-medium whitespace-nowrap">{{ proposal.Lead.Company }}</a>
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Phone }} / {{ proposal.Lead.Email }}</div>
                             
                         </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">{{ proposal.Reference }}</a>
-                                
-                        </td>
                         
-                        <td class="w-60 text-right">
-                            <div class="pr-16">{{ proposal.Date | date:"d M Y" }}</div>
-                        </td>
                         <!-- <td class="w-60">
                             <a href="" class="font-medium whitespace-nowrap text-primary">{{ proposal.Lead.Salesman.first_name }}</a>
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.Mobile }}</div>
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.email }}</div>
                         </td> -->
                         <td class="w-60">
-                            <a href="" class="font-medium whitespace-nowrap text-primary">{{ proposal.Lead.CName }}</a>
+                            <a href="" class="font-medium whitespace-nowrap">{{ proposal.Lead.CName }}</a>
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CNumber }}</div>
                             <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.CMail }}</div>
-                        </td>
-
-                        <td class="w-60 text-right">
-                            <div class="pr-16">{{ proposal.Grand_Total }}</div>
                         </td>
 
                         {% if proposal.Proposal_Status == 0 %}
@@ -517,6 +509,14 @@
                             <div class="text-center">Pending</div>
                         </td>
                         {% endif %}
+
+                        <td class="w-60 text-right">
+                            <div class="pr-16">{{ proposal.Date | date:"d M Y" }}</div>
+                        </td>
+
+                        <td class="w-60 text-right">
+                            <div class="pr-16">{{ proposal.Grand_Total }}</div>
+                        </td>
                         
                         <!-- <td class="table-report__action">
                             <div class="flex justify-center items-center">
@@ -780,17 +780,16 @@
                             <input class="form-check-input" type="checkbox">
                         </th> -->
                         
-                       
+                        <th class="whitespace-nowrap">REFERENCE </th>
                         <th class="whitespace-nowrap">COMPANY NAME</th>
-                         <th class="whitespace-nowrap">REFERENCE </th>
                         <!-- <th class="text-center whitespace-nowrap" style="text-align: left;">Proposal Date</th> -->
                         <!-- <th class="whitespace-nowrap">
                             <div class="pr-16">SALESMAN </div>
                         </th> -->
                         <th class="whitespace-nowrap">
-                            <div class="pr-16" style="text-align: center;">PROPOSAL COMPLETED DATE</div>
+                            <div class="pr-16" style="text-align: center;">PO DATE</div>
                         </th>
-                        <th class="text-center whitespace-nowrap" style="text-align: center;">MEETINGS</th>
+                        <th class="text-center whitespace-nowrap" style="text-align: center;">VOLUME</th>
                        
                     </tr>
                 </thead>
@@ -800,28 +799,24 @@
                             <!-- <td class="w-10">
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
+                            <td class="w-40">
+                                <a href="{% url 'view-project' project.id %}" class="font-medium whitespace-nowrap">REF:{{ project.Reference }}</a>
+                            </td>
                             <td class="w-72 text-primary">
-                                <a href="{% url 'view-project' project.id %}" class="font-medium whitespace-nowrap">{{ project.Company }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Phone }} / {{ project.Email }}</div>
+                                <a href="{% url 'client-view' project.Lead.id %}" class="font-medium whitespace-nowrap">{{ project.Lead.Company }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Lead.Phone }} / {{ project.Lead.Email }}</div>
                                 
                             </td>
-                            <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">REF:{{ project.Reference }}</a>
-                            </td>
-                                 
-                           
-                            
                             <!-- <td class="w-64">
                              <a href="" class="font-medium whitespace-nowrap text-primary">{{ project.Salesman.first_name }}</a>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ project.Salesman.Mobile }} / {{ project.Salesman.email }}</div>
                             </td> -->
 
                              <td class="w-40" style="text-align:center;">
-                                <div  class="font-medium whitespace-nowrap text-success">{{ project.To_Project }}</div>
+                                <div  class="font-medium whitespace-nowrap text-success">{{ project.PO_Date }}</div>
                             </td> 
-                            <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap"><span>Done: {{ project.Previous_Meetings }}</span></div> 
-                                <div class="flex items-center justify-center whitespace-nowrap"><span class="text-success">Upcoming: {{ project.Upcoming_Meetings }}</span></div>
+                            <td class="w-40" style="text-align:center;">
+                                <div  class="font-medium whitespace-nowrap text-success">{{ project.Grand_Total }}</div>
                             </td> 
                         </tr>
                     {% endfor %}   

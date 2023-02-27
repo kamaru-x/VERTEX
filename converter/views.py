@@ -668,6 +668,9 @@ def view_project(request,pid):
     invoices = Invoice.objects.filter(Proposal=proposal)
     receipts = Receipt.objects.filter(Proposal=proposal)
 
+    invoice_totals = invoices.aggregate(sum=Sum('Amount'))
+    receipt_totals = receipts.aggregate(sum=Sum('Amount'))
+
     products = Proposal_Items.objects.filter(Proposal=proposal)
     catagories = []
     for product in products:
@@ -720,6 +723,8 @@ def view_project(request,pid):
         'rrefer' : rrefer,
         'invoices' : invoices,
         'receipts' : receipts,
+        'invoice_totals' : invoice_totals,
+        'receipt_totals' : receipt_totals,
     }
     return render(request,'project-view.html',context)
 

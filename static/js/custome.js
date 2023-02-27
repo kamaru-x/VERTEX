@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	alert('it works')
+
 	var calculated_total_sum = 0
 	var rowCount = $('#mytable tr').length;
 	var row = rowCount - 2
@@ -15,4 +17,8 @@ $(document).ready(function(){
 
 	var category_name = $('#category-name').html()
 	
+})
+
+$(document).ready(function(){
+	alert('script works')
 })

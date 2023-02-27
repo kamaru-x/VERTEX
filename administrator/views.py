@@ -8,6 +8,7 @@ from u_auth.models import User
 from datetime import timedelta
 from django.db.models import Q
 from administrator.set_fun import setTarget
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -146,7 +147,14 @@ def add_category(request):
 
 @login_required
 def list_category(request):
-    categories = Category.objects.filter(Status=1).order_by('-id')
+    # categories = Category.objects.filter(Status=1).order_by('-id')
+    # count = 10
+    # count = request.GET.get('count')
+    # print(count)
+    p = Paginator(Category.objects.filter(Status=1).order_by('-id'),10)
+    page = request.GET.get('page')
+    categories = p.get_page(page)
+    nums = 'a' * categories.paginator.num_pages
 
     if request.method == 'POST':
         id = request.POST.get('id')
@@ -156,7 +164,8 @@ def list_category(request):
         return redirect('list-category')
 
     context = {
-        'categories' : categories
+        'categories' : categories,
+        'nums' : nums,
     }
     return render(request,'category-list.html',context)
 
@@ -242,7 +251,11 @@ def add_product(request):
 
 @login_required
 def list_products(request):
-    products = Product.objects.filter(Status=1).order_by('-id')
+    # products = Product.objects.filter(Status=1).order_by('-id')
+    p = Paginator(Product.objects.filter(Status=1).order_by('-id'),10)
+    page = request.GET.get('page')
+    products = p.get_page(page)
+    nums = 'a' * products.paginator.num_pages
     if request.method == 'POST' :
         id = request.POST.get('id')
         product = Product.objects.get(id=id)
@@ -251,7 +264,8 @@ def list_products(request):
         setcount()
         return redirect('list-product')
     context = {
-        'products' : products
+        'products' : products,
+        'nums' : nums,
     }
     return render(request,'product-list.html',context)
 
@@ -743,7 +757,7 @@ def opertunity_convertion(request,lid):
 
 def canceld_leads(request):
     leads = Lead.objects.filter(Lead_Status=0,Status=3)
-    opportunities = Lead.objects.filter(Status=3,Lead_Status=1)
+    opportunities = Lead.objects.filter(Status=2,Lead_Status=1)
     clients = Lead.objects.filter(Status=3,Lead_Status=2)
     projects = Lead.objects.filter(Status=3,Lead_Status=3)
 

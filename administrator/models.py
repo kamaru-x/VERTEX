@@ -158,6 +158,7 @@ class Proposal(models.Model):
     Exclusion = models.TextField(null=True,blank=True)
     Terms_Condition = models.TextField(null=True,blank=True)
     Oppertunity = models.TextField(null=True,blank=True)
+    Action_Date = models.DateField(null=True)
 
     PO_Number = models.CharField(max_length=50,null=True)
     PO_Date = models.DateField(null=True)

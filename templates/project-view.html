@@ -366,7 +366,7 @@
 
     var it = $('#it').html()
     var rt = $('#rt').html()
-    var gt = parseInt(it)+parseInt(rt)
+    var gt = parseInt(rt) - parseInt(it)
     if (gt > 0 ){
         $('#gt').addClass('text-success')
     }else if (gt < 0){

@@ -254,9 +254,15 @@
                             </td>
                             {% endif %}
 
-                            <td class="w-60 text-right">
-                                <div class="pr-16">{{ proposal.Grand_Total }}</div>
-                            </td>
+                            {% if proposal.PO_Value %}
+                                <td class="w-60 text-right">
+                                    <div class="pr-16">{{ proposal.PO_Value }}</div>
+                                </td>
+                            {% else %}
+                                <td class="w-60 text-right">
+                                    <div class="pr-16">{{ proposal.Grand_Total }}</div>
+                                </td>
+                            {% endif %}
                             
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">

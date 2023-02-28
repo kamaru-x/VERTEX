@@ -91,9 +91,15 @@
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.Mobile }}</div>
                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ proposal.Lead.Salesman.email }}</div>
                             </td>
-                            <td class="w-60 text-right text-primary">
-                                <div class="pr-16">{{ proposal.PO_Value }}</div>
-                            </td>
+                            {% if proposal.PO_Value %}
+                                <td class="w-60 text-right text-primary">
+                                    <div class="pr-16">{{ proposal.PO_Value }}</div>
+                                </td>
+                            {% else %}
+                                <td class="w-60 text-right text-primary">
+                                    <div class="pr-16">{{ proposal.Grand_Total }}</div>
+                                </td>
+                            {% endif %}
                             {% if proposal.Proposal_Status == 0 %}
                             <td class="w-60 text-right text-danger">
                                 <div class="pr-16">Rejected</div>

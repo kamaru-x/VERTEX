@@ -136,6 +136,8 @@ class Lead_Schedule(models.Model):
     Update_Date = models.DateField(null=True)
     Attachment = models.ManyToManyField(Attachments)
 
+    notification = models.IntegerField(default=1)
+
 
     # def __str__(self):
     #     return self.Lead.Company
@@ -188,6 +190,8 @@ class Task(models.Model):
     Attachment = models.ManyToManyField(Attachments)
     Task_Status = models.IntegerField(default=0)
     Completed_Date = models.DateField(null=True)
+
+    notification = models.IntegerField(default=1)
 
     def __str__(self):
         return self.Title

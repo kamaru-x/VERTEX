@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User,Task
 from datetime import date
 from django.db.models import Q
 import math
@@ -150,6 +150,9 @@ def dashboard(request):
     pp_percentage = math.ceil(proposal_pending_percentage)
     ps_percentage = math.floor(proposal_success_percentage)
     pf_percentage = math.ceil(proposal_failed_percentage)
+
+    task_notifications = Task.objects.filter(notification=1)
+    schedule_notification = Lead_Schedule.objects.filter(notification=1)
 
     context = {
         'total_leads' : total_leads.count(),

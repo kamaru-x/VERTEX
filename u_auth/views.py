@@ -67,11 +67,13 @@ def dashboard(request):
 
     for p in total_proposals:
         if p.Proposal_Status == 1:
-            if p.Grand_Total:
-                proposal_success_volume += p.Grand_Total
+            if p.PO_Value:
+                proposal_success_volume += p.PO_Value
+
         elif p.Proposal_Status == 0:
             if p.Grand_Total:
                 proposal_failed_volume += p.Grand_Total
+
         elif p.Proposal_Status == 10:
             if p.Grand_Total:
                 proposal_pending_volume += p.Grand_Total

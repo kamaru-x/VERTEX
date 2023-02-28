@@ -956,8 +956,8 @@ def salesman_report(request):
                 sum_total_proposals += p.Grand_Total
 
         for a in accepteted_proposals:
-            if a.Grand_Total:
-                sum_accepteted_proposals += a.Grand_Total
+            if a.PO_Value:
+                sum_accepteted_proposals += a.PO_Value
         
         for r in rejected_proposals:
             if r.Grand_Total:
@@ -1042,10 +1042,10 @@ def top_customers(request):
         pro = Proposal.objects.filter(Lead=lead).count()
 
         for p in proposals:
-            total_volume += p.Grand_Total
+            total_volume += p.PO_Value
 
         for a in a_proposals:
-            volume += a.Grand_Total
+            volume += a.PO_Value
 
         if volume and total_volume != 0:
             p = volume / total_volume * 100
@@ -1084,8 +1084,8 @@ def proposal_report(request):
                 total_value += proposal.Grand_Total
 
         if proposal.Proposal_Status == 1:
-            if proposal.Grand_Total:
-                success_value += proposal.Grand_Total
+            if proposal.PO_Value:
+                success_value += proposal.PO_Value
 
         if proposal.Proposal_Status == 0:
             if proposal.Grand_Total:

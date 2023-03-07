@@ -3,10 +3,12 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User,Task
+from administrator.models import Category,Product,Lead,Lead_Update,Lead_Schedule,Attachments,Proposal,Sales_Target,User,Task,Notification
 from datetime import date
 from django.db.models import Q
 import math
+from django.http import HttpResponse
+import json
 
 # Create your views here.
 
@@ -96,13 +98,16 @@ def dashboard(request):
     for target in targets:
         yrs.append(target.From.year)
     years = [*set(yrs)]
+    years.sort()
     
     for year in years:
         archived = 0
+        total_target = 0
         ts = Sales_Target.objects.filter(From__year = year)
         for t in ts:
             archived += t.Archived
-        report = {'year':year,'archived':archived}
+            total_target += t.Targets
+        report = {'year':int(year),'archived':int(archived),'total_target':int(total_target)}
         reports.append(report)
 
     try:
@@ -151,9 +156,6 @@ def dashboard(request):
     ps_percentage = math.floor(proposal_success_percentage)
     pf_percentage = math.ceil(proposal_failed_percentage)
 
-    task_notifications = Task.objects.filter(notification=1)
-    schedule_notification = Lead_Schedule.objects.filter(notification=1)
-
     context = {
         'total_leads' : total_leads.count(),
         'total_opportunities' : total_opportunities,
@@ -180,7 +182,8 @@ def dashboard(request):
         'of_percentage' : of_percentage,
         'pp_percentage' : pp_percentage,
         'ps_percentage' : ps_percentage,
-        'pf_percentage' : pf_percentage
+        'pf_percentage' : pf_percentage,
+        'yrs' : yrs,
     }
 
     return render(request,'index.html',context)
@@ -229,3 +232,9 @@ def change_salesman_password(request,id):
 def signout(request):
     logout(request)
     return redirect('sign-in')
+
+#################################################################################
+
+def header(request):
+    notifications = Notification.objects.filter(notification_user=request.user)
+    return render(request,'header.html',{'notifications':notifications})

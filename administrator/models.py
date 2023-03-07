@@ -123,6 +123,7 @@ class Lead_Schedule(models.Model):
     AddedBy = models.IntegerField(default=0)
     Ip = models.GenericIPAddressField(null=True,blank=True)
 
+    Reference = models.CharField(max_length=25,null=True)
     AddedDate = models.DateField(null=True)
     Lead = models.ForeignKey(Lead,on_delete=models.SET_NULL,null=True)
     Mode = models.CharField(max_length=25)
@@ -308,4 +309,14 @@ class Receipt(models.Model):
     def __str__(self):
         return self.Reference
     
+#################################################################################
+
+class Notification(models.Model):
+    added_by = models.ForeignKey(User,related_name='added_by',on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    notification_user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='notification_user')
+    Message = models.CharField(max_length=225)
+    Read_Status = models.BooleanField(default=False)
+    Read_Date = models.DateField(null=True)
+
 #################################################################################

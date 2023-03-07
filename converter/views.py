@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items,Sales_Target,Invoice,Receipt
+from administrator.models import Lead,Lead_Schedule,Lead_Update,Attachments,Product,Task,Proposal,Replays,Salesman_Report,Review,Proposal_Items,Sales_Target,Invoice,Receipt,Notification
 from u_auth.models import User
 from datetime import date as dt
 from administrator.views import setip
@@ -344,6 +344,7 @@ def create_task(request):
     ip = setip(request)
     leads = Lead.objects.filter(Status=1)
     salesmans = User.objects.filter(is_salesman=True)
+    users = User.objects.all()
     if request.method == 'POST':
         lead = request.POST.get('lead')
         salesman = request.POST.get('salesman')
@@ -376,6 +377,11 @@ def create_task(request):
             attach.save()
             ls.Attachment.add(attach)
             ls.save()
+
+        for salesman in users:
+            notification = Notification(added_by=request.user,notification_user=salesman,Message=f'new task added for {sm.first_name}')
+            notification.save()
+
         return redirect('pending-task')
 
     context = {
@@ -737,6 +743,7 @@ def upcoming_meetings(request):
     d = dt.today()
     ip = setip(request)
     leads = Lead.objects.filter(Status=1)
+    users = User.objects.all()
 
     if request.method == 'POST':
         if request.POST.get('date'):
@@ -750,6 +757,10 @@ def upcoming_meetings(request):
 
             data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
             data.save()
+
+            for salesman in users:
+                notification = Notification(added_by=request.user,notification_user=salesman,Message=f'new meeting scheduled on {date} from {ftime} to {to}')
+                notification.save()
             return redirect('.')
 
         if request.POST.get('id'):
@@ -801,6 +812,7 @@ def previous_meetings(request):
     d = dt.today()
     ip = setip(request)
     leads = Lead.objects.filter(Status=1)
+    users = User.objects.all()
 
     if request.method == 'POST':
         if request.POST.get('date'):
@@ -814,6 +826,10 @@ def previous_meetings(request):
 
             data = Lead_Schedule(Date=d,AddedBy=user,Ip=ip,Lead=lead,Mode=mode,From=ftime,To=to,Description=description,AddedDate=date)
             data.save()
+
+            for salesman in users:
+                notification = Notification(added_by=request.user,notification_user=salesman,Message=f'new meeting scheduled on {date} from {ftime} to {to}')
+                notification.save()
             return redirect('.')
             
         if request.POST.get('udate'):

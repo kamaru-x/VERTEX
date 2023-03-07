@@ -131,9 +131,9 @@
                                     </div>
                                 </div>
                                 <div class="report-chart">
-                                    <div class="h-[275px]">
-                                        <canvas id="report-line-chart" class="mt-6 -mb-6"></canvas>
-                                    </div>
+                                    <div>
+                                        <canvas id="myChart"></canvas>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -158,11 +158,11 @@
                                         <span class="truncate">80% - 100% Achieved</span> <span class="font-medium ml-auto">{{ab80}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
-                                        <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                        <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
                                         <span class="truncate">50% - 80% Achieved</span> <span class="font-medium ml-auto">{{ab50}} Salesman</span> 
                                     </div>
                                     <div class="flex items-center mt-4">
-                                        <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                        <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
                                         <span class="truncate">below 50% Achieved</span> <span class="font-medium ml-auto">{{bl50}} Salesman</span> 
                                     </div>
                                 </div>
@@ -224,10 +224,42 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- <script>
-            report = $('#reports').val()
-            alert(report)
+            value = $('#reports').val()
+            alert(value)
         </script> -->
+        <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: [{% for report in reports %} '{{report.year}}', {% endfor %}],
+                datasets: [{
+                  label: 'given targer',
+                  data: [{% for report in reports %} '{{report.total_target}}', {% endfor %}],
+                  borderWidth: 1,
+                  backgroundColor : ['#2196f3'],
+                  maxBarThickness : 20,
+                },
+                {
+                  label: 'archived',
+                  data: [{% for report in reports %} '{{report.archived}}', {% endfor %}],
+                  borderWidth: 1,
+                  backgroundColor : ['blue'],
+                  maxBarThickness : 20,
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
         <!-- BEGIN: Dark Mode Switcher-->
         <div data-url="#" class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
             <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>

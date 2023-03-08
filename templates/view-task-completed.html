@@ -29,13 +29,13 @@
                                             <a class="text-slate-500 ml-4" href=""></a>
                                         </div>
                                         <div class="mt-5 2xl:mt-24 dropdown">
-                                    {% if task.Attachments.all %}
+                                    {% if task.Attachment.all %}
                                     <button class="dropdown-toggle btn btn-rounded-primary w-44 2xl:w-52 px-4 relative justify-start" aria-expanded="false" data-tw-toggle="dropdown">
                                         Download Attachments 
                                         <span class="w-8 h-8 absolute flex justify-center items-center right-0 top-0 bottom-0 my-auto ml-auto mr-1"> <i data-lucide="chevron-down" class="w-4 h-4"></i> </span>
                                     </button>
                                     {% endif %}
-                                    {% for t in task.Attachments.all %}
+                                    {% for t in task.Attachment.all %}
                                     <div class="dropdown-menu w-44 2xl:w-52">
                                         <ul class="dropdown-content">
                                             <li>

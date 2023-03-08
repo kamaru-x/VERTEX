@@ -9,6 +9,7 @@ from django.http.response import JsonResponse
 from administrator.set_fun import setTarget
 import math
 from django.db.models import Sum
+from administrator.views import setreport
 
 # Create your views here.
 
@@ -907,6 +908,7 @@ def previous_meeting_details(request,mid):
 #################################################################################
 
 def task_staff(request):
+    setreport()
     salesmans = User.objects.filter(is_salesman=True)
     reports = Salesman_Report.objects.filter(Status=1)
     return render(request,'task-staff.html',{'salesmans':salesmans,'reports':reports})
@@ -996,6 +998,7 @@ def salesman_report(request):
 
 @login_required
 def salestarget(request):
+    setTarget()
     target = 0
     archived = 0
     balance = 0

@@ -19,7 +19,7 @@
                         </div>
                         <div class="mt-14 mb-3 grid grid-cols-12 sm:gap-10 intro-y" style="background: #fff;">
                             <div class="col-span-12 sm:col-span-6 md:col-span-4 py-6 sm:pl-5 md:pl-0 lg:pl-5 relative text-center sm:text-left">
-                                <div class="absolute pt-0.5 2xl:pt-0 mt-5 2xl:mt-6 top-0 right-0 dropdown">
+                                <!-- <div class="absolute pt-0.5 2xl:pt-0 mt-5 2xl:mt-6 top-0 right-0 dropdown">
                                     <a class="dropdown-toggle block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-vertical" class="w-5 h-5 text-slate-500"></i> </a>
                                     <div class="dropdown-menu w-40">
                                         <ul class="dropdown-content">
@@ -31,7 +31,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="text-sm 2xl:text-base font-medium -mb-1 text-primary">{{ salesman.first_name }}, <span class="text-slate-600 dark:text-slate-300 font-normal">{{ salesman.Mobile }}</span> </div>
                                 <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-slate-600 dark:text-slate-300 leading-3 mt-14 2xl:mt-24"> Total Target Assigned <i data-lucide="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i> </div>
                                 <div class="2xl:flex mt-5 mb-3">
@@ -803,7 +803,7 @@
                                 <input class="form-check-input" type="checkbox">
                             </td> -->
                             <td class="w-40">
-                                <a href="{% url 'view-project' project.id %}" class="font-medium whitespace-nowrap">REF:{{ project.Reference }}</a>
+                                <a href="{% url 'view-project' project.id %}" class="font-medium whitespace-nowrap text-primary">{{ project.Reference }}</a>
                             </td>
                             <td class="w-72 text-primary">
                                 <a href="{% url 'client-view' project.Lead.id %}" class="font-medium whitespace-nowrap">{{ project.Lead.Company }}</a>
@@ -819,7 +819,7 @@
                                 <div  class="font-medium whitespace-nowrap text-success">{{ project.PO_Date }}</div>
                             </td> 
                             <td class="w-40" style="text-align:center;">
-                                <div  class="font-medium whitespace-nowrap text-success">{{ project.Grand_Total }}</div>
+                                <div  class="font-medium whitespace-nowrap text-success">{{ project.PO_Value }}</div>
                             </td> 
                         </tr>
                     {% endfor %}   

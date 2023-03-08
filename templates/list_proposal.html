@@ -97,9 +97,15 @@
                                 <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'view-proposal' proposal.id %}">
                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
                                 </a>
+                                {% if proposal.Proposal_Status == 0 %}
+                                
+                                {% elif proposal.Proposal_Status == 1 %}
+                                
+                                {% else %}
                                 <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-proposal' proposal.id %}">
                                     <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                                 </a>
+                                {% endif %}
                                 <!-- <a class="flex items-right text-danger whitespace-nowrap" data-tw-toggle="modal" data-tw-target="#cancel-confirmation-modal" onclick="cancel('{{proposal.id}}')" style="cursor: pointer;" title="cancel">
                                     <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i> 
                                 </a>  -->

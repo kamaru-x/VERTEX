@@ -110,6 +110,14 @@ def dashboard(request):
         report = {'year':int(year),'archived':int(archived),'total_target':int(total_target)}
         reports.append(report)
 
+    
+    overall_given_target = 0
+    overall_achived_target = 0
+
+    for r in reports:
+        overall_given_target += r['total_target']
+        overall_achived_target += r['archived']
+
     try:
         lead_success_percentage = (Lead_Succes.count() / total_leads.count()) * 100
     except:
@@ -184,6 +192,8 @@ def dashboard(request):
         'ps_percentage' : ps_percentage,
         'pf_percentage' : pf_percentage,
         'yrs' : yrs,
+        'overall_given_target' : overall_given_target,
+        'overall_achived_target' : overall_achived_target,
     }
 
     return render(request,'index.html',context)

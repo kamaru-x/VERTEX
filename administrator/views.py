@@ -443,7 +443,6 @@ def salesman_view(request,sid):
     for proposal in f_proposals:
         target_failed += proposal.Grand_Total
 
-    print(year,total_target)
 
     if request.method == 'POST':
 
@@ -504,6 +503,15 @@ def salesman_view(request,sid):
             previous.append(schedule)
         elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
+
+    monthly_report = []
+
+    for month in range(1,13):
+        proposals_report = Proposal.objects.filter(Lead__Salesman=salesman,PO_Date__year=year,PO_Date__month=month)
+        # print(proposals_report.count())
+        p_count = proposals_report.count()
+        monthly_report.append(p_count)
+
     context = {
         'salesman':salesman,
         'previous' : previous,
@@ -520,6 +528,7 @@ def salesman_view(request,sid):
         'target_archived' : target_archived,
         'target_failed' : target_failed,
         'proposals' : proposals,
+        'monthly_report' : monthly_report,
     }
     return render(request,'salesman-view.html',context)
 

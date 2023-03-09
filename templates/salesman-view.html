@@ -44,9 +44,9 @@
                                             <a class="text-slate-500 ml-4 2xl:ml-16" href="."> <i data-lucide="refresh-ccw" class="w-4 h-4"></i> </a>
                                         {% endif %}
                                     </div>
-                                    <!-- <div class="mt-5 2xl:flex 2xl:justify-center 2xl:mt-0 2xl:-ml-20 2xl:w-14 2xl:flex-none 2xl:pl-2.5">
-                                        <div class="font-medium inline-flex bg-success text-white rounded-full px-2 py-1 text-xs 2xl:text-sm 2xl:p-0 2xl:text-success 2xl:bg-transparent 2xl:flex items-center tooltip cursor-pointer 2xl:justify-center" title="49% Higher than last month"> 49% <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
-                                    </div> -->
+                                    <div class="mt-5 2xl:flex 2xl:justify-center 2xl:mt-0 2xl:-ml-20 2xl:w-14 2xl:flex-none 2xl:pl-2.5">
+                                        <div class="font-medium inline-flex bg-success text-white rounded-full px-2 py-1 text-xs 2xl:text-sm 2xl:p-0 2xl:text-success 2xl:bg-transparent 2xl:flex items-center tooltip cursor-pointer 2xl:justify-center" title="{{percentage}}% Higher than last month"> {{percentage}}% <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                    </div>
                                 </div>
                                 
                                 <div class="2xl:text-base text-slate-600 dark:text-slate-300 mt-6 -mb-1 "> Target Achieved <a href="" class="underline decoration-dotted underline-offset-4 text-success dark:text-slate-400">{{ target_archived }}</a> </div>
@@ -1418,7 +1418,7 @@ color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
               data: {
                 labels: ['January', 'february', 'march', 'april', 'may', 'june','july','august','september','cotober','november','december'],
                 datasets: [{
-                  label: '# of Votes',
+                  label: 'number of proposal wins',
                   data: [{% for report in monthly_report %} '{{report}}', {% endfor %}],
                 //   data:[1,0,1,0,0,0,0,0,0,0,0,0],
                   borderWidth: 1

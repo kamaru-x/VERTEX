@@ -9,7 +9,7 @@ from datetime import timedelta
 from django.db.models import Q
 from administrator.set_fun import setTarget
 from django.core.paginator import Paginator
-
+import math
 # Create your views here.
 
 def setip(request):
@@ -507,10 +507,21 @@ def salesman_view(request,sid):
     monthly_report = []
 
     for month in range(1,13):
-        proposals_report = Proposal.objects.filter(Lead__Salesman=salesman,PO_Date__year=year,PO_Date__month=month)
+        proposals_report = Proposal.objects.filter(Lead__Salesman=salesman,PO_Date__year=year,PO_Date__month=month,Proposal_Status=1)
         # print(proposals_report.count())
         p_count = proposals_report.count()
         monthly_report.append(p_count)
+
+    
+    if total_target and target_archived != 0:
+        p = (int(target_archived) / int(total_target.Targets)) * 100
+        percentage = math.trunc(p)
+        if percentage > 100:
+            percentage = 100
+    else :
+        percentage = 0
+
+    print(total_target,target_archived)
 
     context = {
         'salesman':salesman,
@@ -529,6 +540,7 @@ def salesman_view(request,sid):
         'target_failed' : target_failed,
         'proposals' : proposals,
         'monthly_report' : monthly_report,
+        'percentage' : percentage,
     }
     return render(request,'salesman-view.html',context)
 

@@ -29,57 +29,122 @@
         {% if upcoming %}
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <!-- <div class="font-medium text-base">Add / Manage Products</div> -->
-                                    <div class="col-span-12">
-                
-                                        <div class="overflow-x-auto">
-                                            <table class="table">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th class="whitespace-nowrap">Date</th>
-                                                        <th class="whitespace-nowrap">Company Name</th>
-                                                        <th class="whitespace-nowrap">Salesman</th>
-                                                        <th class="whitespace-nowrap">Mode Of Meeting</th>
-                                                        <th class="whitespace-nowrap">Time</th>
-                                                        <th class="whitespace-nowrap">Description</th>
-                                                        
-                                                        <th class="whitespace-nowrap">Action</th> 
- 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for u in upcoming %}
-                                                     <tr>
-                                                        <td>{{ u.AddedDate | date:"d M Y" }}</td>
-                                                         <td class="w-60 text-primary">
-                                                            <a href="" class="font-medium whitespace-nowrap">{{ u.Lead.Company }}</a>
-                                                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Phone }} / {{ u.Lead.Email }}</div>
-                                                            
-                                                        </td>
-                                                         <td class="w-60">
-                                                        <a href="" class="font-medium whitespace-nowrap text-primary">{{ u.Lead.Salesman.first_name }}</a>
-                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.Mobile }}</div>
-                                                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.email }}</div>
-                                                        </td>
-                                                        <td>{{ u.Mode }}</td>
-                                                        <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
-                                                        <td>{{ u.Description }}</td>
-                                                        <td class="table-report__action">
-                                                        <div class="flex justify-center items-center">
-                                                     
-                                                        <a style="cursor: pointer;" title="Delete" class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{u.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                                            <i data-lucide="trash" class="w-4 h-4 ml-1 mr-1"></i>
-                                                        </a>
-                                                        <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-meeting' u.id %}">
-                                                            <i data-lucide="edit" class="w-4 h-4 ml-1 mr-1"></i>
-                                                        </a>
-                                                        </div>
-                                                        </td>   
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                
+            <div class="col-span-12">
+
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="whitespace-nowrap">Date</th>
+                                <th class="whitespace-nowrap">Company Name</th>
+                                <th class="whitespace-nowrap">Salesman</th>
+                                <th class="whitespace-nowrap">Mode Of Meeting</th>
+                                <th class="whitespace-nowrap">Time</th>
+                                <th class="whitespace-nowrap">Description</th>
+                                
+                                <th class="whitespace-nowrap">Action</th> 
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in upcoming %}
+                                <tr>
+                                <td>{{ u.AddedDate | date:"d M Y" }}</td>
+                                    <td class="w-60 text-primary">
+                                    <a href="" class="font-medium whitespace-nowrap">{{ u.Lead.Company }}</a>
+                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Phone }} / {{ u.Lead.Email }}</div>
+                                    
+                                </td>
+                                    <td class="w-60">
+                                <a href="" class="font-medium whitespace-nowrap text-primary">{{ u.Lead.Salesman.first_name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.Mobile }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ u.Lead.Salesman.email }}</div>
+                                </td>
+                                <td>{{ u.Mode }}</td>
+                                <td class="text-primary">{{ u.From }} - {{ u.To }}</td>
+                                <td>{{ u.Description }}</td>
+                                <td class="table-report__action">
+                                <div class="flex justify-center items-center">
+                                
+                                <a style="cursor: pointer;" title="Delete" class="flex items-center text-danger whitespace-nowrap" onclick="pop('{{u.id}}')" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    <i data-lucide="trash" class="w-4 h-4 ml-1 mr-1"></i>
+                                </a>
+                                <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{% url 'edit-meeting' u.id %}">
+                                    <i data-lucide="edit" class="w-4 h-4 ml-1 mr-1"></i>
+                                </a>
+                                </div>
+                                </td>   
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-5">
+                    <nav class="w-full sm:w-auto sm:mr-auto">
+                        <ul class="pagination">
+                            {% if upcoming.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{upcoming.previous_page_number}}">
+                                    <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="">
+                                    <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <!-- <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="w-4 h-4" data-lucide="chevron-left"></i>
+                                </a>
+                            </li> -->
+                            <!-- <li class="page-item">
+                                <a class="page-link" href="#">...</a>
+                            </li> -->
+                            {% for n in nums %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                            </li>
+                            {% endfor %}
+                            <!-- <li class="page-item active">
+                                <a class="page-link" href="#">2</a>
+                            </li> -->
+                            <!-- <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li> -->
+                            <!-- <li class="page-item">
+                                <a class="page-link" href="#">...</a>
+                            </li> -->
+                            <!-- <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                                </a>
+                            </li> -->
+                            {% if upcoming.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{upcoming.next_page_number}}">
+                                    <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="">
+                                    <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    <select class="w-20 form-select box mt-3 sm:mt-0" name="count">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>35</option>
+                        <option>50</option>
+                    </select>
+                </div>
+
             </div>
         </div>
         {% else %}

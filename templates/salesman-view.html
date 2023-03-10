@@ -258,41 +258,59 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if leads.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{leads.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if leads.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{leads.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -388,45 +406,63 @@
         {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        {% if opportunity %}
+        {% if opportunities %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if opportunities.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{opportunities.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in op_nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if opportunities.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{opportunities.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -557,45 +593,63 @@
         {% endif %}
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        {% if opportunity %}
+        {% if proposals %}
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if proposals.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{proposals.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in pro_nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if proposals.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{proposals.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -709,41 +763,59 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if clients.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{clients.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in cli_nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if clients.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{clients.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -848,41 +920,59 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if projects.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{projects.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in prj_nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if projects.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{projects.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -969,6 +1059,71 @@ color: #1e40af; padding-top: 100px; padding-bottom:60px;">Previous Meeting</h2>
     </table>
 </div>
 {% endif %}
+<div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-5">
+    <nav class="w-full sm:w-auto sm:mr-auto">
+        <ul class="pagination">
+            {% if previous.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{previous.previous_page_number}}">
+                    <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="">
+                    <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                </a>
+            </li>
+            {% endif %}
+            <!-- <li class="page-item">
+                <a class="page-link" href="#">
+                    <i class="w-4 h-4" data-lucide="chevron-left"></i>
+                </a>
+            </li> -->
+            <!-- <li class="page-item">
+                <a class="page-link" href="#">...</a>
+            </li> -->
+            {% for n in prv_nums %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+            </li>
+            {% endfor %}
+            <!-- <li class="page-item active">
+                <a class="page-link" href="#">2</a>
+            </li> -->
+            <!-- <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li> -->
+            <!-- <li class="page-item">
+                <a class="page-link" href="#">...</a>
+            </li> -->
+            <!-- <li class="page-item">
+                <a class="page-link" href="#">
+                    <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                </a>
+            </li> -->
+            {% if previous.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{previous.next_page_number}}">
+                    <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="">
+                    <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <select class="w-20 form-select box mt-3 sm:mt-0">
+        <option>10</option>
+        <option>25</option>
+        <option>35</option>
+        <option>50</option>
+    </select>
+</div>
                                     
 
 
@@ -1009,6 +1164,72 @@ color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
                 </div>
             
 
+        </div>
+
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-5 mb-5">
+            <nav class="w-full sm:w-auto sm:mr-auto mb-5">
+                <ul class="pagination">
+                    {% if upcoming.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{upcoming.previous_page_number}}">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-left"></i>
+                        </a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li> -->
+                    {% for n in upc_nums %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                    </li>
+                    {% endfor %}
+                    <!-- <li class="page-item active">
+                        <a class="page-link" href="#">2</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                        </a>
+                    </li> -->
+                    {% if upcoming.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{upcoming.next_page_number}}">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <select class="w-20 form-select box mt-3 sm:mt-0">
+                <option>10</option>
+                <option>25</option>
+                <option>35</option>
+                <option>50</option>
+            </select>
         </div>
     </div>
     {% else %}
@@ -1131,41 +1352,59 @@ color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <ul class="pagination">
+                    {% if ptasks.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{ptasks.previous_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-left"></i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-left"></i>
                         </a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
+                    </li> -->
+                    {% for n in pt_nums %}
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
                     </li>
-                    <li class="page-item active">
+                    {% endfor %}
+                    <!-- <li class="page-item active">
                         <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">...</a>
-                    </li>
-                    <li class="page-item">
+                    </li> -->
+                    <!-- <li class="page-item">
                         <a class="page-link" href="#">
                             <i class="w-4 h-4" data-lucide="chevron-right"></i>
                         </a>
-                    </li>
+                    </li> -->
+                    {% if ptasks.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="?page={{ptasks.next_page_number}}">
                             <i class="w-4 h-4" data-lucide="chevrons-right"></i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <select class="w-20 form-select box mt-3 sm:mt-0">
@@ -1248,7 +1487,75 @@ color: #1e40af; padding-top: 100px; padding-bottom:60px;">Upcoming Meeting</h2>
             </table>
         </div>
         <!-- END: Data List -->
-        
+    {% if ctasks %}
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mb-5">
+            <nav class="w-full sm:w-auto sm:mr-auto">
+                <ul class="pagination">
+                    {% if ctasks.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ctasks.previous_page_number}}">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-left"></i>
+                        </a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li> -->
+                    {% for n in ct_nums %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                    </li>
+                    {% endfor %}
+                    <!-- <li class="page-item active">
+                        <a class="page-link" href="#">2</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li> -->
+                    <!-- <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                        </a>
+                    </li> -->
+                    {% if ctasks.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ctasks.next_page_number}}">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="">
+                            <i class="w-4 h-4" data-lucide="chevrons-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <select class="w-20 form-select box mt-3 sm:mt-0">
+                <option>10</option>
+                <option>25</option>
+                <option>35</option>
+                <option>50</option>
+            </select>
+        </div>
+        <!-- END: Pagination -->
+    </div>
+    {% endif %}  
     </div>
     
 

@@ -381,9 +381,16 @@ def list_salesman(request):
         report.Status = 0
         report.save()
         return redirect('list-salesman')
+    
+    p = Paginator(reports,10)
+    page = request.GET.get('page')
+    reports = p.get_page(page)
+    nums = 'a' * reports.paginator.num_pages
+
     context = {
         'salesmans':salesmans,
         'reports' : reports,
+        'nums' : nums,
     }
     return render(request,'salesman-list.html',context)
 
@@ -523,6 +530,51 @@ def salesman_view(request,sid):
 
     print(total_target,target_archived)
 
+    p = Paginator(leads,10)
+    page = request.GET.get('page')
+    leads = p.get_page(page)
+    nums = 'a' * leads.paginator.num_pages
+
+    op = Paginator(opportunities,10)
+    op_page = request.GET.get('page')
+    opportunities = op.get_page(op_page)
+    op_nums = 'a' * opportunities.paginator.num_pages
+
+    pro = Paginator(proposals,10)
+    pro_page = request.GET.get('page')
+    proposals = pro.get_page(pro_page)
+    pro_nums = 'a' * proposals.paginator.num_pages
+
+    cli = Paginator(clients,10)
+    cli_page = request.GET.get('page')
+    clients = cli.get_page(cli_page)
+    cli_nums = 'a' * clients.paginator.num_pages
+
+    prj = Paginator(projects,10)
+    prj_page = request.GET.get('page')
+    projects = prj.get_page(prj_page)
+    prj_nums = 'a' * projects.paginator.num_pages
+
+    prv = Paginator(previous,10)
+    prv_page = request.GET.get('page')
+    previous = prv.get_page(prv_page)
+    prv_nums = 'a' * previous.paginator.num_pages
+
+    upc = Paginator(upcoming,10)
+    upc_page = request.GET.get('page')
+    upcoming = upc.get_page(upc_page)
+    upc_nums = 'a' * upcoming.paginator.num_pages
+
+    pt = Paginator(p_task,10)
+    pt_page = request.GET.get('page')
+    p_task = pt.get_page(pt_page)
+    pt_nums = 'a' * p_task.paginator.num_pages
+
+    ct = Paginator(c_task,10)
+    ct_page = request.GET.get('page')
+    c_task = ct.get_page(ct_page)
+    ct_nums = 'a' * c_task.paginator.num_pages
+
     context = {
         'salesman':salesman,
         'previous' : previous,
@@ -541,6 +593,15 @@ def salesman_view(request,sid):
         'proposals' : proposals,
         'monthly_report' : monthly_report,
         'percentage' : percentage,
+        'nums' : nums,
+        'op_nums' : op_nums,
+        'pro_nums' : pro_nums,
+        'cli_nums' : cli_nums,
+        'prj_nums' : prj_nums,
+        'prv_nums' : prv_nums,
+        'upc_nums' : upc_nums,
+        'pt_nums' : pt_nums,
+        'ct_nums' : ct_nums,
     }
     return render(request,'salesman-view.html',context)
 
@@ -624,9 +685,15 @@ def list_leads(request):
             # report.Lead_Faild = report.Lead_Faild + 1
             # report.save()
             return redirect('list-lead')
+    
+    p = Paginator(leads,10)
+    page = request.GET.get('page')
+    leads = p.get_page(page)
+    nums = 'a' * leads.paginator.num_pages
 
     context = {
-        'leads' : leads
+        'leads' : leads,
+        'nums' : nums
     }
     return render(request,'leads-list.html',context)
 
@@ -966,7 +1033,12 @@ def assign_target(request):
         d = {'year':y,'salesmans':salesmans,'total':total,'archived':archived,'balance':balance,'color':color}
         data.append(d)
 
-    return render(request,'assign-target.html',{'data':data})
+    p = Paginator(data,10)
+    page = request.GET.get('page')
+    data = p.get_page(page)
+    nums = 'a' * data.paginator.num_pages
+
+    return render(request,'assign-target.html',{'data':data,'nums':nums})
 
 #################################################################################
 
@@ -1007,11 +1079,18 @@ def target_setup(request):
                     data = Sales_Target(Salesman=man,Targets=t,From=Begindate,To=Enddate)
                     data.save()
         return redirect('assign-target')
+    
+
+    p = Paginator(salesmans,10)
+    page = request.GET.get('page')
+    salesmans = p.get_page(page)
+    nums = 'a' * salesmans.paginator.num_pages
 
     context = {
         'salesmans' : salesmans,
         'years' : years,
-        'y' : y
+        'y' : y,
+        'nums':nums,
     }
 
     return render(request,'target-setup.html',context)
@@ -1022,6 +1101,10 @@ def target_setup(request):
 def target_view(request,year):
     setTarget()
     salesmans = Sales_Target.objects.filter(From__year = year)
-    return render(request,'target-view.html',{'salesmans':salesmans,'year':year})
+    p = Paginator(salesmans,10)
+    page = request.GET.get('page')
+    salesmans = p.get_page(page)
+    nums = 'a' * salesmans.paginator.num_pages
+    return render(request,'target-view.html',{'salesmans':salesmans,'year':year,'nums':nums})
 
 #################################################################################

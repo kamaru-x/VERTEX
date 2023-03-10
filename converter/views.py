@@ -10,6 +10,7 @@ from administrator.set_fun import setTarget
 import math
 from django.db.models import Sum
 from administrator.views import setreport
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -39,7 +40,12 @@ def list_opertunities(request):
         # report.Opportunity_Faild = report.Opportunity_Faild + 1
         # report.save()
         return redirect('list-opportunities')
-    return render(request,'opportunity-list.html',{'opertunitunities':opertunities})
+    
+    p = Paginator(opertunities,10)
+    page = request.GET.get('page')
+    opertunities = p.get_page(page)
+    nums = 'a' * opertunities.paginator.num_pages
+    return render(request,'opportunity-list.html',{'opertunitunities':opertunities,'nums':nums})
 
 #################################################################################
 
@@ -202,7 +208,11 @@ def create_proposal(request,lid):
 def list_proposals(request):
     set_proposals()
     proposals = Proposal.objects.filter(Status=1).order_by('-id')
-    return render(request,'list_proposal.html',{'proposals':proposals})
+    p = Paginator(proposals,10)
+    page = request.GET.get('page')
+    proposals = p.get_page(page)
+    nums = 'a' * proposals.paginator.num_pages
+    return render(request,'list_proposal.html',{'proposals':proposals,'nums':nums})
 
 #################################################################################
 
@@ -430,10 +440,16 @@ def pending_task(request):
             task = Task.objects.get(id=id)
             task.Status = 0
             task.save()
-            return redirect('pending-task')        
+            return redirect('pending-task')
+
+    p = Paginator(tasks,10)
+    page = request.GET.get('page')
+    tasks = p.get_page(page)
+    nums = 'a' * tasks.paginator.num_pages        
 
     context = {
         'tasks' : tasks,
+        'nums':nums,
     }
     return render(request,'task-pending.html',context)
 
@@ -442,7 +458,11 @@ def pending_task(request):
 @login_required
 def completed_task(request):
     tasks = Task.objects.filter(Task_Status=1).order_by('-Completed_Date')
-    return render(request,'task-completed.html',{'tasks':tasks})
+    p = Paginator(tasks,1)
+    page = request.GET.get('page')
+    tasks = p.get_page(page)
+    nums = 'a' * tasks.paginator.num_pages
+    return render(request,'task-completed.html',{'tasks':tasks,'nums':nums})
 
 #################################################################################
 
@@ -554,7 +574,11 @@ def client_list(request):
         lead.Cancel_Reason = request.POST.get('reason')
         lead.save()
         return redirect('clients')
-    return render(request,'clients.html',{'clients':clients})
+    p = Paginator(clients,10)
+    page = request.GET.get('page')
+    clients = p.get_page(page)
+    nums = 'a' * clients.paginator.num_pages
+    return render(request,'clients.html',{'clients':clients,'nums':nums})
 
 #################################################################################
 
@@ -659,7 +683,11 @@ def projects(request):
     #     lead.Cancel_Reason = request.POST.get('reason')
     #     lead.save()
     #     return redirect('projects')
-    return render(request,'projects-list.html',{'projects':projects})
+    p = Paginator(projects,10)
+    page = request.GET.get('page')
+    projects = p.get_page(page)
+    nums = 'a' * projects.paginator.num_pages
+    return render(request,'projects-list.html',{'projects':projects,'nums':nums})
 
 #################################################################################
 
@@ -779,7 +807,12 @@ def upcoming_meetings(request):
             previous.append(schedule)
         elif schedule.AddedDate >= dt.today() :
             upcoming.append(schedule)
-    return render(request,'meeting-upcoming.html',{'upcoming':upcoming,'leads':leads})
+
+    p = Paginator(upcoming,1)
+    page = request.GET.get('page')
+    upcoming = p.get_page(page)
+    nums = 'a' * upcoming.paginator.num_pages
+    return render(request,'meeting-upcoming.html',{'upcoming':upcoming,'leads':leads,'nums':nums})
 
 #################################################################################
 
@@ -865,8 +898,14 @@ def previous_meetings(request):
         if schedule.AddedDate < dt.today() :
             previous.append(schedule)
         elif schedule.AddedDate > dt.today() :
-            upcoming.append(schedule)    
-    return render(request,'meeting-previous.html',{'previous':previous,'leads':leads})
+            upcoming.append(schedule)
+
+    p = Paginator(previous,10)
+    page = request.GET.get('page')
+    previous = p.get_page(page)
+    nums = 'a' * previous.paginator.num_pages 
+
+    return render(request,'meeting-previous.html',{'previous':previous,'leads':leads,'nums':nums})
 
 #################################################################################
 
@@ -874,7 +913,11 @@ def previous_meetings(request):
 def meeting_staff_list(request):
     salesmans = User.objects.filter(is_salesman=True)
     reports = Salesman_Report.objects.filter(Status=1)
-    return render(request,'meeting-staff.html',{'salesmans':salesmans,'reports':reports})
+    p = Paginator(reports,10)
+    page = request.GET.get('page')
+    reports = p.get_page(page)
+    nums = 'a' * reports.paginator.num_pages
+    return render(request,'meeting-staff.html',{'salesmans':salesmans,'reports':reports,'nums':nums})
 
 #################################################################################
 
@@ -911,7 +954,11 @@ def task_staff(request):
     setreport()
     salesmans = User.objects.filter(is_salesman=True)
     reports = Salesman_Report.objects.filter(Status=1)
-    return render(request,'task-staff.html',{'salesmans':salesmans,'reports':reports})
+    p = Paginator(reports,10)
+    page = request.GET.get('page')
+    reports = p.get_page(page)
+    nums = 'a' * reports.paginator.num_pages
+    return render(request,'task-staff.html',{'salesmans':salesmans,'reports':reports,'nums':nums})
 
 #################################################################################
 
@@ -992,7 +1039,11 @@ def salesman_report(request):
             'sum_rejected_proposals':sum_rejected_proposals,
             }
         reports.append(report)
-    return render(request,'salesman-report.html',{'reports':reports})
+    p = Paginator(reports,10)
+    page = request.GET.get('page')
+    reports = p.get_page(page)
+    nums = 'a' * reports.paginator.num_pages
+    return render(request,'salesman-report.html',{'reports':reports,'nums':nums})
 
 #################################################################################
 
@@ -1040,9 +1091,15 @@ def target_report(request):
 
         target = {'Salesman':t.Salesman,'Targets':t.Targets,'Archived':t.Archived,'Pending':t.Balance,'Percentage':percentage}
         targets.append(target)
+    
+    p = Paginator(targets,10)
+    page = request.GET.get('page')
+    targets = p.get_page(page)
+    nums = 'a' * targets.paginator.num_pages
 
     context = {
-        'targets' : targets
+        'targets' : targets,
+        'nums':nums,
     }
 
     return render(request,'target-report.html',context)
@@ -1081,7 +1138,12 @@ def top_customers(request):
             'volume':volume,'Percentage':percentage
             }
         leads.append(company)
-    return render(request,'top-customers.html',{'leads':leads})
+
+    p = Paginator(leads,10)
+    page = request.GET.get('page')
+    leads = p.get_page(page)
+    nums = 'a' * leads.paginator.num_pages
+    return render(request,'top-customers.html',{'leads':leads,'nums':nums})
 
 #################################################################################
 
@@ -1126,7 +1188,11 @@ def proposal_report(request):
 @login_required
 def total_propose(request):
     proposals = Proposal.objects.filter(Status=1)
-    return render(request,'report-proposal-total.html',{'proposals':proposals})
+    p = Paginator(proposals,10)
+    page = request.GET.get('page')
+    proposals = p.get_page(page)
+    nums = 'a' * proposals.paginator.num_pages
+    return render(request,'report-proposal-total.html',{'proposals':proposals,'nums':nums})
 
 #################################################################################
 

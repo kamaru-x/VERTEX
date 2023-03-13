@@ -294,12 +294,12 @@
                     <tr class="intro-x"></tr>
                     <tr class="intro-x"></tr>
                     <tr class="intro-x"></tr>
-                    {% if receipts %}
+                    {% if invoices %}
                     <tr class="intro-x">
                         <td class="w-64 text-center"></td>
                         <td class="w-64 text-center">Invoice = <span id="it">{{ invoice_totals.sum }}</span></td>
                         <td class="w-64 text-center">Receipt = <span id="rt">{{ receipt_totals.sum }}</span></td>
-                        <td class="w-64 text-center">Amount to recive = <span id="gt">{{ receipt_totals.sum|add:'invoice_totals.sum' }}</span></td>
+                        <td class="w-64 text-center">Amount to recive = <span id="gt">{{ receipt_totals.sum|add:'invoice_totals.sum'|cut:"-" }}</span></td>
                     </tr>
                     {% else %}
                     <tr class="intro-x width"> 
@@ -383,7 +383,7 @@
     }else if (gt < 0){
         $('#gt').addClass('text-danger')
     }
-    $('#gt').html(gt)
+    $('#gt').html(Math.abs(gt))
 
 </script>
 <!-- BEGIN: Modal Content -->
